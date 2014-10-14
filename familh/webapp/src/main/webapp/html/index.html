@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script type="text/javascript" src="http://localhost:8080/familh.webapp-1.0-SNAPSHOT/js/lib/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript">
+            function loadPersons() {
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "http://localhost:8080/familh.webapp-1.0-SNAPSHOT/rest/api/v1/person",
+                    success: function(data){
+                        alert(data[0].ident);
+                    }
+                });
+            };
+
+        </script>
+    </head>
+    <body onLoad="javascript:loadPersons();">
+        Welcome Page
+        <p id="'test"></p>
+    </body>
+</html>

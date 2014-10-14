@@ -1,0 +1,34 @@
+0 HEAD
+1 SOUR Gramps
+2 VERS 3.3.1-1
+2 NAME Gramps
+1 DATE 14 MAR 2012
+2 TIME 07:26:51
+1 SUBM @SUBM@
+1 FILE /home/demis/Documents/généalogie/sauvegarde gramps/test.ged
+1 COPR Copyright (c) 2012 Kermabon Stéphane.
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 LANG French
+0 @I0001@ INDI
+1 NAME Stéphane René Pierre /Kermabon/
+2 GIVN Stéphane René Pierre
+2 SURN Kermabon
+1 SEX M
+1 BIRT
+2 DATE 15 NOV 1969
+2 PLAC Maubeuge
+3 MAP
+4 LATI 50.2775
+4 LONG 3.9734
+2 ADDR
+3 CITY Maubeuge
+3 STAE Nord-Pas-de-Calais
+3 CTRY France
+1 OCCU Ingénieur Informatique
+1 CHAN
+2 DATE 13 OCT 2010
+3 TIME 07:44:10
+0 TRLR

@@ -1,0 +1,28 @@
+0 HEAD
+1 SOUR Gramps
+2 VERS 3.2.0-1
+2 NAME Gramps
+2 CORP Gramps Corporation
+3 ADDR 8, rue de l'aigle
+2 DATA Source data
+3 DATE 1 1 1970
+3 COPY Copyright of data
+1 DEST Destination
+1 DATE 12 JUL 2011
+2 TIME 17:37:42
+1 SUBM @SUBM@
+1 SUBN @SUBN@
+1 FILE /home/demis/Documents/généalogie/sauvegarde gramps/kermabon-16.ged
+1 COPR Copyright (c) 2011 Not Provided.
+1 GEDC
+2 VERS 5.5
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+2 VERS 1.0
+1 LANG French
+1 PLAC
+2 FORM Place format
+1 NOTE Note of header
+2 CONC Concat
+2 CONT Continue
+0 TRLR
