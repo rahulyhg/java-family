@@ -45,7 +45,7 @@
             <artifactId>logback-classic</artifactId>
             <version>0.9.30</version>
         </dependency>
-        <!-- unit test -->
+        <!-- unit service -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>

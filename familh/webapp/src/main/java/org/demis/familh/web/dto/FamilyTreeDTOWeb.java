@@ -1,7 +1,7 @@
 package org.demis.familh.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.demis.familh.core.dto.FamilyTreeDTO;
+import org.demis.familh.core.elasticsearch.dto.FamilyTreeDTO;
 
 public class FamilyTreeDTOWeb extends FamilyTreeDTO implements DTOWeb {
 

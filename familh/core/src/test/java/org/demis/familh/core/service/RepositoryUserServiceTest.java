@@ -1,6 +1,6 @@
 package org.demis.familh.core.service;
 
-import org.demis.familh.core.PersistenceJPAConfig;
+import org.demis.familh.core.jpa.PersistenceJPAConfig;
 import org.demis.familh.core.jpa.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

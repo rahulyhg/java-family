@@ -1,7 +1,6 @@
 package org.demis.familh.web.controller;
 
 import org.demis.familh.core.service.GenericService;
-import org.demis.familh.core.service.combine.GenericServiceImpl;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

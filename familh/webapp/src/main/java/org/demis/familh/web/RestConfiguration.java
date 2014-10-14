@@ -1,6 +1,6 @@
 package org.demis.familh.web;
 
-import org.demis.familh.core.PersistenceJPAConfig;
+import org.demis.familh.core.jpa.PersistenceJPAConfig;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;

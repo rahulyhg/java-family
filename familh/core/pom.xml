@@ -95,7 +95,7 @@
             <version>20030825.184428</version>
         </dependency>
 
-        <!-- elasticsearch -->
+        <!-- service -->
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>

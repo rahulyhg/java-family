@@ -1,7 +1,7 @@
 package org.demis.familh.web.converter;
 
 
-import org.demis.familh.core.converter.GenericConverter;
+import org.demis.familh.core.elasticsearch.converter.GenericConverter;
 import org.demis.familh.core.jpa.entity.Model;
 import org.demis.familh.web.RestConfiguration;
 import org.demis.familh.web.dto.DTOWeb;
