@@ -1,5 +1,6 @@
 package org.demis.familh.core.service.impl;
 
+import org.demis.familh.core.elasticsearch.service.PersonESService;
 import org.demis.familh.core.jpa.entity.Person;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.PersonService;
@@ -19,7 +20,7 @@ public class PersonSeviceImpl extends GenericServiceImpl<Person> implements Pers
 
     @Autowired
     @Qualifier ("personESService")
-    private PersonService elasticSearchService;
+    private PersonESService elasticSearchService;
 
 
     @Override

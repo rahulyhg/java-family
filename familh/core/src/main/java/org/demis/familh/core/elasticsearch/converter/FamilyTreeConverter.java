@@ -2,7 +2,9 @@ package org.demis.familh.core.elasticsearch.converter;
 
 import org.demis.familh.core.elasticsearch.dto.FamilyTreeDTO;
 import org.demis.familh.core.jpa.entity.FamilyTree;
+import org.springframework.stereotype.Service;
 
+@Service(value = "familyTreeConverterES")
 public class FamilyTreeConverter extends GenericConverter<FamilyTree, FamilyTreeDTO> {
 
     public FamilyTreeConverter() {

@@ -1,48 +1,28 @@
 package org.demis.familh.core.elasticsearch.service;
 
+import org.demis.familh.core.elasticsearch.converter.FamilyTreeConverter;
+import org.demis.familh.core.elasticsearch.dto.FamilyTreeDTO;
 import org.demis.familh.core.jpa.entity.FamilyTree;
-import org.demis.familh.core.jpa.entity.User;
-import org.demis.familh.core.service.FamilyTreeService;
-import org.demis.familh.core.service.ModelNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service(value ="familyTreeESService")
-public class FamilyTreeESService implements FamilyTreeService {
+public class FamilyTreeESService extends ESService<FamilyTree, FamilyTreeDTO> {
+
+    public static final String USER_MAPPING = "familyTree";
+
+    @Autowired
+    @Qualifier("familyTreeConverterES")
+    private FamilyTreeConverter familyTreeConverter;
 
     @Override
-    public FamilyTree create(FamilyTree created) {
-        return null;
+    protected FamilyTreeConverter getConverter() {
+        return familyTreeConverter;
     }
 
     @Override
-    public FamilyTree delete(Long id) throws ModelNotFoundException {
-        return null;
-    }
-
-    @Override
-    public List<FamilyTree> findAll() {
-        return null;
-    }
-
-    @Override
-    public List<FamilyTree> findPart(int page, int size) {
-        return null;
-    }
-
-    @Override
-    public FamilyTree findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public FamilyTree update(FamilyTree updated) throws ModelNotFoundException {
-        return null;
-    }
-
-    @Override
-    public List<FamilyTree> findUserFamilyTrees(User user) {
-        return null;
+    protected String getMapping() {
+        return USER_MAPPING;
     }
 }

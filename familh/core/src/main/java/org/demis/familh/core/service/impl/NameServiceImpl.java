@@ -1,5 +1,6 @@
 package org.demis.familh.core.service.impl;
 
+import org.demis.familh.core.elasticsearch.service.NameESService;
 import org.demis.familh.core.jpa.entity.Name;
 import org.demis.familh.core.jpa.entity.Person;
 import org.demis.familh.core.service.ModelNotFoundException;
@@ -20,7 +21,7 @@ public class NameServiceImpl implements NameService {
 
     @Autowired
     @Qualifier ("nameESService")
-    private NameService elasticSearchService;
+    private NameESService elasticSearchService;
 
 
     @Override

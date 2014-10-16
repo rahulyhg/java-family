@@ -2,7 +2,9 @@ package org.demis.familh.core.elasticsearch.converter;
 
 import org.demis.familh.core.elasticsearch.dto.NameDTO;
 import org.demis.familh.core.jpa.entity.Name;
+import org.springframework.stereotype.Service;
 
+@Service(value = "nameConverterES")
 public class NameConverter extends GenericConverter<Name, NameDTO> {
 
     public NameConverter() {

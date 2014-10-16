@@ -2,7 +2,9 @@ package org.demis.familh.core.elasticsearch.converter;
 
 import org.demis.familh.core.elasticsearch.dto.PersonDTO;
 import org.demis.familh.core.jpa.entity.Person;
+import org.springframework.stereotype.Service;
 
+@Service(value = "personConverterES")
 public class PersonConverter extends GenericConverter<Person, PersonDTO> {
 
     public PersonConverter() {

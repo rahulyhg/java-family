@@ -1,5 +1,6 @@
 package org.demis.familh.core.service.impl;
 
+import org.demis.familh.core.elasticsearch.service.EventESService;
 import org.demis.familh.core.jpa.entity.Event;
 import org.demis.familh.core.jpa.entity.Person;
 import org.demis.familh.core.service.ModelNotFoundException;
@@ -20,7 +21,7 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     @Qualifier ("eventESService")
-    private EventService elasticSearchService;
+    private EventESService elasticSearchService;
 
 
     @Override

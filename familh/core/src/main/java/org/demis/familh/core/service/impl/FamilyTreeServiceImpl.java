@@ -1,5 +1,6 @@
 package org.demis.familh.core.service.impl;
 
+import org.demis.familh.core.elasticsearch.service.FamilyTreeESService;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.FamilyTreeService;
@@ -20,7 +21,7 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
 
     @Autowired
     @Qualifier ("familyTreeESService")
-    private FamilyTreeService elasticSearchService;
+    private FamilyTreeESService elasticSearchService;
 
 
     @Override

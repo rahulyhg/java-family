@@ -1,5 +1,6 @@
 package org.demis.familh.core.service.impl;
 
+import org.demis.familh.core.elasticsearch.service.UserESService;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.UserService;
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     @Qualifier ("userESService")
-    private UserService elasticSearchService;
+    private UserESService elasticSearchService;
 
 
     @Override

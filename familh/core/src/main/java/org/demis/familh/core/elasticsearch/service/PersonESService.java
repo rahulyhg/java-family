@@ -1,41 +1,29 @@
 package org.demis.familh.core.elasticsearch.service;
 
+import org.demis.familh.core.elasticsearch.converter.PersonConverter;
+import org.demis.familh.core.elasticsearch.dto.PersonDTO;
 import org.demis.familh.core.jpa.entity.Person;
-import org.demis.familh.core.service.ModelNotFoundException;
-import org.demis.familh.core.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service(value ="personESService")
-public class PersonESService implements PersonService {
+public class PersonESService extends ESService<Person, PersonDTO> {
+
+    public static final String USER_MAPPING = "person";
+
+    @Autowired
+    @Qualifier("personConverterES")
+    private PersonConverter personConverter;
+
     @Override
-    public Person create(Person created) {
-        return null;
+    protected PersonConverter getConverter() {
+        return personConverter;
     }
 
     @Override
-    public Person delete(Long id) throws ModelNotFoundException {
-        return null;
-    }
-
-    @Override
-    public List<Person> findAll() {
-        return null;
-    }
-
-    @Override
-    public List<Person> findPart(int page, int size) {
-        return null;
-    }
-
-    @Override
-    public Person findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public Person update(Person updated) throws ModelNotFoundException {
-        return null;
+    protected String getMapping() {
+        return USER_MAPPING;
     }
 }
