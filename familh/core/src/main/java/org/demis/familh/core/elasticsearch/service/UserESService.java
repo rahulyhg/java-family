@@ -2,6 +2,7 @@ package org.demis.familh.core.elasticsearch.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.demis.familh.core.elasticsearch.ElasticSearchConfig;
 import org.demis.familh.core.elasticsearch.converter.UserConverter;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.ModelNotFoundException;
@@ -25,10 +26,13 @@ public class UserESService implements UserService {
     @Qualifier("userConverterES")
     private UserConverter userConverter;
 
+    @Autowired
+    private ElasticSearchConfig configuration;
+
     @Override
     public User create(User created) {
         try {
-            client.prepareIndex("familh", "user", created.getId().toString())
+            client.prepareIndex(configuration.getIndexName(), getMapping(), created.getId().toString())
                     .setSource(mapper.writeValueAsString(userConverter.convertModel(created)))
                     .execute()
                     .actionGet();
@@ -41,7 +45,7 @@ public class UserESService implements UserService {
 
     @Override
     public User delete(Long id) throws ModelNotFoundException {
-        client.prepareDelete("familh", "user", id.toString())
+        client.prepareDelete(configuration.getIndexName(), getMapping(), id.toString())
                 .execute()
                 .actionGet();
         return null;
@@ -65,7 +69,7 @@ public class UserESService implements UserService {
     @Override
     public User update(User updated) throws ModelNotFoundException {
         try {
-            client.prepareIndex("familh", "user", updated.getId().toString())
+            client.prepareIndex(configuration.getIndexName(), getMapping(), updated.getId().toString())
                     .setSource(mapper.writeValueAsString(userConverter.convertModel(updated)))
                     .execute()
                     .actionGet();
@@ -74,5 +78,9 @@ public class UserESService implements UserService {
         }
         return updated;
 
+    }
+
+    public String getMapping() {
+        return  "user";
     }
 }
