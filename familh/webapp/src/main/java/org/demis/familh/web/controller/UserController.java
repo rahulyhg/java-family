@@ -90,7 +90,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
 
     @RequestMapping(value = {"/user/{id}", "/user/{id}/"}, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void postUser(HttpServletResponse httpResponse) {
+    public void postUser() {
     }
 
     @RequestMapping(value = {"/user", "/user/"}, method = RequestMethod.POST)
@@ -115,7 +115,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
 
     @RequestMapping(value = {"/user", "/user/"}, method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void deleteUsers(HttpServletResponse httpResponse) {
+    public void deleteUsers() {
     }
 
     @RequestMapping(value = {"/user/{id}", "/user/{id}/"}, method = RequestMethod.DELETE)
@@ -145,7 +145,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
 
     @RequestMapping(value = {"/user", "/user/"}, method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void putUsers(HttpServletResponse httpResponse) {
+    public void putUsers() {
     }
 
     @RequestMapping(value = {"/user/{id}", "/user/{id}/"}, method = RequestMethod.PUT)

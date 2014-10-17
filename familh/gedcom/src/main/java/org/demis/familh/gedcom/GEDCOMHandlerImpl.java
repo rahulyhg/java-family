@@ -8,7 +8,7 @@ import java.util.Stack;
 
 public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
-    private static Logger logger = LoggerFactory.getLogger(GEDCOMHandlerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GEDCOMHandlerImpl.class);
 
     /** Current level of the gedcom file. This is the level of the previous line. */
     private int currentlevel = -1;
@@ -44,21 +44,12 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
         else if ("FAM".equals(tuple.getCode()) && tuple.getLevel() == 0) {
             handleFamily(tuple);
         }
-/*        else if ("OBJE".equals(tuple.getCode()) && tuple.getLevel() == 0) {
-            handleMultimedia(tuple);
-        }*/
         else if ("NOTE".equals(tuple.getCode())) {
             handleNote(tuple);
         }
-/*        else if ("REPO".equals(tuple.getCode()) && tuple.getLevel() == 0) {
-            handleRepository(tuple);
-        }*/
         else if ("SOUR".equals(tuple.getCode())) {
             handleSource(tuple);
         }
-/*        else if ("SUBM".equals(tuple.getCode())) {
-            handleSubmitter(tuple);
-        }*/
         else if ("VERS".equals(tuple.getCode())) {
             handleVersion(tuple);
         }
@@ -119,24 +110,12 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
         else if ("COPY".equals(tuple.getCode()) || "COPR".equals(tuple.getCode())) {
             handleCopyright(tuple);
         }
-/*        else if ("DEST".equals(tuple.getCode())) {
-            handleDestination(tuple);
-        }*/
         else if ("TIME".equals(tuple.getCode())) {
             handleTime(tuple);
         }
         else if ("FILE".equals(tuple.getCode())) {
             handleFilename(tuple);
         }
-/*        else if ("FORM".equals(tuple.getCode())) {
-            handleFormat(tuple);
-        }
-        else if ("CHAR".equals(tuple.getCode())) {
-            handleCharset(tuple);
-        }
-        else if ("LANG".equals(tuple.getCode())) {
-            handleLanguage(tuple);
-        }*/
         else if ("PLAC".equals(tuple.getCode())) {
             handlePlace(tuple);
         }
@@ -166,9 +145,6 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
                 ) {
             handleEvent(tuple);
         }
-/*        else if ("TYPE".equals(tuple.getCode())) {
-            handleType(tuple);
-        }*/
         else if ("HUSB".equals(tuple.getCode())) {
             handleHusband(tuple);
         }
@@ -178,27 +154,6 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
         else if ("CHIL".equals(tuple.getCode())) {
             handleChild(tuple);
         }
-/*        else if ("NCHI".equals(tuple.getCode())) {
-            handleChildrenNumber(tuple);
-        }
-        else if ("RESN".equals(tuple.getCode())) {
-            handleRestrictionNotice(tuple);
-        }
-        else if ("RFN".equals(tuple.getCode())) {
-            handlePermanentRecordFileNumber(tuple);
-        }
-        else if ("AFN".equals(tuple.getCode())) {
-            handleAncestralFileNumber(tuple);
-        }
-        else if ("REFN".equals(tuple.getCode())) {
-            handleUserReferenceNumber(tuple);
-        }
-        else if ("REFN".equals(tuple.getCode())) {
-            handleUserReferenceNumber(tuple);
-        }
-        else if ("RIN".equals(tuple.getCode())) {
-            handleAutomatedRecordId(tuple);
-        }*/
         else {
             objectstack.push(tuple);
         }
@@ -209,7 +164,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((Map)(objectstack.peek())).setLongitute(Double.parseDouble(tuple.getInfo()));
         }
         else {
-            logger.warn("No longitude container for " + tuple);
+            LOGGER.warn("No longitude container for " + tuple);
         }
         objectstack.push(tuple);
     }
@@ -219,7 +174,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((Map)(objectstack.peek())).setLatitude(Double.parseDouble(tuple.getInfo()));
         }
         else {
-            logger.warn("No latitude container for " + tuple);
+            LOGGER.warn("No latitude container for " + tuple);
         }
         objectstack.push(tuple);
     }
@@ -231,7 +186,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             objectstack.push(map);
         }
         else {
-            logger.warn("No sex container for " + tuple);
+            LOGGER.warn("No sex container for " + tuple);
             objectstack.push(tuple);
         }
     }
@@ -241,7 +196,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((Individual)(objectstack.peek())).setOccupation(tuple.getInfo());
         }
         else {
-            logger.warn("No sex container for " + tuple);
+            LOGGER.warn("No sex container for " + tuple);
         }
         objectstack.push(tuple);
     }
@@ -251,7 +206,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((IndividualName)(objectstack.peek())).setSurname(tuple.getInfo());
         }
         else {
-            logger.warn("No surname container for " + tuple);
+            LOGGER.warn("No surname container for " + tuple);
         }
         objectstack.push(tuple);
     }
@@ -261,7 +216,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((IndividualName)(objectstack.peek())).setGivenName(tuple.getInfo());
         }
         else {
-            logger.warn("No givenName container for " + tuple);
+            LOGGER.warn("No givenName container for " + tuple);
         }
         objectstack.push(tuple);
     }
@@ -271,33 +226,9 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((Individual)(objectstack.peek())).setSex(tuple.getInfo());
         }
         else {
-            logger.warn("No sex container for " + tuple);
+            LOGGER.warn("No sex container for " + tuple);
         }
         objectstack.push(tuple);
-    }
-
-    private void handleAutomatedRecordId(GEDCOMTuple tuple) {
-
-    }
-
-    private void handleUserReferenceNumber(GEDCOMTuple tuple) {
-
-    }
-
-    private void handleAncestralFileNumber(GEDCOMTuple tuple) {
-
-    }
-
-    private void handlePermanentRecordFileNumber(GEDCOMTuple tuple) {
-
-    }
-
-    private void handleRestrictionNotice(GEDCOMTuple tuple) {
-
-    }
-
-    private void handleChildrenNumber(GEDCOMTuple tuple) {
-
     }
 
     private void handleChild(GEDCOMTuple tuple) {
@@ -306,7 +237,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((Family)objectstack.peek()).addChild(individual);
         }
         else {
-            logger.warn("No child container for : " + tuple);
+            LOGGER.warn("No child container for : " + tuple);
         }
         objectstack.push(tuple);
     }
@@ -317,7 +248,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((Family)objectstack.peek()).addParent(individual);
         }
         else {
-            logger.warn("No wife container for : " + tuple);
+            LOGGER.warn("No wife container for : " + tuple);
         }
         objectstack.push(tuple);
     }
@@ -328,13 +259,9 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((Family)objectstack.peek()).addParent(individual);
         }
         else {
-            logger.warn("No husband container for : " + tuple);
+            LOGGER.warn("No husband container for : " + tuple);
         }
         objectstack.push(tuple);
-    }
-
-    private void handleType(GEDCOMTuple tuple) {
-
     }
 
     private void handleEvent(GEDCOMTuple tuple) {
@@ -345,7 +272,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             objectstack.push(event);
         }
         else {
-            logger.warn("No event container for " + tuple);
+            LOGGER.warn("No event container for " + tuple);
             objectstack.push(tuple);
         }
     }
@@ -384,11 +311,11 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
                 familyTree.setNote(familyTree.getNote() + text);
             }
             else {
-                logger.warn("No concate, continue container for " + text);
+                LOGGER.warn("No concate, continue container for " + text);
             }
         }
         else {
-            logger.warn("No concate, continue container for " + text);
+            LOGGER.warn("No concate, continue container for " + text);
         }
     }
 
@@ -404,21 +331,9 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             objectstack.push(place);
         }
         else {
-            logger.warn("No place container for " + tuple);
+            LOGGER.warn("No place container for " + tuple);
             objectstack.push(tuple);
         }
-    }
-
-    private void handleLanguage(GEDCOMTuple tuple) {
-
-    }
-
-    private void handleCharset(GEDCOMTuple tuple) {
-
-    }
-
-    private void handleFormat(GEDCOMTuple tuple) {
-
     }
 
     private void handleFilename(GEDCOMTuple tuple) {
@@ -426,7 +341,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((FamilyTree)(objectstack.peek())).setFilename(tuple.getInfo());
         }
         else {
-            logger.warn("No filename container for " + tuple);
+            LOGGER.warn("No filename container for " + tuple);
         }
         objectstack.push(tuple);
     }
@@ -436,17 +351,13 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             GEDCOMDateParser.parseTime((GEDCOMDate)(objectstack.peek()), tuple.getInfo());
         }
         else {
-            logger.warn("No time container for " + tuple);
+            LOGGER.warn("No time container for " + tuple);
         }
         objectstack.push(tuple);
     }
 
-    private void handleDestination(GEDCOMTuple tuple) {
-        
-    }
-
     private void handleCopyright(GEDCOMTuple tuple) {
-        logger.debug("handleCopyright object " + objectstack.peek());
+        LOGGER.debug("handleCopyright object " + objectstack.peek());
         if (objectstack.peek() instanceof FamilyTreeSourceData) {
             ((FamilyTreeSourceData)(objectstack.peek())).setCopyright(tuple.getInfo());
         }
@@ -454,7 +365,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((FamilyTree)(objectstack.peek())).setCopyright(tuple.getInfo());
         }
         else {
-            logger.warn("No copyright container for " + tuple + " the previous object is " + objectstack.peek());
+            LOGGER.warn("No copyright container for " + tuple + " the previous object is " + objectstack.peek());
         }
         objectstack.push(tuple);
     }
@@ -473,7 +384,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             objectstack.push(date);
         }
         else {
-            logger.warn("No date container for " + tuple);
+            LOGGER.warn("No date container for " + tuple);
             objectstack.push(tuple);
         }
     }
@@ -490,7 +401,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             objectstack.push(data);
         }
         else {
-            logger.warn("No data container for " + tuple);
+            LOGGER.warn("No data container for " + tuple);
             objectstack.push(tuple);
         }
     }
@@ -505,7 +416,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             address.setCountry(tuple.getInfo());
         }
         else {
-            logger.warn("AddressModel line 1 not for an AddressModel object");
+            LOGGER.warn("AddressModel line 1 not for an AddressModel object");
         }
         objectstack.push(tuple);
     }
@@ -516,7 +427,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             address.setPostalCode(tuple.getInfo());
         }
         else {
-            logger.warn("AddressModel line 1 not for an AddressModel object");
+            LOGGER.warn("AddressModel line 1 not for an AddressModel object");
         }
         objectstack.push(tuple);
 
@@ -528,7 +439,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             address.setState(tuple.getInfo());
         }
         else {
-            logger.warn("AddressModel line 1 not for an AddressModel object");
+            LOGGER.warn("AddressModel line 1 not for an AddressModel object");
         }
         objectstack.push(tuple);
     }
@@ -539,7 +450,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             address.setCity(tuple.getInfo());
         }
         else {
-            logger.warn("AddressModel line 1 not for an AddressModel object");
+            LOGGER.warn("AddressModel line 1 not for an AddressModel object");
         }
         objectstack.push(tuple);
     }
@@ -550,7 +461,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             address.setLine2(tuple.getInfo());
         }
         else {
-            logger.warn("AddressModel line 1 not for an AddressModel object");
+            LOGGER.warn("AddressModel line 1 not for an AddressModel object");
         }
         objectstack.push(tuple);
     }
@@ -561,7 +472,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             address.setLine1(tuple.getInfo());
         }
         else {
-            logger.warn("AddressModel line 1 not for an AddressModel object");
+            LOGGER.warn("AddressModel line 1 not for an AddressModel object");
         }
         objectstack.push(tuple);
     }
@@ -583,7 +494,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((AddressContainer)(objectstack.peek())).setAddress(address);
         }
         else {
-            logger.warn("No address container for " + tuple);
+            LOGGER.warn("No address container for " + tuple);
         }
         objectstack.push(address);
     }
@@ -625,25 +536,21 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
                 familyTree.setCharsetVersion(tuple.getInfo());
             }
             else {
-                logger.warn("No container for version for " + tuple);
+                LOGGER.warn("No container for version for " + tuple);
             }
         }
         else if (objectstack.peek() instanceof FamilyTree) {
             ((FamilyTree)(objectstack.peek())).setGedcomVersion(tuple.getInfo());
         }
         else {
-            logger.warn("No container for version for " + tuple);
+            LOGGER.warn("No container for version for " + tuple);
         }
         objectstack.push(tuple);
     }
 
-    private void handleSubmitter(GEDCOMTuple tuple) {
-
-    }
-
     private void handleSource(GEDCOMTuple tuple) {
         // Primary source declaration
-        if (!(objectstack.size() > 0 && objectstack.peek() instanceof FamilyTree)) {
+        if (!(objectstack.isEmpty() && objectstack.peek() instanceof FamilyTree)) {
             Source source = familyTree.getSource(tuple.getRef());
             if (source == null) {
                 source = new Source();
@@ -652,7 +559,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             if (tuple.getLevel() == 0) {
                 familyTree.addSource(source);
             }
-            else if (objectstack.size() > 0 && objectstack.peek() instanceof SourceContainer) {
+            else if (objectstack.isEmpty() && objectstack.peek() instanceof SourceContainer) {
                 ((SourceContainer)(objectstack.peek())).addSource(source);
             }
 
@@ -665,10 +572,6 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             familyTree.setSource(source);
             objectstack.push(source);
         }
-    }
-
-    private void handleRepository(GEDCOMTuple tuple) {
-
     }
 
     private void handleNote(GEDCOMTuple tuple) {
@@ -693,7 +596,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             objectstack.push(tuple);
         }
         else {
-            logger.warn("No note container for " + tuple);
+            LOGGER.warn("No note container for " + tuple);
             objectstack.push(tuple);
         }
     }
@@ -735,7 +638,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
                 objectstack.push(submission);
             }
             else {
-                logger.warn("No submission container for " + tuple);
+                LOGGER.warn("No submission container for " + tuple);
                 objectstack.push(tuple);
             }
         }

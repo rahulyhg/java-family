@@ -17,7 +17,7 @@ import java.util.List;
 @Service(value ="nameRepositoryService")
 public class NameRepositoryService implements NameService {
 
-    private static final Logger logger = LoggerFactory.getLogger(NameRepositoryService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NameRepositoryService.class);
 
     @Resource (name = "nameRepository")
     private NameRepository nameRepository;
@@ -34,7 +34,7 @@ public class NameRepositoryService implements NameService {
         Name deleted = nameRepository.findOne(id);
 
         if (deleted == null) {
-            logger.debug("No Name found with id: " + id);
+            LOGGER.debug("No Name found with id: " + id);
             throw new ModelNotFoundException();
         }
 
@@ -66,7 +66,7 @@ public class NameRepositoryService implements NameService {
         Name name = nameRepository.findOne(updated.getId());
 
         if (name == null) {
-            logger.debug("No Name found with id: " + updated.getId());
+            LOGGER.debug("No Name found with id: " + updated.getId());
             throw new ModelNotFoundException();
         }
 

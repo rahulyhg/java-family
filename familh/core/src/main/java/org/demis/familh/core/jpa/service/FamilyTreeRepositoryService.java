@@ -17,7 +17,7 @@ import java.util.List;
 @Service(value ="familyTreeRepositoryService")
 public class FamilyTreeRepositoryService implements FamilyTreeService {
 
-    private static final Logger logger = LoggerFactory.getLogger(FamilyTreeRepositoryService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FamilyTreeRepositoryService.class);
 
     @Resource(name = "familyTreeRepository")
     private FamilyTreeRepository familyTreeRepository;
@@ -33,7 +33,7 @@ public class FamilyTreeRepositoryService implements FamilyTreeService {
         FamilyTree deleted = familyTreeRepository.findOne(id);
 
         if (deleted == null) {
-            logger.debug("No FamilyTree found with id: " + id);
+            LOGGER.debug("No FamilyTree found with id: " + id);
             throw new ModelNotFoundException();
         }
 
@@ -67,7 +67,7 @@ public class FamilyTreeRepositoryService implements FamilyTreeService {
         FamilyTree familyTree = familyTreeRepository.findOne(updated.getId());
 
         if (familyTree == null) {
-            logger.debug("No FamilyTree found with id: " + updated.getId());
+            LOGGER.debug("No FamilyTree found with id: " + updated.getId());
             throw new ModelNotFoundException();
         }
         else {

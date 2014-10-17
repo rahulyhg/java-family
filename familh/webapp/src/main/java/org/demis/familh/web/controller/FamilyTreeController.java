@@ -88,7 +88,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
     @RequestMapping(value = {"/user/{userId}/familyTree/{familyTreeId}", "/user/{userId}/familyTree/{familyTreeId}/"},
             method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void postExistingFamilyTree(HttpServletResponse httpResponse) {
+    public void postExistingFamilyTree() {
     }
 
     @RequestMapping(value = {"/user/{userId}/familyTree", "/user/{userId}/familyTree/"}, method = RequestMethod.POST)
@@ -117,7 +117,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
 
     @RequestMapping(value = {"/user/{userId}/familyTree", "/user/{userId}/familyTree/"}, method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void deleteFamilyTrees(HttpServletResponse httpResponse) {
+    public void deleteFamilyTrees() {
     }
 
     @RequestMapping(value = {"/user/{userId}/familyTree/{familyTreeId}", "/user/{userId}/familyTree/{familyTreeId}/"},
@@ -149,7 +149,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
 
     @RequestMapping(value = {"/user/{userId}/familyTree", "/user/{userId}/familyTree/"}, method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void putFamilyTrees(HttpServletResponse httpResponse) {
+    public void putFamilyTrees() {
     }
 
     @RequestMapping(value = {"/user/{userId}/familyTree/{familyTreeId}", "/user/{userId}/familyTree/{familyTreeId}/"},

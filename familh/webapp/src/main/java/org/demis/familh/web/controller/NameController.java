@@ -137,7 +137,7 @@ public class NameController extends GenericController {
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void putResources(HttpServletResponse httpResponse) {
+    public void putResources() {
     }
 
     @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.PUT)

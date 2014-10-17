@@ -17,7 +17,7 @@ import java.util.List;
 @Service(value ="eventRepositoryService")
 public class EventRepositoryService implements EventService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EventRepositoryService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventRepositoryService.class);
 
     @Resource(name = "eventRepository")
     private EventRepository eventRepository;
@@ -34,7 +34,7 @@ public class EventRepositoryService implements EventService {
         Event deleted = eventRepository.findOne(id);
 
         if (deleted == null) {
-            logger.debug("No Event found with id: " + id);
+            LOGGER.debug("No Event found with id: " + id);
             throw new ModelNotFoundException();
         }
 
@@ -66,7 +66,7 @@ public class EventRepositoryService implements EventService {
         Event event = eventRepository.findOne(updated.getId());
 
         if (event == null) {
-            logger.debug("No Event found with id: " + updated.getId());
+            LOGGER.debug("No Event found with id: " + updated.getId());
             throw new ModelNotFoundException();
         }
 

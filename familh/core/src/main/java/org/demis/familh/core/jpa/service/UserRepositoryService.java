@@ -16,7 +16,7 @@ import java.util.List;
 @Service(value ="userRepositoryService")
 public class UserRepositoryService implements UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserRepositoryService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryService.class);
 
     @Resource(name = "userRepository")
     private UserRepository userRepository;
@@ -32,7 +32,7 @@ public class UserRepositoryService implements UserService {
         User deleted = userRepository.findOne(id);
 
         if (deleted == null) {
-            logger.debug("No User found with id: " + id);
+            LOGGER.debug("No User found with id: " + id);
             throw new ModelNotFoundException();
         }
 
@@ -66,7 +66,7 @@ public class UserRepositoryService implements UserService {
         User user = userRepository.findOne(updated.getId());
 
         if (user == null) {
-            logger.debug("No User found with id: " + updated.getId());
+            LOGGER.debug("No User found with id: " + updated.getId());
             throw new ModelNotFoundException();
         }
         else {
