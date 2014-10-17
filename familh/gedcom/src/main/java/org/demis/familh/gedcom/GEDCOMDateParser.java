@@ -71,8 +71,7 @@ public class GEDCOMDateParser {
             } catch (NumberFormatException nfe) {
                 date.setMonth(GEDCOMMonth.getMonth(elements[1]).getId());
             }
-        }
-        else if (elements != null && elements.length == 3) {
+        } else if (elements != null && elements.length == 3) {
             date.setYear(Integer.parseInt(elements[2]));
             try {
                 date.setMonth(Integer.parseInt(elements[1]));

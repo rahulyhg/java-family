@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 public class Range {
 
+    private static final Pattern pattern = Pattern.compile("resources[ ]*:[ ]*page[ ]*=[ ]*([0-9]*)[ ]*;[ ]*size[ ]*=[ ]*([0-9]*)");
+
     private int page;
 
     private int size;
@@ -13,9 +15,7 @@ public class Range {
 
     }
 
-    private static final Pattern pattern = Pattern.compile("resources[ ]*:[ ]*page[ ]*=[ ]*([0-9]*)[ ]*;[ ]*size[ ]*=[ ]*([0-9]*)");
-
-    public final static Range parse(String value) {
+    public static final Range parse(String value) {
         Matcher matcher = pattern.matcher(value.trim());
 
         if (matcher.matches()) {

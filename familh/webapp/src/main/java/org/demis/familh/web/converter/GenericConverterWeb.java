@@ -53,49 +53,49 @@ public abstract class GenericConverterWeb<ModelImpl extends Model, DTOImpl exten
     }
 
     protected void generateHrefForResource(DTOWeb dto, HttpServletRequest request) {
-        StringBuffer buffer = new StringBuffer();
-        generateBaseHref(dto, request, buffer);
+        StringBuilder builder = new StringBuilder();
+        generateBaseHref(dto, request, builder);
 
-        dto.setHref(buffer.toString());
+        dto.setHref(builder.toString());
     }
 
-    protected void generateBaseHref(DTOWeb dto, HttpServletRequest request, StringBuffer buffer) {
+    protected void generateBaseHref(DTOWeb dto, HttpServletRequest request, StringBuilder builder) {
         if (request != null) {
             if (request.isSecure()) {
-                buffer.append("https//");
+                builder.append("https//");
             } else {
-                buffer.append("http//");
+                builder.append("http//");
             }
-            buffer.append(request.getServerName());
+            builder.append(request.getServerName());
             if (request.getServerPort() != 80) {
-                buffer.append(":");
-                buffer.append(request.getServerPort());
+                builder.append(":");
+                builder.append(request.getServerPort());
             }
-            buffer.append(request.getContextPath());
+            builder.append(request.getContextPath());
         }
-        buffer.append(RestConfiguration.REST_BASE_URL);
-        buffer.append(dto.getResourceName());
-        buffer.append("/");
-        buffer.append(dto.getId());
+        builder.append(RestConfiguration.REST_BASE_URL);
+        builder.append(dto.getResourceName());
+        builder.append("/");
+        builder.append(dto.getId());
     }
 
     protected void generateHrefForReferences(DTOWeb dto, HttpServletRequest request, ResourcesReferenceWeb reference) {
-        StringBuffer buffer = new StringBuffer();
-        generateBaseHref(dto, request, buffer);
-        buffer.append("/");
-        buffer.append(reference.getReferenceName());
+        StringBuilder builder = new StringBuilder();
+        generateBaseHref(dto, request, builder);
+        builder.append("/");
+        builder.append(reference.getReferenceName());
 
-        reference.setHref(buffer.toString());
+        reference.setHref(builder.toString());
     }
 
     protected void generateHrefForReference(DTOWeb dto, HttpServletRequest request, ResourceReferenceDTOWeb reference) {
-        StringBuffer buffer = new StringBuffer();
-        generateBaseHref(dto, request, buffer);
-        buffer.append("/");
-        buffer.append(reference.getResourceName());
-        buffer.append("/");
-        buffer.append(reference.getId());
+        StringBuilder builder = new StringBuilder();
+        generateBaseHref(dto, request, builder);
+        builder.append("/");
+        builder.append(reference.getResourceName());
+        builder.append("/");
+        builder.append(reference.getId());
 
-        reference.setHref(buffer.toString());
+        reference.setHref(builder.toString());
     }
 }

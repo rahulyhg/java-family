@@ -3,13 +3,14 @@ package org.demis.familh.core.service.impl;
 import org.demis.familh.core.elasticsearch.service.EventESService;
 import org.demis.familh.core.jpa.entity.Event;
 import org.demis.familh.core.jpa.entity.Person;
-import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.EventService;
+import org.demis.familh.core.service.ModelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 
 @Service("eventService")
@@ -68,6 +69,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> findPersonEvents(Person person) {
-        return null;
+        return Collections.emptyList();
+
     }
 }
