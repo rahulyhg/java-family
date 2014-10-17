@@ -72,8 +72,7 @@ public class PersonRepositoryService implements PersonService {
         if (person == null) {
             LOGGER.debug("No Person found with id: " + updated.getId());
             throw new ModelNotFoundException();
-        }
-        else {
+        } else {
             personRepository.save(updated);
         }
 

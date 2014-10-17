@@ -29,14 +29,12 @@ public abstract class GenericController<M, DTO> {
             List<M> models = getService().findPart(range.getPage(), range.getSize());
             if (models.isEmpty()) {
                 httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-            }
-            else {
+            } else {
                 httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
                 httpResponse.setStatus(HttpStatus.OK.value());
                 dtos = getConverter().convertModels(models, request);
             }
-        }
-        else {
+        } else {
             dtos = getConverter().convertModels(getService().findAll(), request);
         }
         return dtos;

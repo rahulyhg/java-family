@@ -54,14 +54,12 @@ public class NameController extends GenericController {
             List<Name> names = nameService.findPart(range.getPage(), range.getSize());
             if (names.isEmpty()) {
                 httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-            }
-            else {
+            } else {
                 httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), names.size()) + "/*");
                 httpResponse.setStatus(HttpStatus.OK.value());
                 dtos = nameConverter.convertModels(names, request);
             }
-        }
-        else {
+        } else {
             dtos = nameConverter.convertModels(nameService.findAll(), request);
         }
         return dtos;
@@ -75,8 +73,7 @@ public class NameController extends GenericController {
             httpResponse.setStatus(HttpStatus.OK.value());
             NameDTOWeb dto = nameConverter.convertModel(name, request);
             return dto;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -99,8 +96,7 @@ public class NameController extends GenericController {
             httpResponse.setStatus(HttpStatus.OK.value());
             NameDTOWeb dto = nameConverter.convertModel(name, request);
             return dto;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             return null;
         }
@@ -129,8 +125,7 @@ public class NameController extends GenericController {
             }
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
             return null;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -160,8 +155,7 @@ public class NameController extends GenericController {
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -198,8 +192,7 @@ public class NameController extends GenericController {
         if (name != null) {
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, name.getUpdated().getTime());
             httpResponse.setStatus(HttpStatus.OK.value());
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
         }
     }

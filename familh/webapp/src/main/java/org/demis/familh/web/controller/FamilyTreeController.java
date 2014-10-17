@@ -59,8 +59,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
             List<FamilyTree> trees = familyTreeService.findUserFamilyTrees(user);
             httpResponse.setStatus(HttpStatus.OK.value());
             return familyTreeConverter.convertModels(trees, request);
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -78,8 +77,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
         if (user != null && familyTree != null && familyTree.getUser().getId() == userId) {
             httpResponse.setStatus(HttpStatus.OK.value());
             return familyTreeConverter.convertModel(familyTree, request);
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -108,8 +106,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
             familyTreeService.create(familyTree);
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, familyTree.getUpdated().getTime());
             return familyTreeConverter.convertModel(familyTree, request);
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -141,8 +138,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
             }
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
             return null;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -179,8 +175,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -220,8 +215,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
         if (familyTree != null) {
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, familyTree.getUpdated().getTime());
             httpResponse.setStatus(HttpStatus.OK.value());
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
         }
     }

@@ -23,8 +23,7 @@ public class Range {
             range.setPage(Integer.parseInt(matcher.group(1)));
             range.setSize(Integer.parseInt(matcher.group(2)));
             return range;
-        }
-        else {
+        } else {
             return null;
         }
     }

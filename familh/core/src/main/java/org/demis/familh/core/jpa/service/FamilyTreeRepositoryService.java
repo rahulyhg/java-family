@@ -69,8 +69,7 @@ public class FamilyTreeRepositoryService implements FamilyTreeService {
         if (familyTree == null) {
             LOGGER.debug("No FamilyTree found with id: " + updated.getId());
             throw new ModelNotFoundException();
-        }
-        else {
+        } else {
             familyTreeRepository.save(updated);
         }
 

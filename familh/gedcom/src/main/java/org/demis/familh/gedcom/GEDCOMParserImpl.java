@@ -95,26 +95,22 @@ public class GEDCOMParserImpl implements GEDCOMParser {
             tuple.setInfo(code.substring(code.indexOf(' ') + 1));
             tuple.setCode(code.substring(0, code.indexOf(' ')));
             tuple.setRef(subline.substring(0, subline.indexOf('@')));
-        }
-        // line kind '<level> @<ref>@ <code>'
-        else if (line.matches("[0-9]{1} @[a-zA-Z0-9]*@ [a-zA-Z0-9]+")) {
+        } else if (line.matches("[0-9]{1} @[a-zA-Z0-9]*@ [a-zA-Z0-9]+")) {
+            // line kind '<level> @<ref>@ <code>'
             String subline = line.substring(line.indexOf('@') + 1);
             String code = subline.substring(subline.indexOf('@') + 2);
             tuple.setCode(code);
             tuple.setRef(subline.substring(0, subline.indexOf('@')));
-        }
-        // line kind '<level> <code> @<ref>@'
-        else if (line.matches("[0-9]{1} [a-zA-Z]{4} @[a-zA-Z0-9]+@")) {
+        } else if (line.matches("[0-9]{1} [a-zA-Z]{4} @[a-zA-Z0-9]+@")) {
+            // line kind '<level> <code> @<ref>@'
             tuple.setCode(line.substring(2,6));
             tuple.setRef(line.substring(8, line.length() -1));
-        }
-        // line kind '<level> <code> <info>'
-        else if (line.matches("[0-9]{1} [a-zA-Z]+ .*")) {
+        } else if (line.matches("[0-9]{1} [a-zA-Z]+ .*")) {
+            // line kind '<level> <code> <info>'
             tuple.setCode(line.substring(2, line.substring(2).indexOf(' ') + 2));
             tuple.setInfo(line.substring(3 + tuple.getCode().length()));
-        }
-        // line kind '<level> <code>'
-        else {
+        } else {
+            // line kind '<level> <code>'
             tuple.setCode(line.substring(2));
         }
         return tuple;

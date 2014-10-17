@@ -68,8 +68,7 @@ public class UserRepositoryService implements UserService {
         if (user == null) {
             LOGGER.debug("No User found with id: " + updated.getId());
             throw new ModelNotFoundException();
-        }
-        else {
+        } else {
             userRepository.save(updated);
         }
 

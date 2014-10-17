@@ -73,14 +73,12 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             List<Person> models = getService().findPart(range.getPage(), range.getSize());
             if (models.isEmpty()) {
                 response.setStatus(HttpStatus.NO_CONTENT.value());
-            }
-            else {
+            } else {
                 response.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
                 response.setStatus(HttpStatus.OK.value());
                 dtos = getConverter().convertModels(models, request);
             }
-        }
-        else {
+        } else {
             dtos = getConverter().convertModels(getService().findAll(), request);
         }
         return dtos;
@@ -95,8 +93,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, person.getUpdated().getTime());
             PersonDTOWeb dto = personConverter.convertModel(person, request);
             return dto;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -110,8 +107,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             List<Name> names = nameService.findPersonNames(person);
             httpResponse.setStatus(HttpStatus.OK.value());
             return nameConverter.convertModels(names, request);
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -125,8 +121,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             List<Event> events = eventService.findPersonEvents(person);
             httpResponse.setStatus(HttpStatus.OK.value());
             return eventConverter.convertModels(events, request);
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -150,8 +145,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, person.getUpdated().getTime());
             PersonDTOWeb dto = personConverter.convertModel(person, request);
             return dto;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             return null;
         }
@@ -167,8 +161,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             nameService.create(name);
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, name.getUpdated().getTime());
             return nameConverter.convertModel(name, request);
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -214,8 +207,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             }
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
             return null;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -246,8 +238,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -284,8 +275,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
         if (person != null) {
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, person.getUpdated().getTime());
             httpResponse.setStatus(HttpStatus.OK.value());
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
         }
     }

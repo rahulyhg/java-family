@@ -54,14 +54,12 @@ public class UserController extends GenericController<User, UserDTOWeb> {
             List<User> models = getService().findPart(range.getPage(), range.getSize());
             if (models.isEmpty()) {
                 response.setStatus(HttpStatus.NO_CONTENT.value());
-            }
-            else {
+            } else {
                 response.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
                 response.setStatus(HttpStatus.OK.value());
                 dtos = getConverter().convertModels(models, request);
             }
-        }
-        else {
+        } else {
             dtos = getConverter().convertModels(getService().findAll(), request);
         }
         return dtos;
@@ -76,8 +74,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, user.getUpdated().getTime());
             UserDTOWeb dto = userConverter.convertModel(user, request);
             return dto;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -102,8 +99,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, user.getUpdated().getTime());
             UserDTOWeb dto = userConverter.convertModel(user, request);
             return dto;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             return null;
         }
@@ -132,8 +128,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
             }
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
             return null;
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -164,8 +159,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
         }
@@ -202,8 +196,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
         if (user != null) {
             httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, user.getUpdated().getTime());
             httpResponse.setStatus(HttpStatus.OK.value());
-        }
-        else {
+        } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
         }
     }

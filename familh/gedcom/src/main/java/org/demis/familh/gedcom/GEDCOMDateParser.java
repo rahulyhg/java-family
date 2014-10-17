@@ -33,12 +33,10 @@ public class GEDCOMDateParser {
         if (text.contains("BEF.")) {
             date.setMode(DateMode.BEFORE);
             parseDateElement(date, text.substring(text.indexOf(" ") + 1));
-        }
-        else if (text.contains("AFT.")) {
+        } else if (text.contains("AFT.")) {
             date.setMode(DateMode.AFTER);
             parseDateElement(date, text.substring(text.indexOf(" ") + 1));
-        }
-        else if (text.contains("BET.")) {
+        } else if (text.contains("BET.")) {
             date.setMode(DateMode.BETWEEN);
             String subtext = text.substring(text.indexOf(" ") + 1);
             GEDCOMDate start = new GEDCOMDate();
@@ -47,20 +45,16 @@ public class GEDCOMDateParser {
             GEDCOMDate end = new GEDCOMDate();
             date.setEnd(end);
             parseDateElement(end, subtext.substring(subtext.indexOf("-") + 2));
-        }
-        else if (text.contains("CAL.")) {
+        } else if (text.contains("CAL.")) {
             date.setMode(DateMode.CALCULATED);
             parseDateElement(date, text.substring(text.indexOf(" ") + 1));
-        }
-        else if (text.contains("EST.")) {
+        } else if (text.contains("EST.")) {
             date.setMode(DateMode.ESTIMATED);
             parseDateElement(date, text.substring(text.indexOf(" ") + 1));
-        }
-        else if (text.contains("ABT.")) {
+        } else if (text.contains("ABT.")) {
             date.setMode(DateMode.ABOUT);
             parseDateElement(date, text.substring(text.indexOf(" ") + 1));
-        }
-        else {
+        } else {
             date.setMode(DateMode.SIMPLE);
             parseDateElement(date, text);
         }
@@ -70,13 +64,11 @@ public class GEDCOMDateParser {
         String[] elements = text.split(" ");
         if (elements != null && elements.length == 1) {
             date.setYear(Integer.parseInt(elements[0]));
-        }
-        else if (elements != null && elements.length == 2) {
+        } else if (elements != null && elements.length == 2) {
             date.setYear(Integer.parseInt(elements[1]));
             try {
                 date.setMonth(Integer.parseInt(elements[0]));
-            }
-            catch (NumberFormatException nfe) {
+            } catch (NumberFormatException nfe) {
                 date.setMonth(GEDCOMMonth.getMonth(elements[1]).getId());
             }
         }
@@ -84,8 +76,7 @@ public class GEDCOMDateParser {
             date.setYear(Integer.parseInt(elements[2]));
             try {
                 date.setMonth(Integer.parseInt(elements[1]));
-            }
-            catch (NumberFormatException nfe) {
+            } catch (NumberFormatException nfe) {
                 date.setMonth(GEDCOMMonth.getMonth(elements[1]).getId());
             }
             date.setDay(Integer.parseInt(elements[0]));

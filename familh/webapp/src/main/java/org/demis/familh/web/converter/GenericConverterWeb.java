@@ -63,8 +63,7 @@ public abstract class GenericConverterWeb<ModelImpl extends Model, DTOImpl exten
         if (request != null) {
             if (request.isSecure()) {
                 buffer.append("https//");
-            }
-            else {
+            } else {
                 buffer.append("http//");
             }
             buffer.append(request.getServerName());
