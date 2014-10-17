@@ -8,6 +8,8 @@ import org.demis.familh.web.RestConfiguration;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.converter.NameConverterWeb;
 import org.demis.familh.web.dto.NameDTOWeb;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +23,8 @@ import java.util.List;
 @RestController
 @RequestMapping(RestConfiguration.REST_BASE_URL + "name")
 public class NameController extends GenericController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(NameController.class);
 
     @Autowired
     @Qualifier("nameService" )
@@ -119,6 +123,7 @@ public class NameController extends GenericController {
             try {
                 nameService.delete(id);
             } catch (ModelNotFoundException e) {
+                LOGGER.warn("Can't delete name: " + name, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -151,6 +156,7 @@ public class NameController extends GenericController {
                 NameDTOWeb resultDto = nameConverter.convertModel(result, request);
                 return resultDto;
             } catch (ModelNotFoundException e) {
+                LOGGER.warn("Can't modify name: " + name, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }

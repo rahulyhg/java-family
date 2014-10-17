@@ -11,6 +11,8 @@ import org.demis.familh.web.converter.FamilyTreeConverterWeb;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.converter.UserConverterWeb;
 import org.demis.familh.web.dto.FamilyTreeDTOWeb;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,8 @@ import java.util.List;
 @RestController
 @RequestMapping(RestConfiguration.REST_BASE_URL)
 public class FamilyTreeController extends GenericController<FamilyTree, FamilyTreeDTOWeb> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FamilyTreeController.class);
 
     @Autowired
     @Qualifier("userService" )
@@ -131,6 +135,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
             try {
                 familyTreeService.delete(familyTreeId);
             } catch (ModelNotFoundException e) {
+                LOGGER.warn("Can't delete familyTree: " + familyTree, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -170,6 +175,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
                 FamilyTreeDTOWeb resultDto = familyTreeConverter.convertModel(result, request);
                 return resultDto;
             } catch (ModelNotFoundException e) {
+                LOGGER.warn("Can't familyTree name: " + user, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }

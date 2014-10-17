@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping(RestConfiguration.REST_BASE_URL)
 public class UserController extends GenericController<User, UserDTOWeb> {
 
-    private static Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     @Qualifier("userService" )

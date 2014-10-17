@@ -6,6 +6,10 @@ import org.demis.familh.gedcom.model.GEDCOMDate;
 
 public class GEDCOMDateParser {
 
+    private GEDCOMDateParser() {
+        // nop op
+    }
+
     public static GEDCOMDate parseDate(String text) {
         GEDCOMDate date = new GEDCOMDate();
         parseDate(date, text);
