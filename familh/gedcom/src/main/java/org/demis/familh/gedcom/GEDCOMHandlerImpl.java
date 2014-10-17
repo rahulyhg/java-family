@@ -320,11 +320,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
     }
 
     private void handlePlace(GEDCOMTuple tuple) {
-        /*if (objectstack.peek() instanceof FamilyTree) {
-            ((FamilyTree)(objectstack.peek())).setPlaceHierarchy(tuple.getInfo());
-            objectstack.push(tuple);
-        }
-        else */if (objectstack.peek() instanceof PlaceContainer) {
+        if (objectstack.peek() instanceof PlaceContainer) {
             Place place = new Place();
             place.setPlaceHierarchy(tuple.getInfo());
             ((PlaceContainer)(objectstack.peek())).setPlace(place);
@@ -348,7 +344,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handleTime(GEDCOMTuple tuple) {
         if (objectstack.peek() instanceof GEDCOMDate) {
-            GEDCOMDateParser.parseTime((GEDCOMDate)(objectstack.peek()), tuple.getInfo());
+            GEDCOMDateParser.parseTime((GEDCOMDate) (objectstack.peek()), tuple.getInfo());
         }
         else {
             LOGGER.warn("No time container for " + tuple);
@@ -376,9 +372,6 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             ((Event)(objectstack.peek())).setEventDate(date);
             objectstack.push(date);
         }
-/*        else if (objectstack.peek() instanceof FamilyTreeSourceModel) {
-            ((FamilyTreeSourceModel)(objectstack.peek())).setDataPublicationDate(tuple.getInfo());
-        }*/
         else if (objectstack.peek() instanceof FamilyTree) {
             ((FamilyTree)(objectstack.peek())).setChange(date);
             objectstack.push(date);
@@ -550,7 +543,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handleSource(GEDCOMTuple tuple) {
         // Primary source declaration
-        if (!(objectstack.isEmpty() && objectstack.peek() instanceof FamilyTree)) {
+        if (!(objectstack.size() > 0 && objectstack.peek() instanceof FamilyTree)) {
             Source source = familyTree.getSource(tuple.getRef());
             if (source == null) {
                 source = new Source();
@@ -559,7 +552,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             if (tuple.getLevel() == 0) {
                 familyTree.addSource(source);
             }
-            else if (objectstack.isEmpty() && objectstack.peek() instanceof SourceContainer) {
+            else if (objectstack.size() > 0 && objectstack.peek() instanceof SourceContainer) {
                 ((SourceContainer)(objectstack.peek())).addSource(source);
             }
 
@@ -599,10 +592,6 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             LOGGER.warn("No note container for " + tuple);
             objectstack.push(tuple);
         }
-    }
-
-    private void handleMultimedia(GEDCOMTuple tuple) {
-
     }
 
     private void handleFamily(GEDCOMTuple tuple) {
