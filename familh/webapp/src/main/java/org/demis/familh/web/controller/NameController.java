@@ -183,7 +183,7 @@ public class NameController extends GenericController {
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void headResources(HttpServletResponse httpResponse){
+    public void headResources(){
     }
 
     @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.HEAD)

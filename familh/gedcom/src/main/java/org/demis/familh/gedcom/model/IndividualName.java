@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class IndividualName {
 
-    static private final Logger logger = LoggerFactory.getLogger(IndividualName.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndividualName.class);
 
     private java.lang.Integer individualNameId = null;
 

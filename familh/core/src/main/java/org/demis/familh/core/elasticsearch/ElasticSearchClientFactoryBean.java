@@ -20,7 +20,7 @@ import javax.annotation.PreDestroy;
 @PropertySource(value = {"classpath:familh.properties"})
 public class ElasticSearchClientFactoryBean extends AbstractFactoryBean<Client> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ElasticSearchClientFactoryBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchClientFactoryBean.class);
 
     private Client client;
 
@@ -52,10 +52,10 @@ public class ElasticSearchClientFactoryBean extends AbstractFactoryBean<Client> 
 
     @PreDestroy
     public void shutdown() {
-        logger.info("Shutting down service TransportClient ...");
+        LOGGER.info("Shutting down service TransportClient ...");
         if (client != null) {
             client.close();
         }
-        logger.info("Elasticsearch TransportClient shutdown.");
+        LOGGER.info("Elasticsearch TransportClient shutdown.");
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends DTO> {
 
-    private static Logger logger = LoggerFactory.getLogger(GenericConverter.class);
+    private static final Logger logger = LoggerFactory.getLogger(GenericConverter.class);
 
 
     protected abstract void updateModelFields(ModelImpl model, DTOImpl dto);
@@ -55,7 +55,7 @@ public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends 
     }
 
     public List<ModelImpl> convertDTOs(List<DTOImpl> dtos) {
-        ArrayList<ModelImpl> models = new ArrayList<>(dtos.size());
+        List<ModelImpl> models = new ArrayList<>(dtos.size());
 
         for (DTOImpl dto: dtos) {
             models.add(convertDTO(dto));
@@ -65,7 +65,7 @@ public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends 
     }
 
     public List<DTOImpl> convertModels(List<ModelImpl> models) {
-        ArrayList<DTOImpl> dtos = new ArrayList<>(models.size());
+        List<DTOImpl> dtos = new ArrayList<>(models.size());
 
         for (ModelImpl model: models) {
             dtos.add(convertModel(model));

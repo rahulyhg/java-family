@@ -45,7 +45,7 @@ public class Range {
     }
 
     public int getStart() {
-        return (page * size);
+        return page * size;
     }
 
     public int getEnd() {

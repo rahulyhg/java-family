@@ -7,7 +7,7 @@ import java.util.List;
 
 public class FamilyTree implements NoteContainer {
 
-    private HashMap<String, Source> sources = new HashMap<>();
+    private java.util.Map<String, Source> sources = new HashMap<>();
 
     private FamilyTreeSource source;
 
@@ -23,15 +23,15 @@ public class FamilyTree implements NoteContainer {
 
     private GEDCOMDate change;
 
-    private HashMap<String, Submission> submissions = new HashMap<>();
+    private java.util.Map<String, Submission> submissions = new HashMap<>();
 
     private List<Submission> fileSubmissions = new ArrayList<>();
 
-    private HashMap<String, Individual> individuals = new HashMap<>();
+    private java.util.Map<String, Individual> individuals = new HashMap<>();
 
-    private HashMap<String, Family> families = new HashMap<>();
+    private java.util.Map<String, Family> families = new HashMap<>();
 
-    private HashMap<String, Note> notes = new HashMap<>();
+    private java.util.Map<String, Note> notes = new HashMap<>();
 
     public void addSource(Source source) {
         sources.put(source.getIdent(), source);

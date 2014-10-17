@@ -11,7 +11,7 @@ import javax.servlet.ServletRegistration;
 
 public class WebFamilh extends AbstractDispatcherServletInitializer {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebFamilh.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebFamilh.class);
     @Override
     protected WebApplicationContext createRootApplicationContext() {
         return null;

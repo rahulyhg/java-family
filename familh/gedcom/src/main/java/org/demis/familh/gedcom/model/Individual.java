@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Individual {
 
-    static private final Logger logger = LoggerFactory.getLogger(Individual.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Individual.class);
 
     private String ident;
 
@@ -100,8 +100,8 @@ public class Individual {
         if (addOk) {
             individualName.setIndividual(this);
         } else {
-            if (logger.isWarnEnabled()) {
-                logger.warn("add returned false");
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("add returned false");
             }
         }
 
@@ -116,8 +116,8 @@ public class Individual {
                 individualName.setIndividual((Individual)this);
             }
         } else {
-            if (logger.isWarnEnabled()) {
-                logger.warn("add returned false");
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("add returned false");
             }
         }
 
@@ -135,8 +135,8 @@ public class Individual {
         if (removedOK) {
             individualName.setIndividual(null);
         } else {
-            if (logger.isWarnEnabled()) {
-                logger.warn("remove returned false");
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("remove returned false");
             }
         }
 
@@ -151,8 +151,8 @@ public class Individual {
                 individualName.setIndividual(null);
             }
         } else {
-            if (logger.isWarnEnabled()) {
-                logger.warn("remove returned false");
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("remove returned false");
             }
         }
 

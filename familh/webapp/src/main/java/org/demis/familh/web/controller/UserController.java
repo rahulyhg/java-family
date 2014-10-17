@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping(RestConfiguration.REST_BASE_URL)
 public class UserController extends GenericController<User, UserDTOWeb> {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     @Qualifier("userService" )
@@ -122,7 +122,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
             try {
                 userService.delete(id);
             } catch (ModelNotFoundException e) {
-                logger.warn("Can't delete the user: " + user, e);
+                LOGGER.warn("Can't delete the user: " + user, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -155,7 +155,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
                 UserDTOWeb resultDto = userConverter.convertModel(result, request);
                 return resultDto;
             } catch (ModelNotFoundException e) {
-                logger.warn("Can't modify the user: " + user, e);
+                LOGGER.warn("Can't modify the user: " + user, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -187,7 +187,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
 
     @RequestMapping(value = {"/user", "/user/"}, method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void headUsers(HttpServletResponse httpResponse){
+    public void headUsers(){
     }
 
     @RequestMapping(value = {"/user/{id}", "/user/{id}/"}, method = RequestMethod.HEAD)

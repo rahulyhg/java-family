@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebFilter (filterName = "CORS Filter", urlPatterns = "/rest/api/v1/*")
 public class SimpleCORSFilter implements Filter {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(SimpleCORSFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleCORSFilter.class);
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;

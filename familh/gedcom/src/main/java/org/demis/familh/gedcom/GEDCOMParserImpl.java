@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 
 public class GEDCOMParserImpl implements GEDCOMParser {
 
-    private static Logger logger = LoggerFactory.getLogger(GEDCOMParserImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GEDCOMParserImpl.class);
 
     @Override
     public void parse(Reader input, GEDCOMHandler handler) {
@@ -17,11 +17,11 @@ public class GEDCOMParserImpl implements GEDCOMParser {
         BufferedReader reader = new BufferedReader(input);
         try {
             while (!(line = reader.readLine()).contains("0 " + "TRLR")) {
-                logger.debug("read line : " + line);
+                LOGGER.debug("read line : " + line);
                 handler.handle(parseLine(line, lineNumber++));
             }
         } catch (IOException e) {
-            logger.error("Error in parsing input", e);
+            LOGGER.error("Error in parsing input", e);
         }
     }
 
@@ -61,7 +61,7 @@ public class GEDCOMParserImpl implements GEDCOMParser {
             stream = new InputStreamReader(new FileInputStream(input), charset);
             parse(stream, handler);
         } catch (FileNotFoundException ex) {
-            logger.error(null, ex);
+            LOGGER.error(null, ex);
         }
     }
 
@@ -77,7 +77,7 @@ public class GEDCOMParserImpl implements GEDCOMParser {
             stream = new InputStreamReader(new FileInputStream(new File(input)), charset);
             parse(stream, handler);
         } catch (FileNotFoundException ex) {
-            logger.error(null, ex);
+            LOGGER.error(null, ex);
         }
     }
 

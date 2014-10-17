@@ -205,7 +205,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
     @RequestMapping(value = {"/user/{userId}/familyTree", "/user/{userId}/familyTree/"},
             method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void headFamilyTrees(HttpServletResponse httpResponse){
+    public void headFamilyTrees(){
     }
 
     @RequestMapping(value = {"/user/{userId}/familyTree/{familyTreeId}", "/user/{userId}/familyTree/{familyTreeId}/"},

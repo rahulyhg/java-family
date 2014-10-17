@@ -240,7 +240,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handleConcatOrContinue(String text) {
         if (objectstack.peek() instanceof IndividualName) {
-            IndividualName name = ((IndividualName)(objectstack.peek()));
+            IndividualName name = (IndividualName)(objectstack.peek());
             if (name.getPersonalName() != null) {
                 name.setPersonalName(name.getPersonalName() + text);
             } else {
@@ -250,7 +250,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
             Note note = (Note)(objectstack.peek());
             note.setText(note.getText() + text);
         } else if (objectstack.peek() instanceof Address) {
-            Address address = ((Address)(objectstack.peek()));
+            Address address = (Address)(objectstack.peek());
             address.setLine(address.getLine() + text);
         } else if (objectstack.peek() instanceof GEDCOMTuple) {
             GEDCOMTuple previous = (GEDCOMTuple)(objectstack.peek());
@@ -342,7 +342,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handleContry(GEDCOMTuple tuple) {
         if (objectstack.peek() instanceof Address) {
-            Address address = ((Address)(objectstack.peek()));
+            Address address = (Address)(objectstack.peek());
             address.setCountry(tuple.getInfo());
         } else {
             LOGGER.warn("AddressModel line 1 not for an AddressModel object");
@@ -352,7 +352,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handlePostalCode(GEDCOMTuple tuple) {
         if (objectstack.peek() instanceof Address) {
-            Address address = ((Address)(objectstack.peek()));
+            Address address = (Address)(objectstack.peek());
             address.setPostalCode(tuple.getInfo());
         } else {
             LOGGER.warn("AddressModel line 1 not for an AddressModel object");
@@ -363,7 +363,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handleState(GEDCOMTuple tuple) {
         if (objectstack.peek() instanceof Address) {
-            Address address = ((Address)(objectstack.peek()));
+            Address address = (Address)(objectstack.peek());
             address.setState(tuple.getInfo());
         } else {
             LOGGER.warn("AddressModel line 1 not for an AddressModel object");
@@ -373,7 +373,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handleCity(GEDCOMTuple tuple) {
         if (objectstack.peek() instanceof Address) {
-            Address address = ((Address)(objectstack.peek()));
+            Address address = (Address)(objectstack.peek());
             address.setCity(tuple.getInfo());
         } else {
             LOGGER.warn("AddressModel line 1 not for an AddressModel object");
@@ -383,7 +383,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handleAddressLine2(GEDCOMTuple tuple) {
         if (objectstack.peek() instanceof Address) {
-            Address address = ((Address)(objectstack.peek()));
+            Address address = (Address)(objectstack.peek());
             address.setLine2(tuple.getInfo());
         } else {
             LOGGER.warn("AddressModel line 1 not for an AddressModel object");
@@ -393,7 +393,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
 
     private void handleAddressLine1(GEDCOMTuple tuple) {
         if (objectstack.peek() instanceof Address) {
-            Address address = ((Address)(objectstack.peek()));
+            Address address = (Address)(objectstack.peek());
             address.setLine1(tuple.getInfo());
         } else {
             LOGGER.warn("AddressModel line 1 not for an AddressModel object");
@@ -447,7 +447,7 @@ public class GEDCOMHandlerImpl implements GEDCOMHandler {
         if (objectstack.peek() instanceof FamilyTreeSource) {
             ((FamilyTreeSource)(objectstack.peek())).setVersion(tuple.getInfo());
         } else if (objectstack.peek() instanceof GEDCOMTuple) {
-            GEDCOMTuple previous = ((GEDCOMTuple)(objectstack.peek()));
+            GEDCOMTuple previous = (GEDCOMTuple)(objectstack.peek());
             if ("GEDC".equals(previous.getCode())) {
                 familyTree.setGedcomVersion(tuple.getInfo());
             } else if ("CHAR".equals(previous.getCode())) {

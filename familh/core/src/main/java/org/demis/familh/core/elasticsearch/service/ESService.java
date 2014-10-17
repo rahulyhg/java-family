@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class ESService<M extends Model, D extends DTO> {
 
-    private static Logger logger = LoggerFactory.getLogger(GenericConverter.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(GenericConverter.class);
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -31,7 +31,7 @@ public abstract class ESService<M extends Model, D extends DTO> {
                     .execute()
                     .actionGet();
         } catch (JsonProcessingException e) {
-            logger.error("Error in JSon conversion for model: " + created, e);
+            LOGGER.error("Error in JSon conversion for model: " + created, e);
         }
         return created;
 
@@ -50,7 +50,7 @@ public abstract class ESService<M extends Model, D extends DTO> {
                     .execute()
                     .actionGet();
         } catch (JsonProcessingException e) {
-            logger.error("Error in JSon conversion for model: " + updated, e);
+            LOGGER.error("Error in JSon conversion for model: " + updated, e);
         }
         return updated;
 

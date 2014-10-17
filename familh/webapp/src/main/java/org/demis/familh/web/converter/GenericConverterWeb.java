@@ -43,7 +43,7 @@ public abstract class GenericConverterWeb<ModelImpl extends Model, DTOImpl exten
     }
 
     public List<DTOImpl> convertModels(List<ModelImpl> models, HttpServletRequest request) {
-        ArrayList<DTOImpl> dtos = new ArrayList<>(models.size());
+        List<DTOImpl> dtos = new ArrayList<>(models.size());
 
         for (ModelImpl model: models) {
             dtos.add(convertModel(model, request));

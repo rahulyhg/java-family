@@ -27,7 +27,7 @@ import java.util.List;
 @RequestMapping(RestConfiguration.REST_BASE_URL + "person")
 public class PersonController extends GenericController<Person, PersonDTOWeb> {
 
-    private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonController.class);
 
     @Autowired
     @Qualifier("personService" )
@@ -201,7 +201,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             try {
                 personService.delete(id);
             } catch (ModelNotFoundException e) {
-                logger.warn("Can't delete the person: " + person, e);
+                LOGGER.warn("Can't delete the person: " + person, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -234,7 +234,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
                 PersonDTOWeb resultDto = personConverter.convertModel(result, request);
                 return resultDto;
             } catch (ModelNotFoundException e) {
-                logger.warn("Can't modify the person: " + person, e);
+                LOGGER.warn("Can't modify the person: " + person, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -266,7 +266,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void headPersons(HttpServletResponse httpResponse){
+    public void headPersons(){
     }
 
     @RequestMapping(value = {"{id}", "{id}/"}, method = RequestMethod.HEAD)
