@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name="event")
 public class Event extends AbstractModel implements Model {
 
-    static private final Logger logger = LoggerFactory.getLogger(Event.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Event.class);
 
     private Long id;
     private String ident;

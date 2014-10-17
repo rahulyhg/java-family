@@ -8,9 +8,13 @@ import org.demis.familh.core.elasticsearch.dto.DTO;
 import org.demis.familh.core.jpa.entity.Model;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.elasticsearch.client.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class ESService<M extends Model, D extends DTO> {
+
+    private static Logger logger = LoggerFactory.getLogger(GenericConverter.class);
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -27,7 +31,7 @@ public abstract class ESService<M extends Model, D extends DTO> {
                     .execute()
                     .actionGet();
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Error in JSon conversion for model: " + created, e);
         }
         return created;
 
@@ -46,7 +50,7 @@ public abstract class ESService<M extends Model, D extends DTO> {
                     .execute()
                     .actionGet();
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Error in JSon conversion for model: " + updated, e);
         }
         return updated;
 

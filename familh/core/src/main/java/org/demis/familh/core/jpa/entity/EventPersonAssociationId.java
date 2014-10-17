@@ -32,13 +32,21 @@ public class EventPersonAssociationId implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         EventPersonAssociationId that = (EventPersonAssociationId) o;
 
-        if (eventId != that.eventId) return false;
-        if (personId != that.personId) return false;
+        if (eventId != that.eventId) {
+            return false;
+        }
+        if (personId != that.personId) {
+            return false;
+        }
 
         return true;
     }

@@ -3,11 +3,16 @@ package org.demis.familh.core.elasticsearch.converter;
 
 import org.demis.familh.core.elasticsearch.dto.DTO;
 import org.demis.familh.core.jpa.entity.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends DTO> {
+
+    private static Logger logger = LoggerFactory.getLogger(GenericConverter.class);
+
 
     protected abstract void updateModelFields(ModelImpl model, DTOImpl dto);
 
@@ -29,10 +34,8 @@ public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends 
             updateDTOFields(dto, model);
             dto.setId(model.getId());
 
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (InstantiationException | IllegalAccessException e) {
+            logger.error("Error when convert Model: " + model + " to DTO", e);
         }
 
         return dto;
@@ -44,10 +47,8 @@ public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends 
             model = modelClass.newInstance();
             updateModelFields(model, dto);
             model.setId(dto.getId());
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (InstantiationException | IllegalAccessException e) {
+            logger.error("Error when convert DTO: " + dto + " to Model", e);
         }
 
         return model;

@@ -11,6 +11,8 @@ import org.demis.familh.web.converter.NameConverterWeb;
 import org.demis.familh.web.converter.PersonConverterWeb;
 import org.demis.familh.web.dto.NameDTOWeb;
 import org.demis.familh.web.dto.PersonDTOWeb;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,8 @@ import java.util.List;
 @RestController
 @RequestMapping(RestConfiguration.REST_BASE_URL + "person")
 public class PersonController extends GenericController<Person, PersonDTOWeb> {
+
+    private static Logger logger = LoggerFactory.getLogger(PersonController.class);
 
     @Autowired
     @Qualifier("personService" )
@@ -204,6 +208,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             try {
                 personService.delete(id);
             } catch (ModelNotFoundException e) {
+                logger.warn("Can't delete the person: " + person, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -237,6 +242,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
                 PersonDTOWeb resultDto = personConverter.convertModel(result, request);
                 return resultDto;
             } catch (ModelNotFoundException e) {
+                logger.warn("Can't modify the person: " + person, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }

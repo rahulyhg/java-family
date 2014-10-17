@@ -1,6 +1,5 @@
 package org.demis.familh.core.jpa.entity;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +9,7 @@ import javax.persistence.*;
 @Table ( name="family_tree")
 public class FamilyTree extends AbstractModel implements Model {
 
-    static private final Logger logger = LoggerFactory.getLogger(FamilyTree.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FamilyTree.class);
 
     private Long id;
     private Integer version;

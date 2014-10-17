@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name="name")
 public class Name extends AbstractModel implements Model {
 
-    static private final Logger logger = LoggerFactory.getLogger(Name.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Name.class);
 
     private Long id;
     private String firstName;

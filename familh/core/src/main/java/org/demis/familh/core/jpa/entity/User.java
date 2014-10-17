@@ -1,6 +1,5 @@
 package org.demis.familh.core.jpa.entity;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +9,7 @@ import javax.persistence.*;
 @Table(name="familh_user")
 public class User extends AbstractModel implements Model {
 
-    static private final Logger logger = LoggerFactory.getLogger(User.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
 
     private Long id;
     private Integer version;

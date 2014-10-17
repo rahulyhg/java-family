@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name="person")
 public class Person extends AbstractModel implements Model {
 
-    static private final Logger logger = LoggerFactory.getLogger(Person.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Person.class);
 
     private Long id;
     private String ident;
