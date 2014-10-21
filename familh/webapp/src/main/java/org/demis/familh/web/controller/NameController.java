@@ -47,7 +47,13 @@ public class NameController extends GenericController {
         Range range = null;
 
         if (request.getHeader("Range") != null) {
-            range = Range.parse(request.getHeader("Range"));
+            try {
+                range = Range.parse(request.getHeader("Range"));
+            } catch (RequestedRangeUnsatisfiableException e) {
+                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
+                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
+                return null;
+            }
         }
 
         if (range != null) {

@@ -2,6 +2,8 @@ package org.demis.familh.web.controller;
 
 import org.demis.familh.core.service.GenericService;
 import org.demis.familh.web.converter.GenericConverterWeb;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public abstract class GenericController<M, DTO> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(NameController.class);
 
     protected abstract GenericConverterWeb getConverter();
 
@@ -22,7 +26,13 @@ public abstract class GenericController<M, DTO> {
         Range range = null;
 
         if (request.getHeader("Range") != null) {
-            range = Range.parse(request.getHeader("Range"));
+            try {
+                range = Range.parse(request.getHeader("Range"));
+            } catch (RequestedRangeUnsatisfiableException e) {
+                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
+                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
+                return null;
+            }
         }
 
         if (range != null) {

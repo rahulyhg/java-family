@@ -59,23 +59,29 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
 
     @RequestMapping(method = RequestMethod.GET, value = {"/person", "/person/"})
     @ResponseBody
-    public List<PersonDTOWeb> getPersons(HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
+    public List<PersonDTOWeb> getPersons(HttpServletRequest request, HttpServletResponse httpResponse) {
+        httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<PersonDTOWeb> dtos = null;
         Range range = null;
 
         if (request.getHeader("Range") != null) {
-            range = Range.parse(request.getHeader("Range"));
+            try {
+                range = Range.parse(request.getHeader("Range"));
+            } catch (RequestedRangeUnsatisfiableException e) {
+                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
+                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
+                return null;
+            }
         }
 
         if (range != null) {
             List<Person> models = getService().findPart(range.getPage(), range.getSize());
             if (models.isEmpty()) {
-                response.setStatus(HttpStatus.NO_CONTENT.value());
+                httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
             } else {
-                response.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
-                response.setStatus(HttpStatus.OK.value());
+                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
+                httpResponse.setStatus(HttpStatus.OK.value());
                 dtos = getConverter().convertModels(models, request);
             }
         } else {

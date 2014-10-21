@@ -54,15 +54,39 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
     public Object getFamilyTrees(@PathVariable(value = "userId") Long userId,
                                      HttpServletResponse httpResponse,
                                      HttpServletRequest request) {
+        httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
+        List<FamilyTreeDTOWeb> dtos = null;
+        Range range = null;
+
+        if (request.getHeader("Range") != null) {
+            try {
+                range = Range.parse(request.getHeader("Range"));
+            } catch (RequestedRangeUnsatisfiableException e) {
+                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
+                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
+                return null;
+            }
+        }
+
         User user = userService.findById(userId);
         if (user != null) {
-            List<FamilyTree> trees = familyTreeService.findUserFamilyTrees(user);
-            httpResponse.setStatus(HttpStatus.OK.value());
-            return familyTreeConverter.convertModels(trees, request);
+            if (range != null) {
+                List<FamilyTree> trees = familyTreeService.findUserFamilyTrees(user);
+                if (trees.isEmpty()) {
+                    httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
+                } else {
+                    httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), trees.size()) + "/*");
+                    httpResponse.setStatus(HttpStatus.OK.value());
+                    dtos = getConverter().convertModels(trees, request);
+                }
+            }
+            else {
+                dtos = getConverter().convertModels(getService().findAll(), request);
+            }
         } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
-            return null;
         }
+        return dtos;
     }
 
     @ResponseBody

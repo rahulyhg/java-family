@@ -47,7 +47,13 @@ public class UserController extends GenericController<User, UserDTOWeb> {
         Range range = null;
 
         if (request.getHeader("Range") != null) {
-            range = Range.parse(request.getHeader("Range"));
+            try {
+                range = Range.parse(request.getHeader("Range"));
+            } catch (RequestedRangeUnsatisfiableException e) {
+                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
+                response.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
+                return null;
+            }
         }
 
         if (range != null) {

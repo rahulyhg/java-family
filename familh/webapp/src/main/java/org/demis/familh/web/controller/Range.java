@@ -15,7 +15,7 @@ public class Range {
 
     }
 
-    public static final Range parse(String value) {
+    public static final Range parse(String value) throws RequestedRangeUnsatisfiableException {
         Matcher matcher = pattern.matcher(value.trim());
 
         if (matcher.matches()) {
@@ -24,7 +24,7 @@ public class Range {
             range.setSize(Integer.parseInt(matcher.group(2)));
             return range;
         } else {
-            return null;
+            throw new RequestedRangeUnsatisfiableException();
         }
     }
 
