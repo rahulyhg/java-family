@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(RestConfiguration.REST_BASE_URL + "person")
+@RequestMapping(RestConfiguration.REST_BASE_URL)
 public class PersonController extends GenericController<Person, PersonDTOWeb> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonController.class);
@@ -57,7 +57,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // GET
     // ------------------------------------------------------------------------
 
-    @RequestMapping(method = RequestMethod.GET, value = {"", "/"})
+    @RequestMapping(method = RequestMethod.GET, value = {"/person", "/person/"})
     @ResponseBody
     public List<PersonDTOWeb> getPersons(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
@@ -85,7 +85,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/{id}","/{id}/"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/person/{id}","/person/{id}/"}, method = RequestMethod.GET)
     public Object getPerson(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse, HttpServletRequest request) {
         Person person = personService.findById(id);
         if (person != null) {
@@ -114,7 +114,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/{id}/event","/{id}/event/"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/person/{id}/event","/person/{id}/event/"}, method = RequestMethod.GET)
     public Object getPersonEvents(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse, HttpServletRequest request) {
         Person person = personService.findById(id);
         if (person != null) {
@@ -131,12 +131,12 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // POST
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/person/{id}", "/person/{id}/"}, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void postPerson() {
     }
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/person", "/person/"}, method = RequestMethod.POST)
     @ResponseBody
     public Object postPerson(@RequestBody PersonDTOWeb personDTO, HttpServletResponse httpResponse, HttpServletRequest request) {
         Person person = personService.create(personConverter.convertDTO(personDTO));
@@ -151,7 +151,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
         }
     }
 
-    @RequestMapping(value = {"{id}/name", "{id}/name/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/person/{id}/name", "/person/{id}/name/"}, method = RequestMethod.POST)
     @ResponseBody
     public Object postPersonName(@PathVariable(value = "id") Long personId, @RequestBody NameDTOWeb nameDTO, HttpServletResponse httpResponse, HttpServletRequest request) {
         Person person = personService.findById(personId);
@@ -166,34 +166,17 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return null;
         }
     }
-/*
-    @RequestMapping(value = {"person/{id}/event", "person/{id}/event/"}, method = RequestMethod.POST)
-    @ResponseBody
-    public Object postPersonEvent(@PathVariable(value = "id") Long personId, @RequestBody EventDTOWeb eventDTO, HttpServletResponse httpResponse) {
-        Person person = personService.findById(personId);
-        if (person != null) {
-            Event event = eventConverter.convertDTO(eventDTO);
-            person.addEvent(event, );
-            nameService.create(event);
-            httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, event.getUpdated().getTime());
-            return nameConverter.convertModel(event);
-        }
-        else {
-            httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
-            return null;
-        }
-    }
-*/
+
     // ------------------------------------------------------------------------
     // DELETE
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.DELETE)
+    @RequestMapping(value = {"/person", "/person/"}, method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void deletePersons() {
     }
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.DELETE)
+    @RequestMapping(value = {"/person/{id}", "/person/{id}/"}, method = RequestMethod.DELETE)
     @ResponseBody
     public Object deletePerson(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse) {
         Person person = personService.findById(id);
@@ -217,12 +200,12 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // PUT
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.PUT)
+    @RequestMapping(value = {"/person", "/person/"}, method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void putPersons() {
     }
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.PUT)
+    @RequestMapping(value = {"/person/{id}", "/person/{id}/"}, method = RequestMethod.PUT)
     @ResponseBody
     public Object putPerson(@PathVariable("id") Long id, @RequestBody PersonDTOWeb dto, HttpServletResponse httpResponse, HttpServletRequest request) {
         Person person = personService.findById(id);
@@ -248,13 +231,13 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // OPTIONS
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(value = {"/person", "/person/"}, method = RequestMethod.OPTIONS)
     @ResponseStatus(HttpStatus.OK)
     public void optionsPersons(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
     }
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(value = {"/person/{id}", "/person/{id}/"}, method = RequestMethod.OPTIONS)
     @ResponseStatus(HttpStatus.OK)
     public void optionsResouce(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
@@ -264,12 +247,12 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // HEAD
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.HEAD)
+    @RequestMapping(value = {"/person", "/person/"}, method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void headPersons(){
     }
 
-    @RequestMapping(value = {"{id}", "{id}/"}, method = RequestMethod.HEAD)
+    @RequestMapping(value = {"/person/{id}", "/person/{id}/"}, method = RequestMethod.HEAD)
     public void headPerson(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse){
         Person person = personService.findById(id);
         if (person != null) {

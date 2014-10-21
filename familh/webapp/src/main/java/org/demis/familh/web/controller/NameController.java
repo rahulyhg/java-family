@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(RestConfiguration.REST_BASE_URL + "name")
+@RequestMapping(RestConfiguration.REST_BASE_URL)
 public class NameController extends GenericController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NameController.class);
@@ -38,7 +38,7 @@ public class NameController extends GenericController {
     // GET
     // ------------------------------------------------------------------------
 
-    @RequestMapping(method = RequestMethod.GET, value = {"", "/"})
+    @RequestMapping(method = RequestMethod.GET, value = {"/name", "/name/"})
     @ResponseBody
     public List<NameDTOWeb> getNames(HttpServletRequest request, HttpServletResponse httpResponse) {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
@@ -66,7 +66,7 @@ public class NameController extends GenericController {
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/{id}","/{id}/"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/name/{id}","/name/{id}/"}, method = RequestMethod.GET)
     public Object getName(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse, HttpServletRequest request) {
         Name name = nameService.findById(id);
         if (name != null) {
@@ -83,12 +83,12 @@ public class NameController extends GenericController {
     // POST
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void postResource() {
     }
 
-    @RequestMapping(value = {"name", "name/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.POST)
     @ResponseBody
     public Object postResource(@RequestBody NameDTOWeb nameDTO, HttpServletResponse httpResponse, HttpServletRequest request) {
         Name name = nameService.create(nameConverter.convertDTO(nameDTO));
@@ -102,16 +102,17 @@ public class NameController extends GenericController {
         }
     }
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void deleteResources() {
-    }
-
     // ------------------------------------------------------------------------
     // DELETE
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.DELETE)
+    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public void deleteResources() {
+    }
+
+
+    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.DELETE)
     @ResponseBody
     public Object deleteResource(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse) {
         Name name = nameService.findById(id);
@@ -135,12 +136,12 @@ public class NameController extends GenericController {
     // PUT
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.PUT)
+    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void putResources() {
     }
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.PUT)
+    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.PUT)
     @ResponseBody
     public Object putResource(@PathVariable("id") Long id, @RequestBody NameDTOWeb dto, HttpServletResponse httpResponse, HttpServletRequest request) {
         Name name = nameService.findById(id);
@@ -165,13 +166,13 @@ public class NameController extends GenericController {
     // OPTIONS
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.OPTIONS)
     @ResponseStatus(HttpStatus.OK)
     public void optionsResources(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
     }
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.OPTIONS)
     @ResponseStatus(HttpStatus.OK)
     public void optionsResouce(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
@@ -181,12 +182,12 @@ public class NameController extends GenericController {
     // HEAD
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.HEAD)
+    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void headResources(){
     }
 
-    @RequestMapping(value = {"/{id}", "/{id}/"}, method = RequestMethod.HEAD)
+    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.HEAD)
     public void headResource(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse){
         Name name = nameService.findById(id);
         if (name != null) {
