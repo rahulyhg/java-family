@@ -1,12 +1,17 @@
 package org.demis.familh.core.jpa.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @MappedSuperclass
 public class AbstractModel {
 
-    protected Date created;
+    private Date created;
     private Date updated;
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends DTO> {
 
@@ -57,9 +58,7 @@ public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends 
     public List<ModelImpl> convertDTOs(List<DTOImpl> dtos) {
         List<ModelImpl> models = new ArrayList<>(dtos.size());
 
-        for (DTOImpl dto: dtos) {
-            models.add(convertDTO(dto));
-        }
+        models.addAll(dtos.stream().map(this::convertDTO).collect(Collectors.toList()));
 
         return models;
     }
@@ -67,9 +66,7 @@ public abstract class GenericConverter<ModelImpl extends Model, DTOImpl extends 
     public List<DTOImpl> convertModels(List<ModelImpl> models) {
         List<DTOImpl> dtos = new ArrayList<>(models.size());
 
-        for (ModelImpl model: models) {
-            dtos.add(convertModel(model));
-        }
+        dtos.addAll(models.stream().map(this::convertModel).collect(Collectors.toList()));
 
         return dtos;
     }

@@ -14,25 +14,25 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table ( name="family_tree")
-public class FamilyTree extends AbstractModel implements Model {
+@Table(name="note")
+public class Note extends AbstractModel implements Model {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FamilyTree.class);
+    static private final Logger logger = LoggerFactory.getLogger(Note.class);
 
     private Long id;
     private Integer version;
-    private String ident;
+    private String content;
+    private FamilyTree familyTree;
     private User user;
 
-
-    public FamilyTree() {
+    public Note() {
         // no op
     }
 
     @Id
-    @Column(name="family_tree_id")
-    @SequenceGenerator(name="family_tree_sequence", sequenceName="family_tree_sequence")
-    @GeneratedValue(generator="family_tree_sequence")
+    @Column(name="note_id")
+    @SequenceGenerator(name="note_sequence", sequenceName="note_sequence")
+    @GeneratedValue(generator="note_sequence")
     public Long getId() {
         return id;
     }
@@ -60,12 +60,18 @@ public class FamilyTree extends AbstractModel implements Model {
         this.user = user;
     }
 
-    @Column (name="ident")
-    public String getIdent() {
-        return ident;
+    @JoinColumn(name = "family_tree_id", nullable=true)
+    @ManyToOne()
+    public FamilyTree getFamilyTree() {
+        return familyTree;
     }
 
-    public void setIdent(String ident) {
-        this.ident = ident;
+    @Column(name="content")
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

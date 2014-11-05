@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Service(value ="eventESService")
+@Service(value = "eventESService")
 public class EventESService extends ESService<Event, EventDTO> {
 
     public static final String USER_MAPPING = "event";

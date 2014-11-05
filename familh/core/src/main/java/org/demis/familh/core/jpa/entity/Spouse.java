@@ -11,23 +11,23 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="event_involved_person")
-@IdClass(EventPersonAssociationId.class)
-public class EventPersonAssociation {
+@Table(name="spouse")
+@IdClass(SpouseId.class)
+public class Spouse {
 
-    private Long eventId;
+    private Long familyId;
     private Long personId;
-    private EventRoleType type;
-    private Event event;
+    private SpouseRole spouseRole;
+    private Family family;
     private Person person;
 
     @Id
-    public Long getEventId() {
-        return eventId;
+    public Long getFamilyId() {
+        return familyId;
     }
 
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
+    public void setFamilyId(Long familyId) {
+        this.familyId = familyId;
     }
 
     @Id
@@ -40,23 +40,23 @@ public class EventPersonAssociation {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "event_involved_person_role_id")
-    public EventRoleType getType() {
-        return type;
+    @Column(name = "spouse_role_id")
+    public SpouseRole getSpouseRole() {
+        return spouseRole;
     }
 
-    public void setType(EventRoleType type) {
-        this.type = type;
+    public void setSpouseRole(SpouseRole spouseRole) {
+        this.spouseRole = spouseRole;
     }
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name="event_id", referencedColumnName="event_id")
-    public Event getEvent() {
-        return event;
+    @PrimaryKeyJoinColumn(name="family_id", referencedColumnName="family_id")
+    public Family getFamily() {
+        return family;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setFamily(Family family) {
+        this.family = family;
     }
 
     @ManyToOne

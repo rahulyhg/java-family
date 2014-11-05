@@ -15,7 +15,7 @@
         <dependency>
             <groupId>org.demis</groupId>
             <artifactId>familh.core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,4 +1,10 @@
-﻿-- event involved person
+﻿-- file_format
+drop table if exists file_format cascade;
+
+-- import
+drop table if exists import cascade;
+
+-- event involved person
 drop table if exists event_involved_person cascade;
 
 -- event involved person role
@@ -24,8 +30,11 @@ drop table if exists spouse cascade;
 -- spouse role
 drop table if exists spouse_role cascade;
 
--- children
-drop table if exists children cascade;
+-- child
+drop table if exists child cascade;
+
+-- child_type
+drop table if exists child_type cascade;
 
 -- family
 drop sequence if exists family_sequence;
@@ -34,6 +43,9 @@ drop table if exists family cascade;
 -- person
 drop sequence if exists person_sequence;
 drop table if exists person cascade;
+
+-- access
+drop table if exists access cascade;
 
 -- sex
 drop table if exists sex cascade;
@@ -45,3 +57,6 @@ drop table if exists family_tree cascade;
 -- familh_user
 drop sequence if exists familh_user_sequence;
 drop table if exists familh_user cascade;
+
+-- familh_user_role
+drop table if exists familh_user_role cascade;

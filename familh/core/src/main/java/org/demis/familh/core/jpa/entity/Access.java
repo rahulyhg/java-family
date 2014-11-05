@@ -1,22 +1,22 @@
 package org.demis.familh.core.jpa.entity;
 
-public enum EventRoleType {
+public enum Access {
 
-    OTHE("OTHE", "Other"), PRIN("PRIN", "Principal"), MAYO("MAYO", "Mayor"), WITN("WITN", "Witness");
+    PRIVATE("P", "Private"), PROTECTED("O", "Protected"), PUBLIC("U", "Public");
 
     private String code;
 
     private String label;
 
-    EventRoleType(String code, String label) {
+    Access(String code, String label) {
         this.code = code;
         this.label = label;
     }
 
-    public static EventRoleType getByCode(String code) {
-        for (EventRoleType role: values()) {
-            if ((role.code).equals(code)) {
-                return role;
+    public static Access getByCode(String code) {
+        for (Access access: values()) {
+            if ((access.code).equals(code)) {
+                return access;
             }
         }
         return null;

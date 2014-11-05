@@ -22,7 +22,7 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     @Qualifier ("eventESService")
-    private EventESService elasticSearchService;
+    private EventService elasticSearchService;
 
 
     @Override

@@ -17,6 +17,7 @@ public class UserConverter extends GenericConverter<User, UserDTO> {
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
         user.setLogin(userDTO.getLogin());
+        user.setRole(userDTO.getRole());
     }
 
     @Override
@@ -25,5 +26,6 @@ public class UserConverter extends GenericConverter<User, UserDTO> {
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());
         userDTO.setLogin(user.getLogin());
+        userDTO.setRole(user.getRole());
     }
 }

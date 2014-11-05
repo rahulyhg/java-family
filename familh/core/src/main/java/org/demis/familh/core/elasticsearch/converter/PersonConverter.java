@@ -15,11 +15,13 @@ public class PersonConverter extends GenericConverter<Person, PersonDTO> {
     protected void updateModelFields(Person person, PersonDTO personDTO) {
         person.setSex(personDTO.getSex());
         person.setIdent(personDTO.getIdent());
+        person.setAccess(personDTO.getAccess());
     }
 
     @Override
     protected void updateDTOFields(PersonDTO personDTO, Person person) {
         personDTO.setIdent(person.getIdent());
         personDTO.setSex(person.getSex());
+        personDTO.setAccess(person.getAccess());
     }
 }

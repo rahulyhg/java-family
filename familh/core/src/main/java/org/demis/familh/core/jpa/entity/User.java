@@ -3,7 +3,15 @@ package org.demis.familh.core.jpa.entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name="familh_user")
@@ -18,6 +26,7 @@ public class User extends AbstractModel implements Model {
     private String email;
     private String login;
     private String password;
+    private UserRole role;
 
     public User() {
         // no op
@@ -88,4 +97,15 @@ public class User extends AbstractModel implements Model {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role_id")
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
 }

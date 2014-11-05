@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-
-@Service(value ="personESService")
+@Service(value = "personESService")
 public class PersonESService extends ESService<Person, PersonDTO> {
 
     public static final String USER_MAPPING = "person";

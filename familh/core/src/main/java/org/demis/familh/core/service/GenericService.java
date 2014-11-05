@@ -1,5 +1,7 @@
 package org.demis.familh.core.service;
 
+import org.demis.familh.core.service.ModelNotFoundException;
+
 import java.util.List;
 
 public interface GenericService<M> {
@@ -10,7 +12,7 @@ public interface GenericService<M> {
      * Deletes a M.
      * @param id  The id of the deleted M.
      * @return  The deleted M.
-     * @throws ModelNotFoundException  if no M is found with the given id.
+     * @throws org.demis.familh.core.service.ModelNotFoundException  if no M is found with the given id.
      */
     public M delete(Long id) throws ModelNotFoundException;
 

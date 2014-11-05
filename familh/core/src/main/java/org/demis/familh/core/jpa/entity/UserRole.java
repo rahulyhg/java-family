@@ -1,20 +1,20 @@
 package org.demis.familh.core.jpa.entity;
 
-public enum EventRoleType {
+public enum UserRole {
 
-    OTHE("OTHE", "Other"), PRIN("PRIN", "Principal"), MAYO("MAYO", "Mayor"), WITN("WITN", "Witness");
+    Administrator("A", "Administrator"), User("U", "User");
 
     private String code;
 
     private String label;
 
-    EventRoleType(String code, String label) {
+    UserRole(String code, String label) {
         this.code = code;
         this.label = label;
     }
 
-    public static EventRoleType getByCode(String code) {
-        for (EventRoleType role: values()) {
+    public static UserRole getByCode(String code) {
+        for (UserRole role: values()) {
             if ((role.code).equals(code)) {
                 return role;
             }
@@ -35,3 +35,4 @@ public enum EventRoleType {
         return label;
     }
 }
+

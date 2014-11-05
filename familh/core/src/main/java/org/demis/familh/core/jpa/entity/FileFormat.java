@@ -1,22 +1,21 @@
 package org.demis.familh.core.jpa.entity;
 
-public enum EventRoleType {
-
-    OTHE("OTHE", "Other"), PRIN("PRIN", "Principal"), MAYO("MAYO", "Mayor"), WITN("WITN", "Witness");
+public enum FileFormat {
+    GEDCOM("GED", "Gedcom");
 
     private String code;
 
     private String label;
 
-    EventRoleType(String code, String label) {
+    FileFormat(String code, String label) {
         this.code = code;
         this.label = label;
     }
 
-    public static EventRoleType getByCode(String code) {
-        for (EventRoleType role: values()) {
-            if ((role.code).equals(code)) {
-                return role;
+    public static FileFormat getByCode(String code) {
+        for (FileFormat fileFormat: values()) {
+            if ((fileFormat.code).equals(code)) {
+                return fileFormat;
             }
         }
         return null;

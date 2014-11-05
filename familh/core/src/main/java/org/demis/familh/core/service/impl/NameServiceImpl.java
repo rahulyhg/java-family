@@ -21,7 +21,7 @@ public class NameServiceImpl implements NameService {
 
     @Autowired
     @Qualifier ("nameESService")
-    private NameESService elasticSearchService;
+    private NameService elasticSearchService;
 
 
     @Override

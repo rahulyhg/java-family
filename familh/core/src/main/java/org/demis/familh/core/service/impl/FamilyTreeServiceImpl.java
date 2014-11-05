@@ -3,6 +3,7 @@ package org.demis.familh.core.service.impl;
 import org.demis.familh.core.elasticsearch.service.FamilyTreeESService;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
+import org.demis.familh.core.jpa.service.FamilyTreeRepositoryService;
 import org.demis.familh.core.service.FamilyTreeService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,17 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
 
     @Autowired
     @Qualifier("familyTreeRepositoryService")
-    private FamilyTreeService repositorySevice;
+    private FamilyTreeRepositoryService familyTreeService;
 
     @Autowired
     @Qualifier ("familyTreeESService")
-    private FamilyTreeESService elasticSearchService;
+    private FamilyTreeService elasticSearchService;
 
 
     @Override
     @Transactional
     public FamilyTree create(FamilyTree created) {
-        FamilyTree familyTree = repositorySevice.create(created);
+        FamilyTree familyTree = familyTreeService.create(created);
         elasticSearchService.create(familyTree);
         return familyTree;
     }
@@ -35,7 +36,7 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
     @Override
     @Transactional
     public FamilyTree delete(Long id) throws ModelNotFoundException {
-        FamilyTree familyTree = repositorySevice.delete(id);
+        FamilyTree familyTree = familyTreeService.delete(id);
         elasticSearchService.delete(id);
         return familyTree;
     }
@@ -43,31 +44,31 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
     @Override
     @Transactional
     public List<FamilyTree> findAll() {
-        return repositorySevice.findAll();
+        return familyTreeService.findAll();
     }
 
     @Override
     @Transactional
     public List<FamilyTree> findPart(int page, int size) {
-        return repositorySevice.findPart(page, size);
+        return familyTreeService.findPart(page, size);
     }
 
     @Override
     @Transactional
     public FamilyTree findById(Long id) {
-        return repositorySevice.findById(id);
+        return familyTreeService.findById(id);
     }
 
     @Override
     @Transactional
     public FamilyTree update(FamilyTree updated) throws ModelNotFoundException {
-        FamilyTree familyTree = repositorySevice.update(updated);
+        FamilyTree familyTree = familyTreeService.update(updated);
         elasticSearchService.update(familyTree);
         return familyTree;
     }
 
     @Override
     public List<FamilyTree> findUserFamilyTrees(User user) {
-        return repositorySevice.findUserFamilyTrees(user);
+        return familyTreeService.findUserFamilyTrees(user);
     }
 }

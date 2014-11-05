@@ -3,7 +3,18 @@ package org.demis.familh.core.jpa.entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +31,11 @@ public class Person extends AbstractModel implements Model {
     private FamilyTree familyTree;
     private List<Name> names = new ArrayList<>();
     private Integer version;
+    // TODO rename ...
     private List<EventPersonAssociation> events;
+    private List<Spouse> spouses;
+    private List<Child> children;
+    private Access access;
 
     public Person() {
         // no op
@@ -124,4 +139,55 @@ public class Person extends AbstractModel implements Model {
         event.getPersons().add(association);
     }
 
+    @OneToMany(mappedBy="family")
+    public List<Spouse> getSpouses() {
+        return spouses;
+    }
+
+    public void setSpouses(List<Spouse> spouses) {
+        this.spouses = spouses;
+    }
+
+    public void addSpouse(Family family, SpouseRole role) {
+        Spouse spouse = new Spouse();
+        spouse.setPerson(this);
+        spouse.setPersonId(this.id);
+        spouse.setFamily(family);
+        spouse.setFamilyId(family.getId());
+        spouse.setSpouseRole(role);
+
+        this.spouses.add(spouse);
+        family.getSpouses().add(spouse);
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "access_id")
+    public Access getAccess() {
+        return access;
+    }
+
+    public void setAccess(Access access) {
+        this.access = access;
+    }
+
+    @OneToMany(mappedBy="child")
+    public List<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Child> children) {
+        this.children = children;
+    }
+
+    public void addChild(Family family, ChildType childType) {
+        Child child = new Child();
+        child.setFamily(family);
+        child.setFamilyId(family.getId());
+        child.setPerson(this);
+        child.setPersonId(this.getId());
+        child.setChildType(childType);
+
+        this.children.add(child);
+        family.getChildren().add(child);
+    }
 }

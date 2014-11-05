@@ -94,7 +94,7 @@
             <artifactId>commons-dbcp</artifactId>
             <version>20030825.184428</version>
         </dependency>
-
+        <!-- Elastic search -->
         <!-- service -->
         <dependency>
             <groupId>org.elasticsearch</groupId>

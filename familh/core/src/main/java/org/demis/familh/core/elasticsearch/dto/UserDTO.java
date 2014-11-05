@@ -1,5 +1,7 @@
 package org.demis.familh.core.elasticsearch.dto;
 
+import org.demis.familh.core.jpa.entity.UserRole;
+
 public class UserDTO implements DTO {
 
     private Long id;
@@ -8,6 +10,7 @@ public class UserDTO implements DTO {
     private String email;
     private String login;
     private String password;
+    private UserRole role;
 
     public UserDTO() {
         // no op
@@ -60,5 +63,13 @@ public class UserDTO implements DTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

@@ -1,5 +1,6 @@
 package org.demis.familh.core.elasticsearch.dto;
 
+import org.demis.familh.core.jpa.entity.Access;
 import org.demis.familh.core.jpa.entity.Sex;
 
 public class PersonDTO implements DTO {
@@ -7,6 +8,7 @@ public class PersonDTO implements DTO {
     private Long id;
     private String ident;
     private Sex sex;
+    private Access access;
 
     public PersonDTO() {
         // no op
@@ -34,5 +36,13 @@ public class PersonDTO implements DTO {
 
     public void setSex(Sex sex) {
         this.sex = sex;
+    }
+
+    public Access getAccess() {
+        return access;
+    }
+
+    public void setAccess(Access access) {
+        this.access = access;
     }
 }

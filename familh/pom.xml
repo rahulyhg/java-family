@@ -45,11 +45,12 @@
             <artifactId>logback-classic</artifactId>
             <version>0.9.30</version>
         </dependency>
-        <!-- unit service -->
+        <!-- unit test -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.8.8</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
