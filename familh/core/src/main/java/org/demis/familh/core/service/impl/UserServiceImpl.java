@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     @Qualifier ("userESService")
-    private UserService elasticSearchService;
+    private UserESService elasticSearchService;
 
 
     @Override

@@ -18,11 +18,11 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
 
     @Autowired
     @Qualifier("familyTreeRepositoryService")
-    private FamilyTreeRepositoryService familyTreeService;
+    private FamilyTreeService familyTreeService;
 
     @Autowired
     @Qualifier ("familyTreeESService")
-    private FamilyTreeService elasticSearchService;
+    private FamilyTreeESService elasticSearchService;
 
 
     @Override

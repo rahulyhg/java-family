@@ -20,7 +20,7 @@ public class PersonSeviceImpl extends GenericServiceImpl<Person> implements Pers
 
     @Autowired
     @Qualifier ("personESService")
-    private PersonService elasticSearchService;
+    private PersonESService elasticSearchService;
 
 
     @Override

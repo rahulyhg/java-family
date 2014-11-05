@@ -10,7 +10,7 @@ create table localized_label (
   , locale                          character varying(8)    not null
   , label                           character varying(256)  not null
 
-  , constraint localized_label_pkey primary key (localized_label, locale)
+  , constraint localized_label_pkey primary key (localized_label_ident, locale)
 );
 
 -- familh_user_role
@@ -182,50 +182,50 @@ create table name (
 );
 
 -- territorial_organisation_type
-create sequence territorial_organisation_type_sequence increment by 1 start 1;
+--create sequence territorial_organisation_type_sequence increment by 1 start 1;
 
-create table territorial_organisation_type (
-    territorial_organisation_type_id    integer                     not null
-  , name_id                             integer                     not null
-  , parent_id                           integer                     null
-
-  , family_tree_id                      integer                     null
-  , user_id                             integer                     null
-
-  , version                             smallint default 0
-  , created                             timestamp                   not null    default now()
-  , updated                             timestamp                   not null    default now()
-
-  , constraint territorial_organisation_pkey primary key (territorial_organisation_id)
-  , constraint territorial_organisation_parent foreign key (parent_id) references territorial_organisation_type (territorial_organisation_type_id)
-  , constraint territorial_organisation_familh_user foreign key (user_id) references familh_user (user_id)
-  , constraint territorial_organisation_family_tree foreign key (family_tree_id) references family_tree (family_tree_id)
-  , constraint territorial_organisation_name foreign key (name_id) references localized_label (localized_label_ident)
-);
+--create table territorial_organisation_type (
+--    territorial_organisation_type_id    integer                     not null
+--  , name_id                             integer                     not null
+--  , parent_id                           integer                     null
+--
+--  , family_tree_id                      integer                     null
+--  , user_id                             integer                     null
+--
+--  , version                             smallint default 0
+--  , created                             timestamp                   not null    default now()
+--  , updated                             timestamp                   not null    default now()
+--
+--  , constraint territorial_organisation_type_pkey primary key (territorial_organisation_type_id)
+--  , constraint territorial_organisation_type_parent foreign key (parent_id) references territorial_organisation_type (territorial_organisation_type_id)
+--  , constraint territorial_organisation_type_familh_user foreign key (user_id) references familh_user (user_id)
+--  , constraint territorial_organisation_type_family_tree foreign key (family_tree_id) references family_tree (family_tree_id)
+--  , constraint territorial_organisation_type_name foreign key (name_id) references localized_label (localized_label_ident)
+--);
 
 -- territorial_organisation
-create sequence territorial_organisation_sequence increment by 1 start 1;
+--create sequence territorial_organisation_sequence increment by 1 start 1;
 
-create table territorial_organisation (
-    territorial_organisation_id integer                     not null
-  , name_id                     integer                     not null
-  , type_id                     character varying(64)       not null
-  , parent_id                   integer                     null
-
-  , family_tree_id              integer                     null
-  , user_id                     integer                     null
-
-  , version                     smallint default 0
-  , created                             timestamp                   not null    default now()
-  , updated                             timestamp                   not null    default now()
-
-  , constraint territorial_organisation_pkey primary key (territorial_organisation_id)
-  , constraint territorial_organisation_parent foreign key (parent_id) references territorial_organisation (territorial_organisation_id)
-  , constraint territorial_organisation_familh_user foreign key (user_id) references familh_user (user_id)
-  , constraint territorial_organisation_family_tree foreign key (family_tree_id) references family_tree (family_tree_id)
-  , constraint territorial_organisation_name foreign key (name_id) references localized_label (localized_label_ident)
-  , constraint territorial_organisation_type foreign key (type_id) references localized_label (localized_label_ident)
-);
+--create table territorial_organisation (
+--    territorial_organisation_id integer                     not null
+--  , name_id                     integer                     not null
+--  , type_id                     character varying(64)       not null
+--  , parent_id                   integer                     null
+--
+--  , family_tree_id              integer                     null
+--  , user_id                     integer                     null
+--
+--  , version                     smallint default 0
+--  , created                             timestamp                   not null    default now()
+--  , updated                             timestamp                   not null    default now()
+--
+--  , constraint territorial_organisation_pkey primary key (territorial_organisation_id)
+--  , constraint territorial_organisation_parent foreign key (parent_id) references territorial_organisation (territorial_organisation_id)
+--  , constraint territorial_organisation_familh_user foreign key (user_id) references familh_user (user_id)
+--  , constraint territorial_organisation_family_tree foreign key (family_tree_id) references family_tree (family_tree_id)
+--  , constraint territorial_organisation_name foreign key (name_id) references localized_label (localized_label_ident)
+--  , constraint territorial_organisation_type foreign key (type_id) references localized_label (localized_label_ident)
+--);
 
 
 -- user_city
@@ -243,7 +243,7 @@ create table user_city (
   , constraint user_city_pkey primary key (user_city_id)
   , constraint user_city_familh_user foreign key (user_id) references familh_user (user_id)
   , constraint user_city_family_tree foreign key (family_tree_id) references family_tree (family_tree_id)
-  , constraint city_name foreign key (name_id) references localized_label (localized_label_ident)
+--  , constraint city_name foreign key (name_id) references localized_label (localized_label_ident)
 );
 
 
@@ -348,5 +348,6 @@ create table note (
   , updated                             timestamp                   not null    default now()
 
   , constraint note_pkey primary key (note_id)
-  , constraint person_familh_user foreign key (user_id) references familh_user (user_id)
-  , constraint person_family foreign key (family_tree_id) references family_tree (family_tree_id)
+  , constraint note_familh_user foreign key (user_id) references familh_user (user_id)
+  , constraint note_family foreign key (family_tree_id) references family_tree (family_tree_id)
+);
