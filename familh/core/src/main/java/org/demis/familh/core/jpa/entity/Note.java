@@ -66,6 +66,10 @@ public class Note extends AbstractModel implements Model {
         return familyTree;
     }
 
+    public void setFamilyTree(FamilyTree familyTree) {
+        this.familyTree = familyTree;
+    }
+
     @Column(name="content")
     public String getContent() {
         return content;
@@ -74,4 +78,5 @@ public class Note extends AbstractModel implements Model {
     public void setContent(String content) {
         this.content = content;
     }
+
 }

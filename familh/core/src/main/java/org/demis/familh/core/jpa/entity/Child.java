@@ -40,7 +40,7 @@ public class Child {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "child_id")
+    @Column(name = "child_type_id")
     public ChildType getChildType() {
         return childType;
     }

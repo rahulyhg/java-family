@@ -139,7 +139,7 @@ public class Person extends AbstractModel implements Model {
         event.getPersons().add(association);
     }
 
-    @OneToMany(mappedBy="family")
+    @OneToMany(mappedBy="person")
     public List<Spouse> getSpouses() {
         return spouses;
     }
@@ -170,7 +170,7 @@ public class Person extends AbstractModel implements Model {
         this.access = access;
     }
 
-    @OneToMany(mappedBy="child")
+    @OneToMany(mappedBy="person")
     public List<Child> getChildren() {
         return children;
     }

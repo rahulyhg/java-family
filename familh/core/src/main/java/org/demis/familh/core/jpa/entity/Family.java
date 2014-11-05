@@ -84,12 +84,12 @@ public class Family extends AbstractModel implements Model {
         this.familyTree = familyTree;
     }
 
-    @OneToMany(mappedBy="spouse")
+    @OneToMany(mappedBy="family")
     public List<Spouse> getSpouses() {
         return spouses;
     }
 
-    public void setEvents(List<Spouse> spouses) {
+    public void setSpouses(List<Spouse> spouses) {
         this.spouses = spouses;
     }
 
@@ -105,7 +105,7 @@ public class Family extends AbstractModel implements Model {
         person.getSpouses().add(spouse);
     }
 
-    @OneToMany(mappedBy="child")
+    @OneToMany(mappedBy="family")
     public List<Child> getChildren() {
         return children;
     }
