@@ -20,6 +20,7 @@ public class UserConverterWeb extends GenericConverterWeb<User, UserDTOWeb> {
         user.setLastName(userDTO.getLastName());
         user.setLogin(userDTO.getLogin());
         user.setPassword(userDTO.getPassword());
+        user.setRole(userDTO.getRole());
     }
 
     protected void updateDTOFields(UserDTOWeb userDTO, User user) {
@@ -27,6 +28,7 @@ public class UserConverterWeb extends GenericConverterWeb<User, UserDTOWeb> {
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setLogin(user.getLogin());
+        userDTO.setRole(user.getRole());
     }
 
     @Override

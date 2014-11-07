@@ -1,4 +1,8 @@
-﻿-- file_format
+﻿-- note
+drop sequence if exists note_sequence;
+drop table if exists note cascade;
+
+-- file_format
 drop table if exists file_format cascade;
 
 -- import
@@ -13,6 +17,13 @@ drop table if exists event_involved_person_role cascade;
 -- event
 drop sequence if exists event_sequence;
 drop table if exists event cascade;
+
+-- address
+drop sequence if exists address_sequence;
+drop table if exists address cascade;
+
+-- user city
+drop table if exists user_city cascade;
 
 -- event type
 drop table if exists event_type cascade;
@@ -60,3 +71,7 @@ drop table if exists familh_user cascade;
 
 -- familh_user_role
 drop table if exists familh_user_role cascade;
+
+-- localized_label
+drop sequence if exists localized_label_sequence;
+drop table if exists localized_label cascade;

@@ -113,7 +113,7 @@ public class Individual {
 
         if (addOk) {
             for(IndividualName individualName : individualNames) {
-                individualName.setIndividual((Individual)this);
+                individualName.setIndividual(this);
             }
         } else {
             if (LOGGER.isWarnEnabled()) {

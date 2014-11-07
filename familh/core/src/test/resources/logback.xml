@@ -3,12 +3,12 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss-SSS} [ias-integration-tests] [%t] %m%n</pattern>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss-SSS} [%thread] [%level] [%contextName] [%X] [%logger{10}.%method] | %message%n</pattern>
         </encoder>
     </appender>
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss-SSS} [ias-integration-tests] [%t] %m%n</pattern>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss-SSS} [%thread] [%level] [%contextName] [%X] [%logger{10}.%method] | %message%n</pattern>
         </encoder>
         <file>/home/stephane/works/logs/familh/familh-test.log</file>
     </appender>

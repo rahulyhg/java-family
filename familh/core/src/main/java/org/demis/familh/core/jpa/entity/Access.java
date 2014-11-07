@@ -2,33 +2,17 @@ package org.demis.familh.core.jpa.entity;
 
 public enum Access {
 
-    PRIVATE("P", "Private"), PROTECTED("O", "Protected"), PUBLIC("U", "Public");
-
-    private String code;
+    I("Private"), O("Protected"), U("Public");
 
     private String label;
 
-    Access(String code, String label) {
-        this.code = code;
+    Access(String label) {
         this.label = label;
-    }
-
-    public static Access getByCode(String code) {
-        for (Access access: values()) {
-            if ((access.code).equals(code)) {
-                return access;
-            }
-        }
-        return null;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     @Override
     public String toString() {
-        return code;
+        return label;
     }
 
     public String getLabel() {

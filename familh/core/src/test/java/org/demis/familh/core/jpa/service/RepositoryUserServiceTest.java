@@ -2,6 +2,7 @@ package org.demis.familh.core.jpa.service;
 
 import org.demis.familh.core.jpa.PersistenceJPAConfig;
 import org.demis.familh.core.jpa.entity.User;
+import org.demis.familh.core.jpa.entity.UserRole;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class RepositoryUserServiceTest extends AbstractTestNGSpringContextTests 
         user.setFirstName("james");
         user.setLastName("bond");
         user.setEmail("james.bond@mi6.uk");
+        user.setRole(UserRole.U);
 
         repository.create(user);
 
@@ -52,6 +54,7 @@ public class RepositoryUserServiceTest extends AbstractTestNGSpringContextTests 
         user.setFirstName("james");
         user.setLastName("bond");
         user.setEmail("james.bond@mi6.uk");
+        user.setRole(UserRole.U);
 
         return user;
     }

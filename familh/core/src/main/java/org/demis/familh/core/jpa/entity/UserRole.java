@@ -2,36 +2,20 @@ package org.demis.familh.core.jpa.entity;
 
 public enum UserRole {
 
-    Administrator("A", "Administrator"), User("U", "User");
-
-    private String code;
+    A("Administrator"), U("User");
 
     private String label;
 
-    UserRole(String code, String label) {
-        this.code = code;
+    UserRole(String label) {
         this.label = label;
     }
 
-    public static UserRole getByCode(String code) {
-        for (UserRole role: values()) {
-            if ((role.code).equals(code)) {
-                return role;
-            }
-        }
-        return null;
-    }
-
-    public String getCode() {
-        return code;
+    public String getLabel() {
+        return label;
     }
 
     @Override
     public String toString() {
-        return code;
-    }
-
-    public String getLabel() {
         return label;
     }
 }
