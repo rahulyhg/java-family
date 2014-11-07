@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Context path="/familh" docBase="/home/stephane/works/app/familh/familh.war" privileged="false" unpackWAR="true">
+
+    <Environment name ="elasticsearch.cluster.name" value="familh" type="java.lang.String" override="false" />
+
+</Context>
