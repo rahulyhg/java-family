@@ -2,27 +2,22 @@ package org.demis.familh.core.jpa.entity;
 
 public enum Sex {
 
-    F('F', "Female"), M('M', "Male");
-
-    private char code;
+    F("Female"), M("Male"), U("Unknown");
 
     private String label;
 
-    Sex(char code, String label) {
-        this.code = code;
+    Sex(String label) {
         this.label = label;
     }
 
-    public static Sex getByCode(String code) {
-        for (Sex sex: values()) {
-            if (("" + sex.code).equals(code)) {
-                return sex;
-            }
-        }
-        return null;
+    public String getLabel() {
+        return label;
     }
 
-    public char getCode() {
-        return code;
+    @Override
+    public String toString() {
+        return "Sex{" +
+                "label='" + label + '\'' +
+                '}';
     }
 }

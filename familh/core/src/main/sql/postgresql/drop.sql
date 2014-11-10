@@ -1,4 +1,8 @@
-﻿-- note
+﻿-- document
+drop sequence if exists document_sequence;
+drop table if exists document cascade;
+
+-- note
 drop sequence if exists note_sequence;
 drop table if exists note cascade;
 

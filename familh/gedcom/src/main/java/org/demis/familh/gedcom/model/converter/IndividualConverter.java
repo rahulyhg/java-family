@@ -10,7 +10,7 @@ public class IndividualConverter {
         Person person = new Person();
 
         person.setIdent(individual.getIdent());
-        person.setSex(Sex.getByCode(individual.getSex()));
+        person.setSex(SexConverter.convert(individual.getSex()));
 
         return person;
     }
@@ -20,7 +20,7 @@ public class IndividualConverter {
 
         individual.setIdent(person.getIdent());
         if (person.getSex() != null)
-            individual.setSex("" + person.getSex().getCode());
+            individual.setSex(SexConverter.convert(person.getSex()));
 
 
         return individual;

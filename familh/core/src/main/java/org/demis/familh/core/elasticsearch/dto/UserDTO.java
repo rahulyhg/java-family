@@ -7,6 +7,7 @@ public class UserDTO implements DTO {
     private Long id;
     private String firstName;
     private String lastName;
+    private String nickName;
     private String email;
     private String login;
     private String password;
@@ -43,6 +44,14 @@ public class UserDTO implements DTO {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public void setEmail(String email) {

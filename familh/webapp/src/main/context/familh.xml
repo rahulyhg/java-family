@@ -2,6 +2,21 @@
 
 <Context path="/familh" docBase="/home/stephane/works/app/familh/familh.war" privileged="false" unpackWAR="true">
 
-    <Environment name ="elasticsearch.cluster.name" value="familh" type="java.lang.String" override="false" />
+    <!-- ElasticSearch access configuration -->
+    <Environment name ="elasticsearch.cluster.name"     value="familh"                  type="java.lang.String"     override="false" />
+    <Environment name ="elasticsearch.address.ip"       value="127.0.0.1"               type="java.lang.String"     override="false" />
+    <Environment name ="elasticsearch.address.port"     value="9300"                    type="java.lang.Integer"    override="false" />
+    <Environment name ="elasticsearch.index.name"       value="familh"                  type="java.lang.String"     override="false" />
 
+    <!-- Database access configuration -->
+    <Environment name ="database.driver.class.name"     value="org.postgresql.Driver"   type="java.lang.String"     override="false" />
+    <Environment name ="database.url"                   value="jdbc:postgresql://localhost:5432/familh-test"
+                                                                                        type="java.lang.String"     override="false" />
+    <Environment name ="database.username"              value="familh"                  type="java.lang.String"     override="false" />
+    <Environment name ="database.password"              value="familh"                  type="java.lang.String"     override="false" />
+
+    <!-- Hibernate configuration -->
+    <Environment name ="hibernate.dialect"              value="org.hibernate.dialect.PostgreSQLDialect"
+                                                                                        type="java.lang.String" override="false" />
+    <!-- TODO log configuration -->
 </Context>

@@ -1,0 +1,49 @@
+/* ****************************************************************************************************************** */
+/* HTML element                                                                                                       */
+/* ****************************************************************************************************************** */
+
+body {
+    margin: 0px;
+}
+
+/* ****************************************************************************************************************** */
+/* By component                                                                                                       */
+/* ****************************************************************************************************************** */
+
+#header {
+    background-color: lightgreen;
+}
+
+
+/* TODO center this div. */
+#header-user {
+    width: 1024;
+    height: 48px;
+    background: url('../images/familh-logo.png');
+    background-position: left center;
+    background-size: 48px;
+    background-repeat: no-repeat;
+    padding-left: 56px;
+    padding-right: 8px;
+}
+
+#header-user-profile {
+    display: none;
+}
+
+#header-user-logout {
+    display: none;
+}
+
+#header-create-user {
+    font-weight: bold;
+}
+
+#center {
+    min-height: 600px;
+}
+
+#bottom {
+    background-color: lightgreen;
+    height: 48px;
+}

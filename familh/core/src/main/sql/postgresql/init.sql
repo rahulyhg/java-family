@@ -27,6 +27,7 @@ insert into access values ('U', 'database.access.public');
 
 insert into sex values ('M', 'database.sex.male');
 insert into sex values ('F', 'database.sex.female');
+insert into sex values ('U', 'database.sex.unknown');
 
 insert into familh_user_role values ('A', 'database.user.role.administrator');
 insert into familh_user_role values ('U', 'database.user.role.user');

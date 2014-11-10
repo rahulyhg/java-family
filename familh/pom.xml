@@ -13,6 +13,8 @@
         <module>gedcom</module>
         <module>core</module>
         <module>webapp</module>
+        <module>delivery</module>
+        <module>client</module>
     </modules>
 
     <dependencyManagement>

@@ -14,25 +14,26 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name="note")
-public class Note extends AbstractModel implements Model {
+@Table(name="document")
+public class Document extends AbstractModel implements Model {
 
-    static private final Logger logger = LoggerFactory.getLogger(Note.class);
+    static private final Logger logger = LoggerFactory.getLogger(Document.class);
 
     private Long id;
     private Integer version;
     private String content;
+    private String contentType;
     private FamilyTree familyTree;
     private User user;
 
-    public Note() {
+    public Document() {
         // no op
     }
 
     @Id
     @Column(name="note_id")
-    @SequenceGenerator(name="note_sequence", sequenceName="note_sequence")
-    @GeneratedValue(generator="note_sequence")
+    @SequenceGenerator(name="document_sequence", sequenceName="document_sequence")
+    @GeneratedValue(generator="document_sequence")
     public Long getId() {
         return id;
     }
@@ -80,4 +81,11 @@ public class Note extends AbstractModel implements Model {
         this.content = content;
     }
 
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 }

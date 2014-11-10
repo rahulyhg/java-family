@@ -1,33 +1,17 @@
 package org.demis.familh.core.jpa.entity;
 
 public enum SpouseRole {
-    FATHER("F", "Father"), MOTHER("M", "Mother");
-
-    private String code;
+    F("Father"), M("Mother");
 
     private String label;
 
-    SpouseRole(String code, String label) {
-        this.code = code;
+    SpouseRole(String label) {
         this.label = label;
-    }
-
-    public static SpouseRole getByCode(String code) {
-        for (SpouseRole spouseRole: values()) {
-            if ((spouseRole.code).equals(code)) {
-                return spouseRole;
-            }
-        }
-        return null;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     @Override
     public String toString() {
-        return code;
+        return label;
     }
 
     public String getLabel() {

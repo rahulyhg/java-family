@@ -1,32 +1,20 @@
 package org.demis.familh.core.jpa.entity;
 
 public enum NameType {
-    B('B', "Birth Name"), M('M', "Married Name"), A('A', "Also Know As");
-
-    private char code;
+    B("Birth Name"), M("Married Name"), A("Also Know As");
 
     private String label;
 
-    NameType(char code, String label) {
-        this.code = code;
+    NameType(String label) {
         this.label = label;
     }
 
-    public static NameType getByCode(String code) {
-        for (NameType nameType: values()) {
-            if (("" + nameType.code).equals(code)) {
-                return nameType;
-            }
-        }
-        return null;
-    }
-
-    public char getCode() {
-        return code;
+    public String getLabel() {
+        return label;
     }
 
     @Override
     public String toString() {
-        return "" + code;
+        return label;
     }
 }

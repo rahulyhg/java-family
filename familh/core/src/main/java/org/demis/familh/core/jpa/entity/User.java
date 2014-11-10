@@ -23,6 +23,7 @@ public class User extends AbstractModel implements Model {
     private Integer version;
     private String firstName;
     private String lastName;
+    private String nickName;
     private String email;
     private String login;
     private String password;
@@ -69,6 +70,15 @@ public class User extends AbstractModel implements Model {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    @Column(name="firstname")
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     @Column(name="email")
