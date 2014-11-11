@@ -2,14 +2,25 @@ var modal = false;
 
 function openCreateUser() {
     console.log('openCreateUser()');
-    $("#page").addClass('blur');
     modal = true;
+    $("#create-user").show();
 }
 
 function onPage() {
+    if (modal) {
+        blurPage();
+    }
+    else {
+        unblurPage();
+    }
 }
 
-function unblur() {
+function unblurPage() {
+    $("#page").removeClass('blur');
+    $(".popin").hide();
 }
 
-
+function blurPage() {
+    $("#page").addClass('blur');
+    modal = false;
+}
