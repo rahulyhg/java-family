@@ -6,20 +6,33 @@
         <link rel='stylesheet' href='css/familh.css'/>
     </head>
     <body>
-        <div id='header'>
-            <div id='header-user'>
-                <span id='header-title'>Familh</span>
-                <span id='header-user-profile'>user</span>
-                <span id='header-user-logout'>logout</span>
-                <span id='header-user-sign-in'>sign-in</span>
-                <span id='header-create-user'>create user</span>
+        <div id="page" onclick="javascript:onPage();">
+            <div id='header'>
+                <div id='header-user'>
+                    <span id='header-title'>Familh, the free genealogy web site</span>
+                    <span id='header-user-profile'>user</span>
+                    <span id='header-user-logout'>logout</span>
+                    <span id='header-user-sign-in'>sign-in</span>
+                    <span id='header-create-user' onclick="javascript:openCreateUser();">create user</a></span>
+                </div>
             </div>
-        </div>
-        <div id="center">
-            bla bla
-        </div>
-        <div id="bottom">
-            bottom
+            <div id="center">
+                bla bla
+            </div>
+            <div id="bottom">
+                <div id="bottom-user">bla bla bla
+                </div>
+            </div>
+        <div>
+        <div class="popin" id="create-user">
+            <h1>Remodal</h1>
+            <p>
+              Flat, responsive, lightweight, fast, easy customizable modal window plugin
+              with declarative state notation and hash tracking.
+            </p>
+            <br>
+            <a id="cancel" href="#">Cancel</a>
+            <a id="confirm" href="#">OK</a>
         </div>
     </body>
 </html>
