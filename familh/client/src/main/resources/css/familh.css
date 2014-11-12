@@ -27,12 +27,53 @@ body {
 
 .create-user {
     width:300px;
-	height:200px;
+	height:440px;
 	color: #000;
 	background-color: #ffffff;
 }
 
+.log-in-user {
+    width:300px;
+	height:240px;
+	color: #000;
+	background-color: #ffffff;
+}
+
+
 .button {
+   border: 1px solid green;
+   background: lightgreen;
+   padding: 5px 10px;
+   color: green;
+   font-size: small;
+   text-decoration: none;
+   vertical-align: middle;
+}
+
+.button:hover {
+   border-color: #28597a;
+   background: green;
+   color: lightgreen;
+}
+
+.button:active {
+   border-color: #1b435e;
+   background: #1b435e;
+}
+
+.button-bar {
+    padding-top: 10px;
+}
+
+.submit {
+    font-weight: bold;
+}
+
+.submit:hover {
+
+}
+
+.submit:active {
 
 }
 
@@ -66,11 +107,17 @@ body {
 #header-user-profile {
     display: none;
     float: right;
+    margin: 12px 6px 6px 12px;
+    color: green;
+    padding-right: 8px;
 }
 
 #header-user-logout {
     display: none;
     float: right;
+    margin: 12px 6px 6px 12px;
+    color: green;
+    padding-right: 8px;
 }
 
 #header-create-user {

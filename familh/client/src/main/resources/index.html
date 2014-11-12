@@ -10,9 +10,9 @@
             <div id='header'>
                 <div id='header-user'>
                     <span id='header-title'>Familh, the free genealogy web site</span>
+                    <span id='header-user-logout' onclick='javascript:logoutUser();'>logout</span>
                     <span id='header-user-profile'>user</span>
-                    <span id='header-user-logout'>logout</span>
-                    <span id='header-user-sign-in'>sign-in</span>
+                    <span id='header-user-sign-in' onclick='javascript:openLoginUser();'>sign-in</span>
                     <span id='header-create-user' onclick='javascript:openCreateUser();'>create user</span>
                 </div>
             </div>
@@ -22,14 +22,63 @@
             </div>
         </div>
         <div class='popin create-user' id='create-user'>
-            <h1>Remodal</h1>
-            <p>
-              Flat, responsive, lightweight, fast, easy customizable modal window plugin
-              with declarative state notation and hash tracking.
-            </p>
-            <br/>
-            <a class="button" id='cancel' href='#'>Cancel</a>
-            <a class="button" id='confirm' href='#'>OK</a>
+            <h1>Create Account</h1>
+            <hr/>
+            <form name="create-user" action="">
+                <div class="grid">
+                    <div id="create-user-firstname" class="column">
+                        Name*<br/>
+                        <input type="text" name="firstName"/>
+                    </div>
+                    <div id="create-user-lastname">
+                        LastName*<br/>
+                        <input type="text" name="lastName"/>
+                    </div>
+                    <div id="create-user-email">
+                        Email*<br/>
+                        <input type="text" name="email"/>
+                    </div>
+                    <div id="create-user-login">
+                        Login*<br/>
+                        <input type="text" name="login"/>
+                    </div>
+                    <div id="create-user-password">
+                        Password*<br/>
+                        <input type="password" name="password"/>
+                    </div>
+                    <div id="create-user-confirm-password">
+                        Confirm your password*<br/>
+                        <input type="password" name="confirm-password"/>
+                    </div>
+                </div>
+                <hr/>
+                <span>* Required fields</span>
+                <div class="button-bar">
+                    <a class="button submit" href="javascript:createUser();">Create</a> or <a class="button cancel" href="javascript:onPage();">Cancel</a>
+                </div>
+            </form>
+        </div>
+        <div class='popin log-in-user' id='log-in-user'>
+            <h1>Log-in</h1>
+            <hr/>
+            <form name="log-in" action="">
+                <div class="grid">
+                    <div>
+                        Login<br/>
+                        <input type="text" name="login" id="log-in-user-login"/>
+                    </div>
+                    <div>
+                        Password<br/>
+                        <input type="password" name="password" id="log-in-user-password"/>
+                    </div>
+                </div>
+                <hr/>
+                <div class="button-bar">
+                    <a class="button submit" href="javascript:connectUser();">Connect</a> or <a class="button cancel" href="javascript:onPage();">Cancel</a>
+                </div>
+            </form>
+
         </div>
     </body>
 </html>
+
