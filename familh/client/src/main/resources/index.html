@@ -23,36 +23,35 @@
         </div>
         <div class='popin create-user' id='create-user'>
             <h1>Create Account</h1>
-            <hr/>
             <form name="create-user" action="">
                 <div class="grid">
                     <div id="create-user-firstname" class="column">
                         Name*<br/>
                         <input type="text" name="firstName"/>
                     </div>
-                    <div id="create-user-lastname">
+                    <div id="create-user-lastname" class="column">
                         LastName*<br/>
                         <input type="text" name="lastName"/>
                     </div>
-                    <div id="create-user-email">
+                    <div id="create-user-email" class="column">
                         Email*<br/>
-                        <input type="text" name="email"/>
+                        <input type="email" name="email"/>
                     </div>
-                    <div id="create-user-login">
+                    <div id="create-user-login" class="column">
                         Login*<br/>
                         <input type="text" name="login"/>
                     </div>
-                    <div id="create-user-password">
+                    <div id="create-user-password" class="column">
                         Password*<br/>
                         <input type="password" name="password"/>
                     </div>
-                    <div id="create-user-confirm-password">
+                    <div id="create-user-confirm-password" class="column">
                         Confirm your password*<br/>
                         <input type="password" name="confirm-password"/>
                     </div>
                 </div>
                 <hr/>
-                <span>* Required fields</span>
+                <span class="require-remark">* Required fields</span>
                 <div class="button-bar">
                     <a class="button submit" href="javascript:createUser();">Create</a> or <a class="button cancel" href="javascript:onPage();">Cancel</a>
                 </div>
@@ -60,19 +59,18 @@
         </div>
         <div class='popin log-in-user' id='log-in-user'>
             <h1>Log-in</h1>
-            <hr/>
             <form name="log-in" action="">
                 <div class="grid">
-                    <div>
+                    <div class="column">
                         Login<br/>
                         <input type="text" name="login" id="log-in-user-login"/>
                     </div>
-                    <div>
+                    <div class="column">
                         Password<br/>
                         <input type="password" name="password" id="log-in-user-password"/>
                     </div>
                 </div>
-                <hr/>
+                <br/>
                 <div class="button-bar">
                     <a class="button submit" href="javascript:connectUser();">Connect</a> or <a class="button cancel" href="javascript:onPage();">Cancel</a>
                 </div>
