@@ -1,0 +1,132 @@
+/* ****************************************************************************************************************** */
+/* HTML element                                                                                                       */
+/* ****************************************************************************************************************** */
+
+body {
+    color: white;
+}
+
+input {
+    border-color: lightgreen;
+}
+
+input:active {
+    border-color: green;
+}
+
+hr {
+    color: green;
+    background-color: green;
+}
+
+form {
+}
+
+.popin {
+}
+
+.popin h1 {
+    background-color: lightgreen;
+}
+
+.button {
+    border-color: green;
+    background: lightgreen;
+    color: green;
+}
+
+.button:hover {
+   border-color: #28597a;
+   background-color: green;
+   color: lightgreen;
+}
+
+.button:active {
+   border-color: #1b435e;
+   background: #1b435e;
+}
+
+.button-bar {
+}
+
+.submit {
+}
+
+.submit:hover {
+
+}
+
+.submit:active {
+
+}
+
+.column {
+}
+
+.require-remark {
+}
+/* ****************************************************************************************************************** */
+/* By component                                                                                                       */
+/* ****************************************************************************************************************** */
+
+#header {
+    background-color: lightgreen;
+}
+
+#header-user {
+}
+
+#header-title {
+    color: green;
+}
+
+#header-user-profile {
+    color: green;
+}
+
+#header-user-profile:hover #header-user-logout:hover #header-create-user:hover #header-user-sign-in:hover {
+}
+
+#header-user-logout {
+    color: green;
+}
+
+#header-create-user {
+    border-color: green;
+    color: green;
+}
+
+#header-user-sign-in {
+    color: green;
+}
+
+#center {
+    background-color: #FFF0FF;
+}
+
+#dropdown-menu {
+}
+
+#middle-center {
+}
+
+
+#bottom {
+    background-color: lightgreen;
+}
+
+#bottom-user {
+    color: green;
+}
+
+.create-user {
+	color: #000;
+	background-color: #ffffff;
+}
+
+.log-in-user {
+	color: #000;
+	background-color: #ffffff;
+}
+
+

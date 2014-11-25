@@ -3,7 +3,12 @@
         <title>Familh, the free genealogy web site.</title>
         <script type='text/javascript' src='javascript/external/jquery-2.1.1.min.js'></script>
         <script type='text/javascript' src='javascript/familh.js'></script>
+        <script type='text/javascript' src='javascript/width.js'></script>
+
         <link rel='stylesheet' href='css/familh.css'/>
+        <link rel='stylesheet' href='css/color.css'/>
+        <link id="size-stylesheet" rel="stylesheet" type="text/css" href="css/width-1920.css" />
+
     </head>
     <body>
         <div id='page' onclick='javascript:onPage();'>
@@ -15,8 +20,27 @@
                     <span id='header-user-sign-in' onclick='javascript:openLoginUser();'>sign-in</span>
                     <span id='header-create-user' onclick='javascript:openCreateUser();'>create user</span>
                 </div>
+                <div id="header-menu">
+                    <ul>
+                        <li>Recherche
+                            <ul>
+                                <li>Recherche Rapide</li>
+                                <li>Recherche avancée</li>
+                            </ul>
+                        </li>
+                        <li>Votre généalogie
+                            <ul>
+                                <li>Vos arbres</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Votre profil
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div id='center'>bla bla</div>
+            <div id='center'>
+            </div>
             <div id='bottom'>
                 <div id='bottom-user'>bla bla bla</div>
             </div>

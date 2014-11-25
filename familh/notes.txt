@@ -4,3 +4,4 @@ TODO complete the delivery with assembly,see samples in office
 TODO start client app
 TODO realize an ES search on users
 TODO analyse http://css-tricks.com/simple-jquery-dropdowns/
+TODO Add Sass, for color, font, size, width, etc...

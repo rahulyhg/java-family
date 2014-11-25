@@ -4,29 +4,29 @@
 
 body {
     margin: 0px;
-    color: white;
 }
 
 input {
     width: 300px;
-    border-color: lightgreen;
     border-style: solid;
 }
 
 input:active {
-    border-color: green;
 }
 
 hr {
     border: 1px;
-    color: green;
-    background-color: green;
     height: 1px;
     margin-bottom: 0px;
 }
 
 form {
     padding: 0px 10px 0px 10px;
+}
+
+ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .blur {
@@ -50,17 +50,15 @@ form {
 }
 
 .popin h1 {
-    background-color: lightgreen;
     padding: 5px;
     margin-top: 0px;
     border-radius: 5px 5px 0px 0px;
 }
 
 .button {
-    border: 1px solid green;
-    background: lightgreen;
+    border-style: solid;
+    border-width: 1px;
     padding: 5px 10px;
-    color: green;
     font-size: medium;
     text-decoration: none;
     vertical-align: middle;
@@ -69,13 +67,9 @@ form {
 
 .button:hover {
    border-color: #28597a;
-   background: green;
-   color: lightgreen;
 }
 
 .button:active {
-   border-color: #1b435e;
-   background: #1b435e;
 }
 
 .button-bar {
@@ -87,11 +81,9 @@ form {
 }
 
 .submit:hover {
-
 }
 
 .submit:active {
-
 }
 
 .column {
@@ -106,11 +98,9 @@ form {
 /* ****************************************************************************************************************** */
 
 #header {
-    background-color: lightgreen;
 }
 
 #header-user {
-    width: 1024;
     margin: 0 auto;
     height: 48px;
     background: url('../images/familh-logo.png');
@@ -120,23 +110,38 @@ form {
     border-width: 0px;
 }
 
+#header-menu {
+    margin: 0 auto;
+}
+
 #header-title {
     float: left;
-    color: green;
-    margin: 9px 6px 6px 3px;
+    margin: 0px 6px 0px 3px;
     font-size: x-large;
-    padding-left: 56px;
+    cursor: pointer;
+    padding: 9px 0px 6px 56px;
 }
 
 #header-user-profile {
     display: none;
     float: right;
     margin: 12px 6px 6px 12px;
-    color: green;
     padding-right: 8px;
 }
 
-#header-user-profile:hover #header-user-logout:hover #header-create-user:hover #header-user-sign-in:hover {
+#header-user-sign-in {
+    cursor: pointer;
+}
+
+#header-user-profile {
+    cursor: pointer;
+}
+
+#header-user-logout {
+    cursor: pointer;
+}
+
+#header-create-user {
     cursor: pointer;
 }
 
@@ -144,7 +149,6 @@ form {
     display: none;
     float: right;
     margin: 12px 6px 6px 12px;
-    color: green;
     padding-right: 8px;
 }
 
@@ -154,53 +158,40 @@ form {
     margin: 6px 3px 6px 3px;
     border-style: solid;
     border-width: 1px;
-    border-color: green;
     padding: 6px 6px 6px 6px;
-    color: green;
 }
 
 #header-user-sign-in {
     float: right;
     margin: 12px 6px 6px 12px;
-    color: green;
     padding-right: 8px;
 }
 
 
 #center {
     min-height: 600px;
-    width: 1024;
     margin: 8px auto;
-    background-color: #FFF0FF;
-    padding-top: 8px;
     padding-bottom: 8 px;
+    display: block;
 }
 
 #bottom {
-    background-color: lightgreen;
     height: 48px;
 }
 
 #bottom-user {
-    width: 1024;
     margin: 0 auto;
     height: 48px;
-    color: green;
     padding: 8px 0px 8px 0px;
 }
 
 .create-user {
     width:320px;
 	height:440px;
-	color: #000;
-	background-color: #ffffff;
 }
 
 .log-in-user {
     width:320px;
 	height:220px;
-	color: #000;
-	background-color: #ffffff;
 }
-
 

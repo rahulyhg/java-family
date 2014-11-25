@@ -1,0 +1,19 @@
+#header-user {
+    width: 1024px;
+}
+
+/* 976 = 1024 - 48 */
+#header-menu {
+    width: 976px; 
+    max-height: 16px;
+}
+
+
+#center {
+    width: 1024px;
+}
+
+#bottom-user {
+    width: 1024px;
+}
+
