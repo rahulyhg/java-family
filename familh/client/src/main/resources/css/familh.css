@@ -24,10 +24,6 @@ form {
     padding: 0px 10px 0px 10px;
 }
 
-ul {
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
 
 .blur {
     -webkit-filter: blur(5px); 
