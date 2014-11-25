@@ -2,8 +2,10 @@ function adjustStyle(width) {
     width = parseInt(width);
     if (width < 1280) {
         $("#size-stylesheet").attr("href", "css/width-1024.css");
-    } else if (width < 1920) {
+    } else if (width < 1600) {
         $("#size-stylesheet").attr("href", "css/width-1280.css");
+    } else if (width < 1920) {
+        $("#size-stylesheet").attr("href", "css/width-1600.css");
     } else {
         $("#size-stylesheet").attr("href", "css/width-1920.css");
     }

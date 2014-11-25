@@ -3,15 +3,7 @@ package org.demis.familh.core.jpa.entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 @Entity
 @Table(name="familh_user")
@@ -72,7 +64,7 @@ public class User extends AbstractModel implements Model {
         this.firstName = firstName;
     }
 
-    @Column(name="firstname")
+    @Column(name="nickname")
     public String getNickName() {
         return nickName;
     }

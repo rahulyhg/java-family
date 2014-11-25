@@ -31,6 +31,7 @@ public class RepositoryUserServiceTest extends AbstractTestNGSpringContextTests 
         User user = new User();
         user.setFirstName("james");
         user.setLastName("bond");
+        user.setNickName("jiji");
         user.setEmail("james.bond@mi6.uk");
         user.setRole(UserRole.U);
 
@@ -53,6 +54,7 @@ public class RepositoryUserServiceTest extends AbstractTestNGSpringContextTests 
         User user = new User();
         user.setFirstName("james");
         user.setLastName("bond");
+        user.setNickName("jiji");
         user.setEmail("james.bond@mi6.uk");
         user.setRole(UserRole.U);
 
