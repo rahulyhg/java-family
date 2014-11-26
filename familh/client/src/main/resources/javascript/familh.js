@@ -38,9 +38,8 @@ function connectUser() {
         $("#header-user-logout").show();
         $("#header-create-user").hide()
         $("#header-user-sign-in").hide();
+        $("#header-menu").show();
     }
-
-
 }
 
 function authenticationValid(login, password) {
@@ -52,5 +51,6 @@ function logoutUser() {
         $("#header-user-logout").hide();
         $("#header-create-user").show()
         $("#header-user-sign-in").show();
+        $("#header-menu").hide();
 }
 

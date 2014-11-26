@@ -3,5 +3,29 @@ TODO create a module for client app
 TODO complete the delivery with assembly,see samples in office
 TODO start client app
 TODO realize an ES search on users
+
+GET _search
+{
+   "query": {
+      "term": {"nickName": "jamies"}
+   }
+}
+
+
+GET _search
+{
+    "query" : {
+        "bool" : {
+            "should" : {
+                "term" : { "nickName" : "jamies" }
+            },
+            "should": {
+                "term" : { "firstName" : "james" }
+            }
+        }
+    }
+}
+
+
 TODO analyse http://css-tricks.com/simple-jquery-dropdowns/
 TODO Add Sass, for color, font, size, width, etc...

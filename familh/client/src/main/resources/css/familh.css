@@ -99,15 +99,16 @@ form {
 #header-user {
     margin: 0 auto;
     height: 48px;
+    border-width: 0px;
     background: url('../images/familh-logo.png');
     background-position: left center;
     background-size: 48px;
     background-repeat: no-repeat;
-    border-width: 0px;
 }
 
 #header-menu {
     margin: 0 auto;
+    display: none;
 }
 
 #header-title {
