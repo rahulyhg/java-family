@@ -26,6 +26,81 @@ GET _search
     }
 }
 
+# Get all mappings
+curl -XGET 'http://localhost:9200/_all/_mapping/?pretty=true'
+# Get one mapping
+curl -XGET 'http://localhost:9200/familh/_mapping/?pretty=true'
+
+"familh" : {
+    "mappings" : {
+      "user" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "long"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "login" : {
+            "type" : "string",
+            "index": "not_analyzed"
+          },
+          "nickName" : {
+            "type" : "string",
+            "index": "not_analyzed"
+          },
+          "role" : {
+            "type" : "string",
+            "index": "not_analyzed"
+          }
+        }
+      }
+    }
+}
+
+
+# Delete one mapping
+curl -XDELETE 'http://localhost:9200/familh/'
+#create mapping
+
+curl -XPUT 'http://localhost:9200/familh/' -d '{
+    "mappings" : {
+        "user" : {
+            "properties" : {
+                "email" : {
+                    "type" : "string"
+                },
+                "firstName" : {
+                    "type" : "string"
+                },
+                "id" : {
+                    "type" : "long"
+                },
+                "lastName" : {
+                    "type" : "string"
+                },
+                "login" : {
+                    "type" : "string"
+                },
+                "nickName" : {
+                    "type" : "string"
+                },
+                "role" : {
+                    "type" : "string"
+                }
+            }
+        }
+    }
+}'
+
+
+
 
 TODO analyse http://css-tricks.com/simple-jquery-dropdowns/
 TODO Add Sass, for color, font, size, width, etc...

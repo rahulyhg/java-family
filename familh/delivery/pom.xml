@@ -15,6 +15,7 @@
         <dependency>
             <groupId>org.demis</groupId>
             <artifactId>familh.webapp</artifactId>
+            <type>war</type>
             <version>${parent.version}</version>
         </dependency>
 

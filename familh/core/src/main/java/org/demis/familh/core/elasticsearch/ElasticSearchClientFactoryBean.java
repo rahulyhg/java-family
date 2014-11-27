@@ -1,5 +1,7 @@
 package org.demis.familh.core.elasticsearch;
 
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
@@ -14,6 +16,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Component
@@ -57,5 +60,22 @@ public class ElasticSearchClientFactoryBean extends AbstractFactoryBean<Client> 
             client.close();
         }
         LOGGER.info("Elasticsearch TransportClient shutdown.");
+    }
+
+    @PostConstruct
+    public void createMapping() throws Exception {
+        createInstance();
+        LOGGER.info("Create Index and Mappings...");
+
+        IndicesExistsResponse res = client.admin().indices().prepareExists(environment.getProperty("elasticsearch.index.name")).execute().actionGet();
+        if (!res.isExists()) {
+            CreateIndexRequestBuilder createIndexRequestBuilder = client.admin().indices().prepareCreate(environment.getProperty("elasticsearch.index.name"));
+            createIndexRequestBuilder.execute().actionGet();
+        }
+        // TODO verify and add mapping
+
+
+
+        LOGGER.info("Index and Mappings created");
     }
 }
