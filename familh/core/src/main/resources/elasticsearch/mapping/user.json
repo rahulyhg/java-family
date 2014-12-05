@@ -1,0 +1,11 @@
+{
+    "properties" : {
+        "email" :       { "type" : "string" },
+        "firstName" :   { "type" : "string" },
+        "id" :          { "type" : "long" },
+        "lastName" :    { "type" : "string" },
+        "login" :       { "type" : "string" },
+        "nickName" :    { "type" : "string" },
+        "role" :        { "type" : "string" }
+    }
+}
