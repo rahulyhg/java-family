@@ -11,6 +11,11 @@ public class Range {
 
     private int size;
 
+    public Range(int page, int size) {
+        this.page = page;
+        this.size = size;
+    }
+
     public Range() {
 
     }

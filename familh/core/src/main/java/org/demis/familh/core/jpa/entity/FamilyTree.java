@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,6 +25,7 @@ public class FamilyTree extends AbstractModel implements Model {
     private Integer version;
     private String ident;
     private User user;
+    private Access access;
 
 
     public FamilyTree() {
@@ -67,5 +70,15 @@ public class FamilyTree extends AbstractModel implements Model {
 
     public void setIdent(String ident) {
         this.ident = ident;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "access_id")
+    public Access getAccess() {
+        return access;
+    }
+
+    public void setAccess(Access access) {
+        this.access = access;
     }
 }

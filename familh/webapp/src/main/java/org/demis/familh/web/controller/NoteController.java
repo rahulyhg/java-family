@@ -44,7 +44,9 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     // GET
     // ------------------------------------------------------------------------
 
-    @RequestMapping(method = RequestMethod.GET, value = {"/note", "/note/"})
+    @RequestMapping(method = RequestMethod.GET, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note",
+            "/user/{userId}/familyTree/{familyTreeId}/note/"})
     @ResponseBody
     public List<NoteDTOWeb> getNotes(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
@@ -78,7 +80,9 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/note/{id}","/note/{id}/"}, method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}/"})
     public Object getNote(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse, HttpServletRequest request) {
         Note note = noteService.findById(id);
         if (note != null) {
@@ -97,12 +101,16 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     // POST
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/note/{id}", "/note/{id}/"}, method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void postNote() {
     }
 
-    @RequestMapping(value = {"/note", "/note/"}, method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note",
+            "/user/{userId}/familyTree/{familyTreeId}/note/"})
     @ResponseBody
     public Object postNote(@RequestBody NoteDTOWeb noteDTO, HttpServletResponse httpResponse, HttpServletRequest request) {
         Note note = noteService.create(noteConverter.convertDTO(noteDTO));
@@ -121,12 +129,16 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     // DELETE
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/note", "/note/"}, method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note",
+            "/user/{userId}/familyTree/{familyTreeId}/note/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void deleteNotes() {
     }
 
-    @RequestMapping(value = {"/note/{id}", "/note/{id}/"}, method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}/"})
     @ResponseBody
     public Object deleteNote(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse) {
         Note note = noteService.findById(id);
@@ -150,12 +162,16 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     // PUT
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/note", "/note/"}, method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note",
+            "/user/{userId}/familyTree/{familyTreeId}/note/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void putNotes() {
     }
 
-    @RequestMapping(value = {"/note/{id}", "/note/{id}/"}, method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}/"})
     @ResponseBody
     public Object putNote(@PathVariable("id") Long id, @RequestBody NoteDTOWeb dto, HttpServletResponse httpResponse, HttpServletRequest request) {
         Note note = noteService.findById(id);
@@ -181,13 +197,17 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     // OPTIONS
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/note", "/note/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(method = RequestMethod.OPTIONS, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note",
+            "/user/{userId}/familyTree/{familyTreeId}/note/"})
     @ResponseStatus(HttpStatus.OK)
     public void optionsNotes(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
     }
 
-    @RequestMapping(value = {"/note/{id}", "/note/{id}/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(method = RequestMethod.OPTIONS, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}/"})
     @ResponseStatus(HttpStatus.OK)
     public void optionsResouce(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
@@ -197,12 +217,16 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     // HEAD
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/note", "/note/"}, method = RequestMethod.HEAD)
+    @RequestMapping(method = RequestMethod.HEAD, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note",
+            "/user/{userId}/familyTree/{familyTreeId}/note/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void headNotes(){
     }
 
-    @RequestMapping(value = {"/note/{id}", "/note/{id}/"}, method = RequestMethod.HEAD)
+    @RequestMapping(method = RequestMethod.HEAD, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/note/{id}/"})
     public void headNote(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse){
         Note note = noteService.findById(id);
         if (note != null) {

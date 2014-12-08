@@ -3,18 +3,17 @@ package org.demis.familh.web.controller;
 import org.demis.familh.core.jpa.entity.Event;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.Name;
-import org.demis.familh.core.jpa.entity.Person;
+import org.demis.familh.core.jpa.entity.Family;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.*;
 import org.demis.familh.web.RestConfiguration;
 import org.demis.familh.web.converter.EventConverterWeb;
 import org.demis.familh.web.converter.FamilyTreeConverterWeb;
 import org.demis.familh.web.converter.GenericConverterWeb;
-import org.demis.familh.web.converter.NameConverterWeb;
-import org.demis.familh.web.converter.PersonConverterWeb;
+import org.demis.familh.web.converter.FamilyConverterWeb;
 import org.demis.familh.web.converter.UserConverterWeb;
 import org.demis.familh.web.dto.NameDTOWeb;
-import org.demis.familh.web.dto.PersonDTOWeb;
+import org.demis.familh.web.dto.FamilyDTOWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +28,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping(RestConfiguration.REST_BASE_URL)
-public class PersonController extends GenericController<Person, PersonDTOWeb> {
+public class FamilyController extends GenericController<Family, FamilyDTOWeb> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FamilyController.class);
 
     @Autowired
     @Qualifier("restConfiguration")
     private RestConfiguration configuration;
 
     @Autowired
-    @Qualifier("personService" )
-    private PersonService personService;
+    @Qualifier("familyService" )
+    private FamilyService familyService;
 
     @Autowired
-    @Qualifier("personConverterWeb" )
-    private PersonConverterWeb personConverter;
+    @Qualifier("familyConverterWeb" )
+    private FamilyConverterWeb familyConverter;
 
     @Autowired
     @Qualifier("eventService" )
@@ -74,17 +73,17 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // ------------------------------------------------------------------------
 
     @RequestMapping(method = RequestMethod.GET, value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person",
-            "/user/{userId}/familyTree/{familyTreeId}/person/"
+            "/user/{userId}/familyTree/{familyTreeId}/family",
+            "/user/{userId}/familyTree/{familyTreeId}/family/"
     })
     @ResponseBody
-    public List<PersonDTOWeb> getPersons(@PathVariable(value = "userId") Long userId,
+    public List<FamilyDTOWeb> getFamilys(@PathVariable(value = "userId") Long userId,
                                          @PathVariable(value = "familyTreeId") Long familyTreeId,
                                          HttpServletRequest request,
                                          HttpServletResponse httpResponse) {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
-        List<PersonDTOWeb> dtos = null;
+        List<FamilyDTOWeb> dtos = null;
         Range range = null;
 
         if (request.getHeader("Range") != null) {
@@ -108,7 +107,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return dtos;
         }
 
-        List<Person> models = personService.findFamilyTreePersons(familyTree);
+        List<Family> models = familyService.findFamilyTreeFamilies(familyTree);
         // TODO add range to the find method
         if (models.isEmpty()) {
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
@@ -122,10 +121,10 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
 
     @ResponseBody
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}",
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}/"
-        }, method = RequestMethod.GET)
-    public Object getPerson(@PathVariable(value = "userId") Long userId,
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}/"
+    }, method = RequestMethod.GET)
+    public Object getFamily(@PathVariable(value = "userId") Long userId,
                             @PathVariable(value = "familyTreeId") Long familyTreeId,
                             @PathVariable(value = "id") Long id,
                             HttpServletResponse httpResponse,
@@ -139,27 +138,12 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return null;
         }
 
-        Person person = personService.findById(id);
-        if (checkPerson(familyTree, person)) {
+        Family family = familyService.findById(id);
+        if (checkFamily(familyTree, family)) {
             httpResponse.setStatus(HttpStatus.OK.value());
-            httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, person.getUpdated().getTime());
-            PersonDTOWeb dto = personConverter.convertModel(person, request);
+            httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, family.getUpdated().getTime());
+            FamilyDTOWeb dto = familyConverter.convertModel(family, request);
             return dto;
-        } else {
-            httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
-            return null;
-        }
-    }
-
-    // TODO move to EventController
-    @ResponseBody
-    @RequestMapping(value = {"/person/{id}/event","/person/{id}/event/"}, method = RequestMethod.GET)
-    public Object getPersonEvents(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse, HttpServletRequest request) {
-        Person person = personService.findById(id);
-        if (person != null) {
-            List<Event> events = eventService.findPersonEvents(person);
-            httpResponse.setStatus(HttpStatus.OK.value());
-            return eventConverter.convertModels(events, request);
         } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
             return null;
@@ -171,21 +155,21 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // ------------------------------------------------------------------------
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}",
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}/"},
-        method = RequestMethod.POST)
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}/"},
+            method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void postPerson() {
+    public void postFamily() {
     }
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person",
-            "/user/{userId}/familyTree/{familyTreeId}/person/"},
-        method = RequestMethod.POST)
+            "/user/{userId}/familyTree/{familyTreeId}/family",
+            "/user/{userId}/familyTree/{familyTreeId}/family/"},
+            method = RequestMethod.POST)
     @ResponseBody
-    public Object postPerson(@PathVariable(value = "userId") Long userId,
+    public Object postFamily(@PathVariable(value = "userId") Long userId,
                              @PathVariable(value = "familyTreeId") Long familyTreeId,
-                             @RequestBody PersonDTOWeb personDTO,
+                             @RequestBody FamilyDTOWeb familyDTO,
                              HttpServletResponse httpResponse,
                              HttpServletRequest request) {
 
@@ -197,15 +181,15 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return null;
         }
 
-        Person person = personService.create(personConverter.convertDTO(personDTO));
+        Family family = familyService.create(familyConverter.convertDTO(familyDTO));
 
-        if (person != null) {
-            person.setFamilyTree(familyTree);
-            person.setUser(user);
+        if (family != null) {
+            family.setFamilyTree(familyTree);
+            family.setUser(user);
 
             httpResponse.setStatus(HttpStatus.OK.value());
-            httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, person.getUpdated().getTime());
-            PersonDTOWeb dto = personConverter.convertModel(person, request);
+            httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, family.getUpdated().getTime());
+            FamilyDTOWeb dto = familyConverter.convertModel(family, request);
             return dto;
         } else {
             httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -218,19 +202,19 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // ------------------------------------------------------------------------
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person",
-            "/user/{userId}/familyTree/{familyTreeId}/person/"},
-        method = RequestMethod.DELETE)
+            "/user/{userId}/familyTree/{familyTreeId}/family",
+            "/user/{userId}/familyTree/{familyTreeId}/family/"},
+            method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void deletePersons() {
+    public void deleteFamilys() {
     }
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}",
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}/"},
-        method = RequestMethod.DELETE)
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}/"},
+            method = RequestMethod.DELETE)
     @ResponseBody
-    public Object deletePerson(@PathVariable(value = "userId") Long userId,
+    public Object deleteFamily(@PathVariable(value = "userId") Long userId,
                                @PathVariable(value = "familyTreeId") Long familyTreeId,
                                @PathVariable(value = "id") Long id,
                                HttpServletResponse httpResponse) {
@@ -243,12 +227,12 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return null;
         }
 
-        Person person = personService.findById(id);
-        if (checkPerson(familyTree, person)) {
+        Family family = familyService.findById(id);
+        if (checkFamily(familyTree, family)) {
             try {
-                personService.delete(id);
+                familyService.delete(id);
             } catch (ModelNotFoundException e) {
-                LOGGER.warn("Can't delete the person: " + person, e);
+                LOGGER.warn("Can't delete the family: " + family, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -265,22 +249,22 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // ------------------------------------------------------------------------
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person",
-            "/user/{userId}/familyTree/{familyTreeId}/person/"},
-        method = RequestMethod.PUT)
+            "/user/{userId}/familyTree/{familyTreeId}/family",
+            "/user/{userId}/familyTree/{familyTreeId}/family/"},
+            method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void putPersons() {
+    public void putFamilys() {
     }
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}",
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}/"},
-        method = RequestMethod.PUT)
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}/"},
+            method = RequestMethod.PUT)
     @ResponseBody
-    public Object putPerson(@PathVariable(value = "userId") Long userId,
+    public Object putFamily(@PathVariable(value = "userId") Long userId,
                             @PathVariable(value = "familyTreeId") Long familyTreeId,
                             @PathVariable("id") Long id,
-                            @RequestBody PersonDTOWeb dto,
+                            @RequestBody FamilyDTOWeb dto,
                             HttpServletResponse httpResponse,
                             HttpServletRequest request) {
 
@@ -292,16 +276,16 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return null;
         }
 
-        Person person = personService.findById(id);
-        if (checkPerson(familyTree, person)) {
-            personConverter.updateModel(person, dto);
+        Family family = familyService.findById(id);
+        if (checkFamily(familyTree, family)) {
+            familyConverter.updateModel(family, dto);
             try {
-                Person result = personService.update(person);
+                Family result = familyService.update(family);
                 httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, result.getUpdated().getTime());
-                PersonDTOWeb resultDto = personConverter.convertModel(result, request);
+                FamilyDTOWeb resultDto = familyConverter.convertModel(result, request);
                 return resultDto;
             } catch (ModelNotFoundException e) {
-                LOGGER.warn("Can't modify the person: " + person, e);
+                LOGGER.warn("Can't modify the family: " + family, e);
                 httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 return null;
             }
@@ -316,18 +300,18 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // ------------------------------------------------------------------------
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person",
-            "/user/{userId}/familyTree/{familyTreeId}/person/"},
-        method = RequestMethod.OPTIONS)
+            "/user/{userId}/familyTree/{familyTreeId}/family",
+            "/user/{userId}/familyTree/{familyTreeId}/family/"},
+            method = RequestMethod.OPTIONS)
     @ResponseStatus(HttpStatus.OK)
-    public void optionsPersons(HttpServletResponse httpResponse){
+    public void optionsFamilys(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
     }
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}",
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}/"},
-        method = RequestMethod.OPTIONS)
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}/"},
+            method = RequestMethod.OPTIONS)
     @ResponseStatus(HttpStatus.OK)
     public void optionsResouce(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
@@ -338,18 +322,18 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     // ------------------------------------------------------------------------
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person",
-            "/user/{userId}/familyTree/{familyTreeId}/person/"},
-        method = RequestMethod.HEAD)
+            "/user/{userId}/familyTree/{familyTreeId}/family",
+            "/user/{userId}/familyTree/{familyTreeId}/family/"},
+            method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void headPersons(){
+    public void headFamilys(){
     }
 
     @RequestMapping(value = {
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}",
-            "/user/{userId}/familyTree/{familyTreeId}/person/{id}/"},
-        method = RequestMethod.HEAD)
-    public void headPerson(@PathVariable(value = "userId") Long userId,
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/family/{id}/"},
+            method = RequestMethod.HEAD)
+    public void headFamily(@PathVariable(value = "userId") Long userId,
                            @PathVariable(value = "familyTreeId") Long familyTreeId,
                            @PathVariable(value = "id") Long id,
                            HttpServletResponse httpResponse){
@@ -361,19 +345,19 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return;
         }
 
-        Person person = personService.findById(id);
-        if (checkPerson(familyTree, person)) {
-            httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, person.getUpdated().getTime());
+        Family family = familyService.findById(id);
+        if (checkFamily(familyTree, family)) {
+            httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, family.getUpdated().getTime());
             httpResponse.setStatus(HttpStatus.OK.value());
         } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
         }
     }
 
-    private boolean checkPerson(FamilyTree familyTree, Person person) {
-        return person != null
-                && person.getFamilyTree() != null
-                && person.getFamilyTree().equals(familyTree);
+    private boolean checkFamily(FamilyTree familyTree, Family family) {
+        return family != null
+                && family.getFamilyTree() != null
+                && family.getFamilyTree().equals(familyTree);
     }
 
     private boolean checkFamilyTree(User user, FamilyTree familyTree) {
@@ -385,11 +369,11 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
 
     @Override
     protected GenericConverterWeb getConverter() {
-        return personConverter;
+        return familyConverter;
     }
 
     @Override
     protected GenericService getService() {
-        return personService;
+        return familyService;
     }
 }

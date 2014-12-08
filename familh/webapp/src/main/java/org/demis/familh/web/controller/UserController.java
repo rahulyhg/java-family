@@ -34,6 +34,10 @@ public class UserController extends GenericController<User, UserDTOWeb> {
     @Qualifier("userConverterWeb" )
     private UserConverterWeb userConverter;
 
+    @Autowired
+    @Qualifier("restConfiguration")
+    private RestConfiguration configuration;
+
     // ------------------------------------------------------------------------
     // GET
     // ------------------------------------------------------------------------
@@ -55,18 +59,17 @@ public class UserController extends GenericController<User, UserDTOWeb> {
                 return null;
             }
         }
+        else {
+            range = new Range(0, configuration.getDefaultPageSize());
+        }
 
-        if (range != null) {
-            List<User> models = getService().findPart(range.getPage(), range.getSize());
-            if (models.isEmpty()) {
-                response.setStatus(HttpStatus.NO_CONTENT.value());
-            } else {
-                response.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
-                response.setStatus(HttpStatus.OK.value());
-                dtos = getConverter().convertModels(models, request);
-            }
+        List<User> models = getService().findPart(range.getPage(), range.getSize());
+        if (models.isEmpty()) {
+            response.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
-            dtos = getConverter().convertModels(getService().findAll(), request);
+            response.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
+            response.setStatus(HttpStatus.OK.value());
+            dtos = getConverter().convertModels(models, request);
         }
         return dtos;
     }

@@ -1,17 +1,17 @@
 package org.demis.familh.core.jpa.repository;
 
 import org.demis.familh.core.jpa.entity.FamilyTree;
-import org.demis.familh.core.jpa.entity.Person;
+import org.demis.familh.core.jpa.entity.Family;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository ("personRepository")
-public interface PersonRepository extends JpaRepository<Person, Long> {
+@Repository ("familyRepository")
+public interface FamilyRepository extends JpaRepository<Family, Long> {
 
-    @Query("select p from Person p where p.familyTree = ?1")
-    List<Person> findFamilyTreePersons(FamilyTree familyTree);
+    @Query("select f from Family f where f.familyTree = ?1")
+    List<Family> findFamilyTreeFamilies(FamilyTree familyTree);
 
 }

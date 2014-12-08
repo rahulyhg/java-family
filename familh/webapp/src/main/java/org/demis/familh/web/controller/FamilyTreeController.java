@@ -30,6 +30,10 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
     private static final Logger LOGGER = LoggerFactory.getLogger(FamilyTreeController.class);
 
     @Autowired
+    @Qualifier("restConfiguration")
+    private RestConfiguration configuration;
+
+    @Autowired
     @Qualifier("userService" )
     private UserService userService;
 
@@ -67,21 +71,20 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
                 return null;
             }
         }
+        else {
+            range = new Range(0, configuration.getDefaultPageSize());
+        }
 
         User user = userService.findById(userId);
         if (user != null) {
-            if (range != null) {
-                List<FamilyTree> trees = familyTreeService.findUserFamilyTrees(user);
-                if (trees.isEmpty()) {
-                    httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-                } else {
-                    httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), trees.size()) + "/*");
-                    httpResponse.setStatus(HttpStatus.OK.value());
-                    dtos = getConverter().convertModels(trees, request);
-                }
-            }
-            else {
-                dtos = getConverter().convertModels(getService().findAll(), request);
+            List<FamilyTree> trees = familyTreeService.findUserFamilyTrees(user);
+            // TODO add range to the find method
+            if (trees.isEmpty()) {
+                httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
+            } else {
+                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), trees.size()) + "/*");
+                httpResponse.setStatus(HttpStatus.OK.value());
+                dtos = getConverter().convertModels(trees, request);
             }
         } else {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());

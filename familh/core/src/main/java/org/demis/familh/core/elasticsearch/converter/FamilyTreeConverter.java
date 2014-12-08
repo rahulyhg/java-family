@@ -15,11 +15,13 @@ public class FamilyTreeConverter extends GenericConverter<FamilyTree, FamilyTree
     protected void updateModelFields(FamilyTree familyTree, FamilyTreeDTO familyTreeDTO) {
         familyTree.setId(familyTreeDTO.getId());
         familyTree.setIdent(familyTreeDTO.getIdent());
+        familyTree.setAccess(familyTreeDTO.getAccess());
     }
 
     @Override
     protected void updateDTOFields(FamilyTreeDTO familytreeDTO, FamilyTree familytree) {
         familytreeDTO.setId(familytree.getId());
         familytreeDTO.setIdent(familytree.getIdent());
+        familytreeDTO.setAccess(familytree.getAccess());
     }
 }

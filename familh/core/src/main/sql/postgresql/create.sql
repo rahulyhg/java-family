@@ -42,6 +42,13 @@ create table familh_user (
   , constraint user_role foreign key (role_id) references familh_user_role (role_id)
 );
 
+-- access
+create table access (
+    access_id                           character varying(1)        not null
+  , label                               character varying(256)      not null
+  , constraint access_pkey primary key (access_id)
+);
+
 -- family tree
 create sequence family_tree_sequence increment by 1 start 1;
 
@@ -49,6 +56,7 @@ create table family_tree (
     family_tree_id                      integer                     not null
   , ident                               character varying(12)
   , user_id                             integer                     not null
+  , access_id                           character varying(1)        not null
 
   , version                             smallint                                default 0
   , created                             timestamp                   not null    default now()
@@ -56,6 +64,7 @@ create table family_tree (
 
   , constraint family_tree_pkey primary key (family_tree_id)
   , constraint family_tree_familh_user_type foreign key (user_id) references familh_user (user_id)
+  , constraint access_person foreign key (access_id) references access (access_id)
 );
 
 -- sex
@@ -63,13 +72,6 @@ create table sex (
     sex_id                              character varying(1)        not null
   , label                               character varying(256)      not null
   , constraint sex_pkey primary key (sex_id)
-);
-
--- access
-create table access (
-    access_id                           character varying(1)        not null
-  , label                               character varying(256)      not null
-  , constraint access_pkey primary key (access_id)
 );
 
 -- person

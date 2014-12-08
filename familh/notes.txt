@@ -3,6 +3,8 @@ TODO create a module for client app
 TODO complete the delivery with assembly,see samples in office
 TODO start client app
 TODO realize an ES search on users
+TODO Add integration test with cargo to test Controllers
+TODO Add contains in elastic search query
 
 GET _search
 {

@@ -1,12 +1,18 @@
 package org.demis.familh.web.controller;
 
 import org.demis.familh.core.jpa.entity.Name;
+import org.demis.familh.core.service.FamilyTreeService;
 import org.demis.familh.core.service.GenericService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.NameService;
+import org.demis.familh.core.service.PersonService;
+import org.demis.familh.core.service.UserService;
 import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.converter.FamilyTreeConverterWeb;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.converter.NameConverterWeb;
+import org.demis.familh.web.converter.PersonConverterWeb;
+import org.demis.familh.web.converter.UserConverterWeb;
 import org.demis.familh.web.dto.NameDTOWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +33,10 @@ public class NameController extends GenericController {
     private static final Logger LOGGER = LoggerFactory.getLogger(NameController.class);
 
     @Autowired
+    @Qualifier("restConfiguration")
+    private RestConfiguration configuration;
+
+    @Autowired
     @Qualifier("nameService" )
     private NameService nameService;
 
@@ -34,13 +44,42 @@ public class NameController extends GenericController {
     @Qualifier("nameConverterWeb" )
     private NameConverterWeb nameConverter;
 
+    @Autowired
+    @Qualifier("userService" )
+    private UserService userService;
+
+    @Autowired
+    @Qualifier("userConverterWeb" )
+    private UserConverterWeb userConverter;
+
+    @Autowired
+    @Qualifier("familyTreeService" )
+    private FamilyTreeService familyTreeService;
+
+    @Autowired
+    @Qualifier("familyTreeConverterWeb" )
+    private FamilyTreeConverterWeb familyTreeConverter;
+
+    @Autowired
+    @Qualifier("personService" )
+    private PersonService personService;
+
+    @Autowired
+    @Qualifier("personConverterWeb" )
+    private PersonConverterWeb personConverter;
+
     // ------------------------------------------------------------------------
     // GET
     // ------------------------------------------------------------------------
 
-    @RequestMapping(method = RequestMethod.GET, value = {"/name", "/name/"})
+    @RequestMapping(method = RequestMethod.GET, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/"})
     @ResponseBody
-    public List<NameDTOWeb> getNames(HttpServletRequest request, HttpServletResponse httpResponse) {
+    public List<NameDTOWeb> getNames(@PathVariable(value = "userId") Long userId,
+                                     @PathVariable(value = "familyTreeId") Long familyTreeId,
+                                     @PathVariable(value = "personId") Long personId,
+                                     HttpServletRequest request, HttpServletResponse httpResponse) {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<NameDTOWeb> dtos = null;
@@ -55,24 +94,25 @@ public class NameController extends GenericController {
                 return null;
             }
         }
+        else {
+            range = new Range(0, configuration.getDefaultPageSize());
+        }
 
-        if (range != null) {
-            List<Name> names = nameService.findPart(range.getPage(), range.getSize());
-            if (names.isEmpty()) {
-                httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-            } else {
-                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), names.size()) + "/*");
-                httpResponse.setStatus(HttpStatus.OK.value());
-                dtos = nameConverter.convertModels(names, request);
-            }
+        List<Name> names = nameService.findPart(range.getPage(), range.getSize());
+        if (names.isEmpty()) {
+            httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
-            dtos = nameConverter.convertModels(nameService.findAll(), request);
+            httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), names.size()) + "/*");
+            httpResponse.setStatus(HttpStatus.OK.value());
+            dtos = nameConverter.convertModels(names, request);
         }
         return dtos;
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/name/{id}","/name/{id}/"}, method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}/"})
     public Object getName(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse, HttpServletRequest request) {
         Name name = nameService.findById(id);
         if (name != null) {
@@ -89,12 +129,16 @@ public class NameController extends GenericController {
     // POST
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void postResource() {
     }
 
-    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/"})
     @ResponseBody
     public Object postResource(@RequestBody NameDTOWeb nameDTO, HttpServletResponse httpResponse, HttpServletRequest request) {
         Name name = nameService.create(nameConverter.convertDTO(nameDTO));
@@ -112,13 +156,13 @@ public class NameController extends GenericController {
     // DELETE
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = {"/name", "/name/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void deleteResources() {
     }
 
 
-    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = {"/name/{id}", "/name/{id}/"})
     @ResponseBody
     public Object deleteResource(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse) {
         Name name = nameService.findById(id);
@@ -142,12 +186,16 @@ public class NameController extends GenericController {
     // PUT
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void putResources() {
     }
 
-    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}/"})
     @ResponseBody
     public Object putResource(@PathVariable("id") Long id, @RequestBody NameDTOWeb dto, HttpServletResponse httpResponse, HttpServletRequest request) {
         Name name = nameService.findById(id);
@@ -172,13 +220,17 @@ public class NameController extends GenericController {
     // OPTIONS
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(method = RequestMethod.OPTIONS, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/"})
     @ResponseStatus(HttpStatus.OK)
     public void optionsResources(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
     }
 
-    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(method = RequestMethod.OPTIONS, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}/"})
     @ResponseStatus(HttpStatus.OK)
     public void optionsResouce(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
@@ -188,12 +240,16 @@ public class NameController extends GenericController {
     // HEAD
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/name", "/name/"}, method = RequestMethod.HEAD)
+    @RequestMapping(method = RequestMethod.HEAD, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void headResources(){
     }
 
-    @RequestMapping(value = {"/name/{id}", "/name/{id}/"}, method = RequestMethod.HEAD)
+    @RequestMapping(method = RequestMethod.HEAD, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/name/{id}/"})
     public void headResource(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse){
         Name name = nameService.findById(id);
         if (name != null) {

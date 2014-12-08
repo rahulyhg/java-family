@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+// TODO add user, familyTree, person to event
+
 @RestController
 @RequestMapping(RestConfiguration.REST_BASE_URL)
 public class EventController extends GenericController {
@@ -38,7 +40,9 @@ public class EventController extends GenericController {
     // GET
     // ------------------------------------------------------------------------
 
-    @RequestMapping(method = RequestMethod.GET, value = {"/event", "/event/"})
+    @RequestMapping(method = RequestMethod.GET,
+            value = {"/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event",
+                    "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/"})
     @ResponseBody
     public List<EventDTOWeb> getEvents(HttpServletRequest request, HttpServletResponse httpResponse) {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
@@ -72,7 +76,9 @@ public class EventController extends GenericController {
     }
 
     @ResponseBody
-    @RequestMapping(value = {"/event/{id}","/event/{id}/"}, method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}/"})
     public Object getEvent(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse, HttpServletRequest request) {
         Event event = eventService.findById(id);
         if (event != null) {
@@ -89,12 +95,12 @@ public class EventController extends GenericController {
     // POST
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/event/{id}", "/event/{id}/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}", "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}/"}, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void postResource() {
     }
 
-    @RequestMapping(value = {"/event", "/event/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event", "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/"}, method = RequestMethod.POST)
     @ResponseBody
     public Object postResource(@RequestBody EventDTOWeb eventDTO, HttpServletResponse httpResponse, HttpServletRequest request) {
         Event event = eventService.create(eventConverter.convertDTO(eventDTO));
@@ -112,13 +118,17 @@ public class EventController extends GenericController {
     // DELETE
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/event", "/event/"}, method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void deleteResources() {
     }
 
 
-    @RequestMapping(value = {"/event/{id}", "/event/{id}/"}, method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}/"})
     @ResponseBody
     public Object deleteResource(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse) {
         Event event = eventService.findById(id);
@@ -142,12 +152,16 @@ public class EventController extends GenericController {
     // PUT
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/event", "/event/"}, method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void putResources() {
     }
 
-    @RequestMapping(value = {"/event/{id}", "/event/{id}/"}, method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}/"})
     @ResponseBody
     public Object putResource(@PathVariable("id") Long id, @RequestBody EventDTOWeb dto, HttpServletResponse httpResponse, HttpServletRequest request) {
         Event event = eventService.findById(id);
@@ -172,13 +186,17 @@ public class EventController extends GenericController {
     // OPTIONS
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/event", "/event/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(method = RequestMethod.OPTIONS, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/"})
     @ResponseStatus(HttpStatus.OK)
     public void optionsResources(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
     }
 
-    @RequestMapping(value = {"/event/{id}", "/event/{id}/"}, method = RequestMethod.OPTIONS)
+    @RequestMapping(method = RequestMethod.OPTIONS, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}/"})
     @ResponseStatus(HttpStatus.OK)
     public void optionsResouce(HttpServletResponse httpResponse){
         httpResponse.addHeader(HttpHeaders.ALLOW, "HEAD,GET,PUT,POST,DELETE,OPTIONS");
@@ -188,12 +206,16 @@ public class EventController extends GenericController {
     // HEAD
     // ------------------------------------------------------------------------
 
-    @RequestMapping(value = {"/event", "/event/"}, method = RequestMethod.HEAD)
+    @RequestMapping(method = RequestMethod.HEAD, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/"})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public void headResources(){
     }
 
-    @RequestMapping(value = {"/event/{id}", "/event/{id}/"}, method = RequestMethod.HEAD)
+    @RequestMapping(method = RequestMethod.HEAD, value = {
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}",
+            "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/{id}/"})
     public void headResource(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse){
         Event event = eventService.findById(id);
         if (event != null) {

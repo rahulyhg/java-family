@@ -32,7 +32,7 @@ public class PersonDTOWeb extends PersonDTO implements DTOWeb {
         return events;
     }
 
-    public ResourcesReferenceWeb getNames() {
+/*    public ResourcesReferenceWeb getNames() {
         return names;
-    }
+    }*/
 }

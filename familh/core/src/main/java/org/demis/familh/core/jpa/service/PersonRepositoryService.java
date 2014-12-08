@@ -1,5 +1,6 @@
 package org.demis.familh.core.jpa.service;
 
+import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.Person;
 import org.demis.familh.core.jpa.repository.NameRepository;
 import org.demis.familh.core.jpa.repository.PersonRepository;
@@ -86,5 +87,10 @@ public class PersonRepositoryService implements PersonService {
 
     public void setNameRepository(NameRepository nameRepository) {
         this.nameRepository = nameRepository;
+    }
+
+    @Override
+    public List<Person> findFamilyTreePersons(FamilyTree familyTree) {
+        return personRepository.findFamilyTreePersons(familyTree);
     }
 }
