@@ -1,5 +1,6 @@
 package org.demis.familh.core.elasticsearch.dto;
 
+import org.demis.familh.core.dto.DTO;
 import org.demis.familh.core.jpa.entity.UserRole;
 
 public class UserDTO implements DTO {

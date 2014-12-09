@@ -15,11 +15,13 @@ public class FamilyTreeConverterWeb extends GenericConverterWeb<FamilyTree, Fami
     }
 
     protected void updateModelFields(FamilyTree familyTree, FamilyTreeDTOWeb familyTreeDTO) {
-        familyTree.setIdent(familyTreeDTO.getIdent());
+        familyTree.setName(familyTreeDTO.getName());
+        familyTree.setAccess(familyTreeDTO.getAccess());
     }
 
     protected void updateDTOFields(FamilyTreeDTOWeb familyTreeDTO, FamilyTree familyTree) {
-        familyTreeDTO.setIdent(familyTree.getIdent());
+        familyTreeDTO.setName(familyTree.getName());
+        familyTreeDTO.setAccess(familyTree.getAccess());
     }
 
     @Override

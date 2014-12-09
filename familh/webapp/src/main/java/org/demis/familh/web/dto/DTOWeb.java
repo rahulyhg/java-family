@@ -1,6 +1,6 @@
 package org.demis.familh.web.dto;
 
-import org.demis.familh.core.elasticsearch.dto.DTO;
+import org.demis.familh.core.dto.DTO;
 
 public interface DTOWeb extends DTO {
 

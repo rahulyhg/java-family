@@ -1,4 +1,4 @@
-package org.demis.familh.core.elasticsearch.dto;
+package org.demis.familh.core.dto;
 
 public interface DTO {
 

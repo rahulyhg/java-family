@@ -2,9 +2,9 @@ package org.demis.familh.core.elasticsearch.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.demis.familh.core.dto.DTO;
 import org.demis.familh.core.elasticsearch.ElasticSearchConfig;
 import org.demis.familh.core.elasticsearch.converter.GenericConverter;
-import org.demis.familh.core.elasticsearch.dto.DTO;
 import org.demis.familh.core.jpa.entity.Model;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.elasticsearch.client.Client;

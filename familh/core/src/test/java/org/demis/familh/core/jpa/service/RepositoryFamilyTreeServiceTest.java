@@ -1,6 +1,7 @@
 package org.demis.familh.core.jpa.service;
 
 import org.demis.familh.core.jpa.PersistenceJPAConfig;
+import org.demis.familh.core.jpa.entity.Access;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.FamilyTreeService;
@@ -37,6 +38,7 @@ public class RepositoryFamilyTreeServiceTest extends AbstractTestNGSpringContext
         FamilyTree familyTree = createFamilyTree();
         User user = userRepository.create(RepositoryUserServiceTest.createUser());
         familyTree.setUser(user);
+        familyTree.setAccess(Access.U);
 
         familyTreeRepository.create(familyTree);
 
@@ -61,6 +63,7 @@ public class RepositoryFamilyTreeServiceTest extends AbstractTestNGSpringContext
 
     public static FamilyTree createFamilyTree() {
         FamilyTree familyTree = new FamilyTree();
+        familyTree.setAccess(Access.U);
 
         return familyTree;
     }

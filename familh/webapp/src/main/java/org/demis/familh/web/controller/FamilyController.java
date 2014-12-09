@@ -1,18 +1,11 @@
 package org.demis.familh.web.controller;
 
-import org.demis.familh.core.jpa.entity.Event;
-import org.demis.familh.core.jpa.entity.FamilyTree;
-import org.demis.familh.core.jpa.entity.Name;
 import org.demis.familh.core.jpa.entity.Family;
+import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.*;
 import org.demis.familh.web.RestConfiguration;
-import org.demis.familh.web.converter.EventConverterWeb;
-import org.demis.familh.web.converter.FamilyTreeConverterWeb;
-import org.demis.familh.web.converter.GenericConverterWeb;
-import org.demis.familh.web.converter.FamilyConverterWeb;
-import org.demis.familh.web.converter.UserConverterWeb;
-import org.demis.familh.web.dto.NameDTOWeb;
+import org.demis.familh.web.converter.*;
 import org.demis.familh.web.dto.FamilyDTOWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,7 +105,7 @@ public class FamilyController extends GenericController<Family, FamilyDTOWeb> {
         if (models.isEmpty()) {
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
-            httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
+            httpResponse.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
             httpResponse.setStatus(HttpStatus.OK.value());
             dtos = getConverter().convertModels(models, request);
         }

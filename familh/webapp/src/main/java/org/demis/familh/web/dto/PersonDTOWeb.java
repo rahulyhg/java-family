@@ -1,7 +1,7 @@
 package org.demis.familh.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.demis.familh.core.elasticsearch.dto.PersonDTO;
+import org.demis.familh.core.dto.PersonDTO;
 
 public class PersonDTOWeb extends PersonDTO implements DTOWeb {
 
@@ -32,7 +32,7 @@ public class PersonDTOWeb extends PersonDTO implements DTOWeb {
         return events;
     }
 
-/*    public ResourcesReferenceWeb getNames() {
+    public ResourcesReferenceWeb getNames() {
         return names;
-    }*/
+    }
 }

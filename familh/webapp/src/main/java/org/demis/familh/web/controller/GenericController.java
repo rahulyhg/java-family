@@ -40,7 +40,7 @@ public abstract class GenericController<M, DTO> {
             if (models.isEmpty()) {
                 httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
             } else {
-                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
+                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
                 httpResponse.setStatus(HttpStatus.OK.value());
                 dtos = getConverter().convertModels(models, request);
             }

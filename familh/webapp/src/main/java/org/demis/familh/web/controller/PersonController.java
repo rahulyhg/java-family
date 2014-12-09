@@ -2,18 +2,11 @@ package org.demis.familh.web.controller;
 
 import org.demis.familh.core.jpa.entity.Event;
 import org.demis.familh.core.jpa.entity.FamilyTree;
-import org.demis.familh.core.jpa.entity.Name;
 import org.demis.familh.core.jpa.entity.Person;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.*;
 import org.demis.familh.web.RestConfiguration;
-import org.demis.familh.web.converter.EventConverterWeb;
-import org.demis.familh.web.converter.FamilyTreeConverterWeb;
-import org.demis.familh.web.converter.GenericConverterWeb;
-import org.demis.familh.web.converter.NameConverterWeb;
-import org.demis.familh.web.converter.PersonConverterWeb;
-import org.demis.familh.web.converter.UserConverterWeb;
-import org.demis.familh.web.dto.NameDTOWeb;
+import org.demis.familh.web.converter.*;
 import org.demis.familh.web.dto.PersonDTOWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,15 +98,16 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
 
         if (!checkFamilyTree(user, familyTree)) {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
+            LOGGER.info("The familyTree #" + familyTreeId + " don't exist for user #" + userId + ", no persons returned");
             return dtos;
         }
 
         List<Person> models = personService.findFamilyTreePersons(familyTree);
         // TODO add range to the find method
-        if (models.isEmpty()) {
+        if (models == null || models.isEmpty()) {
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
-            httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
+            httpResponse.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
             httpResponse.setStatus(HttpStatus.OK.value());
             dtos = getConverter().convertModels(models, request);
         }
@@ -194,23 +188,20 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
 
         if (!checkFamilyTree(user, familyTree)) {
             httpResponse.setStatus(HttpStatus.NOT_FOUND.value());
+            LOGGER.info("The familyTree #" + familyTreeId + " don't exist for user #" + userId + ", no persons returned");
             return null;
         }
 
-        Person person = personService.create(personConverter.convertDTO(personDTO));
+        Person person = personConverter.convertDTO(personDTO);
+        person.setFamilyTree(familyTree);
+        person.setUser(user);
 
-        if (person != null) {
-            person.setFamilyTree(familyTree);
-            person.setUser(user);
+        person = personService.create(person);
 
-            httpResponse.setStatus(HttpStatus.OK.value());
-            httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, person.getUpdated().getTime());
-            PersonDTOWeb dto = personConverter.convertModel(person, request);
-            return dto;
-        } else {
-            httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            return null;
-        }
+        httpResponse.setStatus(HttpStatus.OK.value());
+        httpResponse.setDateHeader(HttpHeaders.LAST_MODIFIED, person.getUpdated().getTime());
+        PersonDTOWeb dto = personConverter.convertModel(person, request);
+        return dto;
     }
 
     // ------------------------------------------------------------------------

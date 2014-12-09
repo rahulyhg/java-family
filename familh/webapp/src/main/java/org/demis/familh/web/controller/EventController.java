@@ -65,7 +65,7 @@ public class EventController extends GenericController {
             if (events.isEmpty()) {
                 httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
             } else {
-                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), events.size()) + "/*");
+                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), events.size()) + "/*");
                 httpResponse.setStatus(HttpStatus.OK.value());
                 dtos = eventConverter.convertModels(events, request);
             }

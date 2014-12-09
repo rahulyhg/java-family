@@ -1,11 +1,12 @@
 package org.demis.familh.core.elasticsearch.dto;
 
+import org.demis.familh.core.dto.DTO;
 import org.demis.familh.core.jpa.entity.Access;
 
 public class FamilyTreeDTO implements DTO {
 
     private Long id;
-    private String ident;
+    private String name;
     private Access access;
 
     public FamilyTreeDTO() {
@@ -22,12 +23,12 @@ public class FamilyTreeDTO implements DTO {
         this.id = id;
     }
 
-    public String getIdent() {
-        return ident;
+    public String getName() {
+        return name;
     }
 
-    public void setIdent(String ident) {
-        this.ident = ident;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Access getAccess() {

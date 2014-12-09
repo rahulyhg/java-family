@@ -54,7 +54,9 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
     // ------------------------------------------------------------------------
 
     @ResponseBody
-    @RequestMapping(value = {"/user/{userId}/familyTree","/user/{userId}/familyTree/"}, method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = {
+            "/user/{userId}/familyTree",
+            "/user/{userId}/familyTree/"})
     public Object getFamilyTrees(@PathVariable(value = "userId") Long userId,
                                      HttpServletResponse httpResponse,
                                      HttpServletRequest request) {
@@ -82,7 +84,7 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
             if (trees.isEmpty()) {
                 httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
             } else {
-                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), trees.size()) + "/*");
+                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), trees.size()) + "/*");
                 httpResponse.setStatus(HttpStatus.OK.value());
                 dtos = getConverter().convertModels(trees, request);
             }

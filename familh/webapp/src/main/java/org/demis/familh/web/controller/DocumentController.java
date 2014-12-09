@@ -1,12 +1,12 @@
 package org.demis.familh.web.controller;
 
 import org.demis.familh.core.jpa.entity.Document;
+import org.demis.familh.core.service.DocumentService;
 import org.demis.familh.core.service.GenericService;
 import org.demis.familh.core.service.ModelNotFoundException;
-import org.demis.familh.core.service.DocumentService;
 import org.demis.familh.web.RestConfiguration;
-import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.converter.DocumentConverterWeb;
+import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.dto.DocumentDTOWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,7 +61,7 @@ public class DocumentController extends GenericController<Document, DocumentDTOW
             if (models.isEmpty()) {
                 response.setStatus(HttpStatus.NO_CONTENT.value());
             } else {
-                response.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
+                response.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
                 response.setStatus(HttpStatus.OK.value());
                 dtos = getConverter().convertModels(models, request);
             }

@@ -1,18 +1,9 @@
 package org.demis.familh.web.controller;
 
 import org.demis.familh.core.jpa.entity.Name;
-import org.demis.familh.core.service.FamilyTreeService;
-import org.demis.familh.core.service.GenericService;
-import org.demis.familh.core.service.ModelNotFoundException;
-import org.demis.familh.core.service.NameService;
-import org.demis.familh.core.service.PersonService;
-import org.demis.familh.core.service.UserService;
+import org.demis.familh.core.service.*;
 import org.demis.familh.web.RestConfiguration;
-import org.demis.familh.web.converter.FamilyTreeConverterWeb;
-import org.demis.familh.web.converter.GenericConverterWeb;
-import org.demis.familh.web.converter.NameConverterWeb;
-import org.demis.familh.web.converter.PersonConverterWeb;
-import org.demis.familh.web.converter.UserConverterWeb;
+import org.demis.familh.web.converter.*;
 import org.demis.familh.web.dto.NameDTOWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,7 +93,7 @@ public class NameController extends GenericController {
         if (names.isEmpty()) {
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
-            httpResponse.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), names.size()) + "/*");
+            httpResponse.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), names.size()) + "/*");
             httpResponse.setStatus(HttpStatus.OK.value());
             dtos = nameConverter.convertModels(names, request);
         }

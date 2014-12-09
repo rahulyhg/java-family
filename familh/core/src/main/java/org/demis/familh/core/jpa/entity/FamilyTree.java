@@ -3,17 +3,7 @@ package org.demis.familh.core.jpa.entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 @Entity
 @Table ( name="family_tree")
@@ -23,7 +13,7 @@ public class FamilyTree extends AbstractModel implements Model {
 
     private Long id;
     private Integer version;
-    private String ident;
+    private String name;
     private User user;
     private Access access;
 
@@ -63,13 +53,13 @@ public class FamilyTree extends AbstractModel implements Model {
         this.user = user;
     }
 
-    @Column (name="ident")
-    public String getIdent() {
-        return ident;
+    @Column (name="name")
+    public String getName() {
+        return name;
     }
 
-    public void setIdent(String ident) {
-        this.ident = ident;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Enumerated(EnumType.STRING)
@@ -80,5 +70,25 @@ public class FamilyTree extends AbstractModel implements Model {
 
     public void setAccess(Access access) {
         this.access = access;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FamilyTree that = (FamilyTree) o;
+
+        if (!name.equals(that.name)) return false;
+        if (!user.equals(that.user)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + user.hashCode();
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package org.demis.familh.core.elasticsearch.dto;
 
+import org.demis.familh.core.dto.DTO;
+
 public class NoteDTO implements DTO {
 
     private Long id;

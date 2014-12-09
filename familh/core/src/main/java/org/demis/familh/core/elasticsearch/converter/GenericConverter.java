@@ -1,7 +1,7 @@
 package org.demis.familh.core.elasticsearch.converter;
 
 
-import org.demis.familh.core.elasticsearch.dto.DTO;
+import org.demis.familh.core.dto.DTO;
 import org.demis.familh.core.jpa.entity.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

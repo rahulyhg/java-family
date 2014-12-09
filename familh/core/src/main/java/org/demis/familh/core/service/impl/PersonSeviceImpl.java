@@ -68,6 +68,6 @@ public class PersonSeviceImpl extends GenericServiceImpl<Person> implements Pers
 
     @Override
     public List<Person> findFamilyTreePersons(FamilyTree familyTree) {
-        return null;
+        return repositorySevice.findFamilyTreePersons(familyTree);
     }
 }

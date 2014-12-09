@@ -67,7 +67,7 @@ public class UserController extends GenericController<User, UserDTOWeb> {
         if (models.isEmpty()) {
             response.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
-            response.setHeader(HttpHeaders.CONTENT_RANGE, "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
+            response.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
             response.setStatus(HttpStatus.OK.value());
             dtos = getConverter().convertModels(models, request);
         }
