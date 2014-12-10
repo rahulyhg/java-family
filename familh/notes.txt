@@ -5,6 +5,9 @@ TODO start client app
 TODO realize an ES search on users
 TODO Add integration test with cargo to test Controllers
 TODO Add contains in elastic search query
+TODO Convert Range like Sort
+TODO propagate sort on all controllers
+TODO Improve Exception json (with sub class) and propagate to all errors
 
 GET _search
 {

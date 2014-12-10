@@ -1,5 +1,6 @@
 package org.demis.familh.web.controller;
 
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.FamilyTreeService;
@@ -7,6 +8,8 @@ import org.demis.familh.core.service.GenericService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.UserService;
 import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.controller.converter.SortConverter;
+import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.FamilyTreeConverterWeb;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.converter.UserConverterWeb;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -57,9 +61,11 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
     @RequestMapping(method = RequestMethod.GET, value = {
             "/user/{userId}/familyTree",
             "/user/{userId}/familyTree/"})
-    public Object getFamilyTrees(@PathVariable(value = "userId") Long userId,
-                                     HttpServletResponse httpResponse,
-                                     HttpServletRequest request) {
+    public Object getFamilyTrees(
+            @PathVariable(value = "userId") Long userId,
+            HttpServletResponse httpResponse,
+            HttpServletRequest request,
+            @RequestParam(value="sort", required = false) String sortParameters) throws RangeException {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
         List<FamilyTreeDTOWeb> dtos = null;
         Range range = null;
@@ -68,18 +74,25 @@ public class FamilyTreeController extends GenericController<FamilyTree, FamilyTr
             try {
                 range = Range.parse(request.getHeader("Range"));
             } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
+                String reason = "Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range");
+                throw new RangeException(reason);
             }
         }
         else {
             range = new Range(0, configuration.getDefaultPageSize());
         }
 
+        List<Sort> sorts;
+        if (sortParameters != null && sortParameters.length() > 0) {
+            sorts = SortConverter.parse(sortParameters);
+        }
+        else {
+            sorts = Collections.emptyList();
+        }
+
         User user = userService.findById(userId);
         if (user != null) {
-            List<FamilyTree> trees = familyTreeService.findUserFamilyTrees(user);
+            List<FamilyTree> trees = familyTreeService.findUserFamilyTrees(user, range.getPage(), range.getSize(), sorts);
             // TODO add range to the find method
             if (trees.isEmpty()) {
                 httpResponse.setStatus(HttpStatus.NO_CONTENT.value());

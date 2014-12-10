@@ -1,9 +1,9 @@
 package org.demis.familh.core.service.impl;
 
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.elasticsearch.service.FamilyTreeESService;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
-import org.demis.familh.core.jpa.service.FamilyTreeRepositoryService;
 import org.demis.familh.core.service.FamilyTreeService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
     }
 
     @Override
-    public List<FamilyTree> findUserFamilyTrees(User user) {
-        return familyTreeService.findUserFamilyTrees(user);
+    public List<FamilyTree> findUserFamilyTrees(User user, int page, int size, List<Sort> sorts) {
+        return familyTreeService.findUserFamilyTrees(user, page, size, sorts);
     }
 }

@@ -1,11 +1,13 @@
 package org.demis.familh.web.controller;
 
 import org.demis.familh.core.service.GenericService;
+import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,5 +51,13 @@ public abstract class GenericController<M, DTO> {
         }
         return dtos;
     }
+
+    @ExceptionHandler(RangeException.class)
+    public Object handleRangeException(HttpServletRequest request, HttpServletResponse httpResponse, RangeException ex) {
+        LOGGER.warn(ex.getReason());
+        httpResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        return ex;
+    }
+
 
 }

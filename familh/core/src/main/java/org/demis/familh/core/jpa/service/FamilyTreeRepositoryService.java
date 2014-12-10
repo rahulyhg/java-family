@@ -1,12 +1,15 @@
 package org.demis.familh.core.jpa.service;
 
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.jpa.repository.FamilyTreeRepository;
+import org.demis.familh.core.jpa.service.converter.SortConverter;
 import org.demis.familh.core.service.FamilyTreeService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,8 +85,14 @@ public class FamilyTreeRepositoryService implements FamilyTreeService {
     }
 
     @Override
-    public List<FamilyTree> findUserFamilyTrees(User user) {
-        return familyTreeRepository.findUserFamilyTrees(user);
+    public List<FamilyTree> findUserFamilyTrees(User user, int page, int size, List<Sort> sorts) {
+        Page<FamilyTree> entitiesPage = familyTreeRepository.findUserFamilyTrees(user, new PageRequest(page, size, SortConverter.convert(sorts)));
+        if (entitiesPage != null) {
+            return entitiesPage.getContent();
+        }
+        else {
+            return null;
+        }
     }
 }
 
