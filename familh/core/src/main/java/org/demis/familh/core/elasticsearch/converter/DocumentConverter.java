@@ -1,6 +1,6 @@
 package org.demis.familh.core.elasticsearch.converter;
 
-import org.demis.familh.core.elasticsearch.dto.DocumentDTO;
+import org.demis.familh.core.dto.DocumentDTO;
 import org.demis.familh.core.jpa.entity.Document;
 import org.springframework.stereotype.Service;
 

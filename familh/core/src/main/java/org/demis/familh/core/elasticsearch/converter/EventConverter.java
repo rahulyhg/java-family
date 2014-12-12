@@ -1,6 +1,6 @@
 package org.demis.familh.core.elasticsearch.converter;
 
-import org.demis.familh.core.elasticsearch.dto.EventDTO;
+import org.demis.familh.core.dto.EventDTO;
 import org.demis.familh.core.jpa.entity.Event;
 import org.springframework.stereotype.Service;
 

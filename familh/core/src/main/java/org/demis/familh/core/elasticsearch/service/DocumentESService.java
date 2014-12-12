@@ -1,7 +1,7 @@
 package org.demis.familh.core.elasticsearch.service;
 
 import org.demis.familh.core.elasticsearch.converter.DocumentConverter;
-import org.demis.familh.core.elasticsearch.dto.DocumentDTO;
+import org.demis.familh.core.dto.DocumentDTO;
 import org.demis.familh.core.jpa.entity.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

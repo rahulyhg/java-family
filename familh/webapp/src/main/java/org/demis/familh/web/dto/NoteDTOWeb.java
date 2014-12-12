@@ -1,7 +1,7 @@
 package org.demis.familh.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.demis.familh.core.elasticsearch.dto.NoteDTO;
+import org.demis.familh.core.dto.NoteDTO;
 
 public class NoteDTOWeb extends NoteDTO implements DTOWeb {
 

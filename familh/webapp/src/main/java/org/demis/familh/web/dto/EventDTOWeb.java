@@ -1,6 +1,6 @@
 package org.demis.familh.web.dto;
 
-import org.demis.familh.core.elasticsearch.dto.EventDTO;
+import org.demis.familh.core.dto.EventDTO;
 
 import javax.persistence.Transient;
 

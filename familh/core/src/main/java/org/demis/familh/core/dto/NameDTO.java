@@ -1,4 +1,4 @@
-package org.demis.familh.core.elasticsearch.dto;
+package org.demis.familh.core.dto;
 
 import org.demis.familh.core.dto.DTO;
 import org.demis.familh.core.jpa.entity.NameType;

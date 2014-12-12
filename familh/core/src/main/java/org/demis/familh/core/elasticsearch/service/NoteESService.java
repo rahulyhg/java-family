@@ -1,7 +1,7 @@
 package org.demis.familh.core.elasticsearch.service;
 
 import org.demis.familh.core.elasticsearch.converter.NoteConverter;
-import org.demis.familh.core.elasticsearch.dto.NoteDTO;
+import org.demis.familh.core.dto.NoteDTO;
 import org.demis.familh.core.jpa.entity.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
