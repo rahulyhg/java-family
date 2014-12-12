@@ -1,10 +1,12 @@
 package org.demis.familh.web.controller;
 
+import org.demis.familh.core.Range;
 import org.demis.familh.core.jpa.entity.Family;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.*;
 import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.*;
 import org.demis.familh.web.dto.FamilyDTOWeb;
 import org.slf4j.Logger;
@@ -73,24 +75,11 @@ public class FamilyController extends GenericController<Family, FamilyDTOWeb> {
     public List<FamilyDTOWeb> getFamilys(@PathVariable(value = "userId") Long userId,
                                          @PathVariable(value = "familyTreeId") Long familyTreeId,
                                          HttpServletRequest request,
-                                         HttpServletResponse httpResponse) {
+                                         HttpServletResponse httpResponse) throws RangeException {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<FamilyDTOWeb> dtos = null;
-        Range range = null;
-
-        if (request.getHeader("Range") != null) {
-            try {
-                range = Range.parse(request.getHeader("Range"));
-            } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
-            }
-        }
-        else {
-            range = new Range(0, configuration.getDefaultPageSize());
-        }
+        Range range = getRange(request.getHeader("Range"));
 
         User user = userService.findById(userId);
         FamilyTree familyTree = familyTreeService.findById(familyTreeId);
@@ -365,7 +354,6 @@ public class FamilyController extends GenericController<Family, FamilyDTOWeb> {
         return familyConverter;
     }
 
-    @Override
     protected GenericService getService() {
         return familyService;
     }

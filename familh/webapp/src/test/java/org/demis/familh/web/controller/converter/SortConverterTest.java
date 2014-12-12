@@ -1,7 +1,6 @@
-package org.demis.familh.web.controller;
+package org.demis.familh.web.controller.converter;
 
 import org.demis.familh.core.Sort;
-import org.demis.familh.web.controller.converter.SortConverter;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

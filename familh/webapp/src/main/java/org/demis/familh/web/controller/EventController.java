@@ -1,10 +1,12 @@
 package org.demis.familh.web.controller;
 
+import org.demis.familh.core.Range;
 import org.demis.familh.core.jpa.entity.Event;
 import org.demis.familh.core.service.EventService;
 import org.demis.familh.core.service.GenericService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.EventConverterWeb;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.dto.EventDTOWeb;
@@ -44,21 +46,11 @@ public class EventController extends GenericController {
             value = {"/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event",
                     "/user/{userId}/familyTree/{familyTreeId}/person/{personId}/event/"})
     @ResponseBody
-    public List<EventDTOWeb> getEvents(HttpServletRequest request, HttpServletResponse httpResponse) {
+    public List<EventDTOWeb> getEvents(HttpServletRequest request, HttpServletResponse httpResponse) throws RangeException {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<EventDTOWeb> dtos = null;
-        Range range = null;
-
-        if (request.getHeader("Range") != null) {
-            try {
-                range = Range.parse(request.getHeader("Range"));
-            } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
-            }
-        }
+        Range range = getRange(request.getHeader("Range"));
 
         if (range != null) {
             List<Event> events = eventService.findPart(range.getPage(), range.getSize());
@@ -231,7 +223,6 @@ public class EventController extends GenericController {
         return eventConverter;
     }
 
-    @Override
     protected GenericService getService() {
         return eventService;
     }

@@ -1,10 +1,12 @@
 package org.demis.familh.web.controller;
 
+import org.demis.familh.core.Range;
 import org.demis.familh.core.jpa.entity.Note;
 import org.demis.familh.core.service.GenericService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.NoteService;
 import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.converter.NoteConverterWeb;
 import org.demis.familh.web.dto.NoteDTOWeb;
@@ -42,21 +44,11 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
             "/user/{userId}/familyTree/{familyTreeId}/note",
             "/user/{userId}/familyTree/{familyTreeId}/note/"})
     @ResponseBody
-    public List<NoteDTOWeb> getNotes(HttpServletRequest request, HttpServletResponse response) {
+    public List<NoteDTOWeb> getNotes(HttpServletRequest request, HttpServletResponse response) throws RangeException {
         response.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<NoteDTOWeb> dtos = null;
-        Range range = null;
-
-        if (request.getHeader("Range") != null) {
-            try {
-                range = Range.parse(request.getHeader("Range"));
-            } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                response.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
-            }
-        }
+        Range range = getRange(request.getHeader("Range"));
 
         if (range != null) {
             List<Note> models = getService().findPart(range.getPage(), range.getSize());
@@ -236,7 +228,6 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
         return noteConverter;
     }
 
-    @Override
     protected GenericService<Note> getService() {
         return noteService;
     }

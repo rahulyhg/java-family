@@ -1,4 +1,4 @@
-package org.demis.familh.web.controller;
+package org.demis.familh.core;
 
 public class RequestedRangeUnsatisfiableException extends Exception {
 }

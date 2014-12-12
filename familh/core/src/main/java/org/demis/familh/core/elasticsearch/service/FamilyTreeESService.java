@@ -1,14 +1,14 @@
 package org.demis.familh.core.elasticsearch.service;
 
 import org.demis.familh.core.elasticsearch.converter.FamilyTreeConverter;
-import org.demis.familh.core.elasticsearch.dto.FamilyTreeDTO;
+import org.demis.familh.core.elasticsearch.dto.FamilyTreeESDTO;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service(value ="familyTreeESService")
-public class FamilyTreeESService extends ESService<FamilyTree, FamilyTreeDTO> {
+public class FamilyTreeESService extends ESService<FamilyTree, FamilyTreeESDTO> {
 
     public static final String USER_MAPPING = "familyTree";
 

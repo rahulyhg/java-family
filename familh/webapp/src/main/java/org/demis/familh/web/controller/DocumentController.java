@@ -1,10 +1,12 @@
 package org.demis.familh.web.controller;
 
+import org.demis.familh.core.Range;
 import org.demis.familh.core.jpa.entity.Document;
 import org.demis.familh.core.service.DocumentService;
 import org.demis.familh.core.service.GenericService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.DocumentConverterWeb;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.dto.DocumentDTOWeb;
@@ -40,21 +42,11 @@ public class DocumentController extends GenericController<Document, DocumentDTOW
 
     @RequestMapping(method = RequestMethod.GET, value = {"/document", "/document/"})
     @ResponseBody
-    public List<DocumentDTOWeb> getDocuments(HttpServletRequest request, HttpServletResponse response) {
+    public List<DocumentDTOWeb> getDocuments(HttpServletRequest request, HttpServletResponse response) throws RangeException {
         response.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<DocumentDTOWeb> dtos = null;
-        Range range = null;
-
-        if (request.getHeader("Range") != null) {
-            try {
-                range = Range.parse(request.getHeader("Range"));
-            } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                response.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
-            }
-        }
+        Range range = getRange(request.getHeader("Range"));
 
         if (range != null) {
             List<Document> models = getService().findPart(range.getPage(), range.getSize());
@@ -212,7 +204,6 @@ public class DocumentController extends GenericController<Document, DocumentDTOW
         return documentConverter;
     }
 
-    @Override
     protected GenericService<Document> getService() {
         return documentService;
     }

@@ -4,9 +4,7 @@ import org.demis.familh.core.jpa.PersistenceJPAConfig;
 import org.demis.familh.core.jpa.entity.Access;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
-import org.demis.familh.core.service.FamilyTreeService;
 import org.demis.familh.core.service.ModelNotFoundException;
-import org.demis.familh.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,11 +23,11 @@ public class RepositoryFamilyTreeServiceTest extends AbstractTestNGSpringContext
 
     @Autowired
     @Qualifier("familyTreeRepositoryService")
-    public FamilyTreeService familyTreeRepository;
+    public FamilyTreeRepositoryService familyTreeRepository;
 
     @Autowired
     @Qualifier("userRepositoryService")
-    public UserService userRepository;
+    public UserRepositoryService userRepository;
 
 
     @Test

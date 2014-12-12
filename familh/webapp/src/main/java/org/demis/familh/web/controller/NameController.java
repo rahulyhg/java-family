@@ -1,8 +1,10 @@
 package org.demis.familh.web.controller;
 
+import org.demis.familh.core.Range;
 import org.demis.familh.core.jpa.entity.Name;
 import org.demis.familh.core.service.*;
 import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.*;
 import org.demis.familh.web.dto.NameDTOWeb;
 import org.slf4j.Logger;
@@ -70,24 +72,11 @@ public class NameController extends GenericController {
     public List<NameDTOWeb> getNames(@PathVariable(value = "userId") Long userId,
                                      @PathVariable(value = "familyTreeId") Long familyTreeId,
                                      @PathVariable(value = "personId") Long personId,
-                                     HttpServletRequest request, HttpServletResponse httpResponse) {
+                                     HttpServletRequest request, HttpServletResponse httpResponse) throws RangeException {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<NameDTOWeb> dtos = null;
-        Range range = null;
-
-        if (request.getHeader("Range") != null) {
-            try {
-                range = Range.parse(request.getHeader("Range"));
-            } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
-            }
-        }
-        else {
-            range = new Range(0, configuration.getDefaultPageSize());
-        }
+        Range range = getRange(request.getHeader("Range"));
 
         List<Name> names = nameService.findPart(range.getPage(), range.getSize());
         if (names.isEmpty()) {
@@ -256,7 +245,6 @@ public class NameController extends GenericController {
         return nameConverter;
     }
 
-    @Override
     protected GenericService getService() {
         return nameService;
     }

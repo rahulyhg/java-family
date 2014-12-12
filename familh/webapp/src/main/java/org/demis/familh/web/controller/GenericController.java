@@ -1,55 +1,61 @@
 package org.demis.familh.web.controller;
 
-import org.demis.familh.core.service.GenericService;
+import org.demis.familh.core.Range;
+import org.demis.familh.core.RequestedRangeUnsatisfiableException;
+import org.demis.familh.core.Sort;
+import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.controller.converter.RangeConverter;
+import org.demis.familh.web.controller.converter.SortConverter;
 import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class GenericController<M, DTO> {
+
+    @Autowired
+    @Qualifier("restConfiguration")
+    private RestConfiguration configuration;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NameController.class);
 
     protected abstract GenericConverterWeb getConverter();
 
-    protected  abstract GenericService<M> getService();
-
-    protected List<DTO> getResources(HttpServletRequest request, HttpServletResponse httpResponse) {
-        httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
-
-        List<DTO> dtos = null;
+    public Range getRange(String requestRange) throws RangeException {
         Range range = null;
 
-        if (request.getHeader("Range") != null) {
+        if (requestRange != null) {
             try {
-                range = Range.parse(request.getHeader("Range"));
+                range = RangeConverter.parse(requestRange);
             } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
+                String reason = "Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + requestRange;
+                throw new RangeException(reason);
             }
         }
+        else {
+            range = new Range(0, configuration.getDefaultPageSize());
+        }
+        return range;
+    }
 
-        if (range != null) {
-            List<M> models = getService().findPart(range.getPage(), range.getSize());
-            if (models.isEmpty()) {
-                httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
-            } else {
-                httpResponse.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
-                httpResponse.setStatus(HttpStatus.OK.value());
-                dtos = getConverter().convertModels(models, request);
-            }
-        } else {
-            dtos = getConverter().convertModels(getService().findAll(), request);
+    public List<Sort> getSorts(String sortParameters) {
+        List<Sort> sorts;
+        if (sortParameters != null && sortParameters.length() > 0) {
+            sorts = SortConverter.parse(sortParameters);
         }
-        return dtos;
+        else {
+            sorts = Collections.emptyList();
+        }
+        return sorts;
     }
 
     @ExceptionHandler(RangeException.class)
@@ -58,6 +64,4 @@ public abstract class GenericController<M, DTO> {
         httpResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         return ex;
     }
-
-
 }

@@ -1,18 +1,18 @@
 package org.demis.familh.core.elasticsearch.converter;
 
-import org.demis.familh.core.elasticsearch.dto.UserDTO;
+import org.demis.familh.core.elasticsearch.dto.UserESDTO;
 import org.demis.familh.core.jpa.entity.User;
 import org.springframework.stereotype.Service;
 
 @Service(value = "userConverterES")
-public class UserConverter extends GenericConverter<User, UserDTO> {
+public class UserConverter extends GenericConverter<User, UserESDTO> {
 
     public UserConverter() {
-        super(User.class, UserDTO.class);
+        super(User.class, UserESDTO.class);
     }
 
     @Override
-    protected void updateModelFields(User user, UserDTO userDTO) {
+    protected void updateModelFields(User user, UserESDTO userDTO) {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
@@ -22,7 +22,7 @@ public class UserConverter extends GenericConverter<User, UserDTO> {
     }
 
     @Override
-    protected void updateDTOFields(UserDTO userDTO, User user) {
+    protected void updateDTOFields(UserESDTO userDTO, User user) {
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());

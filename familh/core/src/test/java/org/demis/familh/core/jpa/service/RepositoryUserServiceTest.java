@@ -4,7 +4,6 @@ import org.demis.familh.core.jpa.PersistenceJPAConfig;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.jpa.entity.UserRole;
 import org.demis.familh.core.service.ModelNotFoundException;
-import org.demis.familh.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,7 +22,7 @@ public class RepositoryUserServiceTest extends AbstractTestNGSpringContextTests 
 
     @Autowired
     @Qualifier("userRepositoryService")
-    public UserService repository;
+    public UserRepositoryService repository;
 
     @Test
     public void create() {

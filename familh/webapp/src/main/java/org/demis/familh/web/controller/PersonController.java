@@ -1,12 +1,20 @@
 package org.demis.familh.web.controller;
 
-import org.demis.familh.core.jpa.entity.Event;
+import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.Person;
 import org.demis.familh.core.jpa.entity.User;
-import org.demis.familh.core.service.*;
+import org.demis.familh.core.service.FamilyTreeService;
+import org.demis.familh.core.service.ModelNotFoundException;
+import org.demis.familh.core.service.PersonService;
+import org.demis.familh.core.service.UserService;
 import org.demis.familh.web.RestConfiguration;
-import org.demis.familh.web.converter.*;
+import org.demis.familh.web.controller.exception.RangeException;
+import org.demis.familh.web.converter.FamilyTreeConverterWeb;
+import org.demis.familh.web.converter.GenericConverterWeb;
+import org.demis.familh.web.converter.PersonConverterWeb;
+import org.demis.familh.web.converter.UserConverterWeb;
 import org.demis.familh.web.dto.PersonDTOWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,14 +47,6 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     private PersonConverterWeb personConverter;
 
     @Autowired
-    @Qualifier("eventService" )
-    private EventService eventService;
-
-    @Autowired
-    @Qualifier("eventConverterWeb" )
-    private EventConverterWeb eventConverter;
-
-    @Autowired
     @Qualifier("userService" )
     private UserService userService;
 
@@ -74,24 +74,13 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     public List<PersonDTOWeb> getPersons(@PathVariable(value = "userId") Long userId,
                                          @PathVariable(value = "familyTreeId") Long familyTreeId,
                                          HttpServletRequest request,
-                                         HttpServletResponse httpResponse) {
+                                         HttpServletResponse httpResponse,
+                                         @RequestParam(value="sort", required = false) String sortParameters) throws RangeException {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<PersonDTOWeb> dtos = null;
-        Range range = null;
-
-        if (request.getHeader("Range") != null) {
-            try {
-                range = Range.parse(request.getHeader("Range"));
-            } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                httpResponse.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
-            }
-        }
-        else {
-            range = new Range(0, configuration.getDefaultPageSize());
-        }
+        Range range = getRange(request.getHeader("Range"));
+        List<Sort> sorts = getSorts(sortParameters);
 
         User user = userService.findById(userId);
         FamilyTree familyTree = familyTreeService.findById(familyTreeId);
@@ -102,8 +91,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return dtos;
         }
 
-        List<Person> models = personService.findFamilyTreePersons(familyTree);
-        // TODO add range to the find method
+        List<Person> models = personService.findFamilyTreePersons(familyTree, range, sorts);
         if (models == null || models.isEmpty()) {
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
@@ -146,6 +134,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
     }
 
     // TODO move to EventController
+    /*
     @ResponseBody
     @RequestMapping(value = {"/person/{id}/event","/person/{id}/event/"}, method = RequestMethod.GET)
     public Object getPersonEvents(@PathVariable(value = "id") Long id, HttpServletResponse httpResponse, HttpServletRequest request) {
@@ -159,6 +148,7 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
             return null;
         }
     }
+    */
 
     // ------------------------------------------------------------------------
     // POST
@@ -379,8 +369,4 @@ public class PersonController extends GenericController<Person, PersonDTOWeb> {
         return personConverter;
     }
 
-    @Override
-    protected GenericService getService() {
-        return personService;
-    }
 }

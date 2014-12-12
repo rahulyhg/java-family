@@ -1,9 +1,11 @@
 package org.demis.familh.core.jpa.service;
 
+import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.jpa.repository.UserRepository;
+import org.demis.familh.core.jpa.service.converter.SortConverter;
 import org.demis.familh.core.service.ModelNotFoundException;
-import org.demis.familh.core.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +16,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service(value ="userRepositoryService")
-public class UserRepositoryService implements UserService {
+public class UserRepositoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryService.class);
 
@@ -22,12 +24,10 @@ public class UserRepositoryService implements UserService {
     private UserRepository userRepository;
 
     @Transactional
-    @Override
     public User create(User created) {
         return userRepository.save(created);
     }
 
-    @Override
     public User delete(Long id) throws ModelNotFoundException {
         User deleted = userRepository.findOne(id);
 
@@ -42,26 +42,22 @@ public class UserRepositoryService implements UserService {
     }
 
     @Transactional(readOnly = true)
-    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    @Override
-    public List<User> findPart(int page, int size) {
-        return userRepository.findAll(new PageRequest(page, size)).getContent();
+    public List<User> findPart(Range range, List<Sort> sorts) {
+        return userRepository.findAll(new PageRequest(range.getPage(), range.getSize(), SortConverter.convert(sorts))).getContent();
     }
 
 
     @Transactional(readOnly = true)
-    @Override
     public User findById(Long id) {
         return userRepository.findOne(id);
     }
 
     @Transactional(rollbackFor = ModelNotFoundException.class)
-    @Override
     public User update(User updated) throws ModelNotFoundException {
         User user = userRepository.findOne(updated.getId());
 
@@ -74,10 +70,6 @@ public class UserRepositoryService implements UserService {
 
         return user;
 
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
     }
 }
 

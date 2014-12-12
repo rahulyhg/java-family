@@ -1,10 +1,12 @@
 package org.demis.familh.web.controller;
 
+import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.User;
-import org.demis.familh.core.service.GenericService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.UserService;
 import org.demis.familh.web.RestConfiguration;
+import org.demis.familh.web.controller.exception.RangeException;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.converter.UserConverterWeb;
 import org.demis.familh.web.dto.UserDTOWeb;
@@ -44,26 +46,16 @@ public class UserController extends GenericController<User, UserDTOWeb> {
 
     @RequestMapping(method = RequestMethod.GET, value = {"/user", "/user/"})
     @ResponseBody
-    public List<UserDTOWeb> getUsers(HttpServletRequest request, HttpServletResponse response) {
+    public List<UserDTOWeb> getUsers(@RequestParam(value="sort", required = false) String sortParameters,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) throws RangeException {
         response.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<UserDTOWeb> dtos = null;
-        Range range = null;
+        Range range = getRange(request.getHeader("Range"));
+        List<Sort> sorts = getSorts(sortParameters);
 
-        if (request.getHeader("Range") != null) {
-            try {
-                range = Range.parse(request.getHeader("Range"));
-            } catch (RequestedRangeUnsatisfiableException e) {
-                LOGGER.warn("Wrong format for the range parameter. The format is: \"resources: page=[page-number];size=[page-size]\" and the parameter value is: " + request.getHeader("Range"));
-                response.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
-                return null;
-            }
-        }
-        else {
-            range = new Range(0, configuration.getDefaultPageSize());
-        }
-
-        List<User> models = getService().findPart(range.getPage(), range.getSize());
+        List<User> models = userService.findPart(range, sorts);
         if (models.isEmpty()) {
             response.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
@@ -215,8 +207,5 @@ public class UserController extends GenericController<User, UserDTOWeb> {
         return userConverter;
     }
 
-    @Override
-    protected GenericService<User> getService() {
-        return userService;
-    }
+
 }
