@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service(value ="eventRepositoryService")
-public class EventRepositoryService implements EventService {
+public class EventRepositoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EventRepositoryService.class);
 
@@ -23,13 +23,11 @@ public class EventRepositoryService implements EventService {
     private EventRepository eventRepository;
 
     @Transactional
-    @Override
     public Event create(Event created) {
         return eventRepository.save(created);
     }
 
     @Transactional(rollbackFor = ModelNotFoundException.class)
-    @Override
     public Event delete(Long id) throws ModelNotFoundException {
         Event deleted = eventRepository.findOne(id);
 
@@ -43,25 +41,21 @@ public class EventRepositoryService implements EventService {
     }
 
     @Transactional(readOnly = true)
-    @Override
     public List<Event> findAll() {
         return eventRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    @Override
     public List<Event> findPart(int page, int size) {
         return eventRepository.findAll(new PageRequest(page, size)).getContent();
     }
 
     @Transactional(readOnly = true)
-    @Override
     public Event findById(Long id) {
         return eventRepository.findOne(id);
     }
 
     @Transactional(rollbackFor = ModelNotFoundException.class)
-    @Override
     public Event update(Event updated) throws ModelNotFoundException {
         Event event = eventRepository.findOne(updated.getId());
 
@@ -73,7 +67,7 @@ public class EventRepositoryService implements EventService {
         return event;
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public List<Event> findPersonEvents(Person person) {
         return eventRepository.findPersonEvents(person);
     }
