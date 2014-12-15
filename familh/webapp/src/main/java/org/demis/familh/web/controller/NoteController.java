@@ -1,14 +1,20 @@
 package org.demis.familh.web.controller;
 
 import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
+import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.Note;
-import org.demis.familh.core.service.GenericService;
+import org.demis.familh.core.jpa.entity.User;
+import org.demis.familh.core.service.FamilyTreeService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.NoteService;
+import org.demis.familh.core.service.UserService;
 import org.demis.familh.web.RestConfiguration;
 import org.demis.familh.web.controller.exception.RangeException;
+import org.demis.familh.web.converter.FamilyTreeConverterWeb;
 import org.demis.familh.web.converter.GenericConverterWeb;
 import org.demis.familh.web.converter.NoteConverterWeb;
+import org.demis.familh.web.converter.UserConverterWeb;
 import org.demis.familh.web.dto.NoteDTOWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +42,22 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     @Qualifier("noteConverterWeb" )
     private NoteConverterWeb noteConverter;
 
+    @Autowired
+    @Qualifier("userService" )
+    private UserService userService;
+
+    @Autowired
+    @Qualifier("userConverterWeb" )
+    private UserConverterWeb userConverter;
+
+    @Autowired
+    @Qualifier("familyTreeService" )
+    private FamilyTreeService familyTreeService;
+
+    @Autowired
+    @Qualifier("familyTreeConverterWeb" )
+    private FamilyTreeConverterWeb familyTreeConverter;
+
     // ------------------------------------------------------------------------
     // GET
     // ------------------------------------------------------------------------
@@ -44,23 +66,27 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
             "/user/{userId}/familyTree/{familyTreeId}/note",
             "/user/{userId}/familyTree/{familyTreeId}/note/"})
     @ResponseBody
-    public List<NoteDTOWeb> getNotes(HttpServletRequest request, HttpServletResponse response) throws RangeException {
+    public List<NoteDTOWeb> getNotes(@PathVariable(value = "userId") Long userId,
+                                     @PathVariable(value = "familyTreeId") Long familyTreeId,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     @RequestParam(value="sort", required = false) String sortParameters) throws RangeException {
         response.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<NoteDTOWeb> dtos = null;
         Range range = getRange(request.getHeader("Range"));
+        List<Sort> sorts = getSorts(sortParameters);
 
-        if (range != null) {
-            List<Note> models = getService().findPart(range.getPage(), range.getSize());
-            if (models.isEmpty()) {
-                response.setStatus(HttpStatus.NO_CONTENT.value());
-            } else {
-                response.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
-                response.setStatus(HttpStatus.OK.value());
-                dtos = getConverter().convertModels(models, request);
-            }
+        User user = userService.findById(userId);
+        FamilyTree familyTree = familyTreeService.findById(familyTreeId);
+
+        List<Note> models = noteService.findFamilyTreeNotes(familyTree, range, sorts);
+        if (models.isEmpty()) {
+            response.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
-            dtos = getConverter().convertModels(getService().findAll(), request);
+            response.setHeader(HttpHeaders.CONTENT_RANGE.toString(), "resources " + range.getStart() + "-" + Math.min(range.getEnd(), models.size()) + "/*");
+            response.setStatus(HttpStatus.OK.value());
+            dtos = getConverter().convertModels(models, request);
         }
         return dtos;
     }
@@ -227,9 +253,4 @@ public class NoteController extends GenericController<Note, NoteDTOWeb> {
     protected GenericConverterWeb getConverter() {
         return noteConverter;
     }
-
-    protected GenericService<Note> getService() {
-        return noteService;
-    }
-
 }

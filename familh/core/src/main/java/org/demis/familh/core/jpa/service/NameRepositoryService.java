@@ -1,12 +1,16 @@
 package org.demis.familh.core.jpa.service;
 
+import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.Name;
 import org.demis.familh.core.jpa.entity.Person;
 import org.demis.familh.core.jpa.repository.NameRepository;
+import org.demis.familh.core.jpa.service.converter.SortConverter;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.NameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +19,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service(value ="nameRepositoryService")
-public class NameRepositoryService implements NameService {
+public class NameRepositoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NameRepositoryService.class);
 
@@ -23,13 +27,11 @@ public class NameRepositoryService implements NameService {
     private NameRepository nameRepository;
 
     @Transactional
-    @Override
     public Name create(Name created) {
         return nameRepository.save(created);
     }
 
     @Transactional(rollbackFor = ModelNotFoundException.class)
-    @Override
     public Name delete(Long id) throws ModelNotFoundException {
         Name deleted = nameRepository.findOne(id);
 
@@ -43,25 +45,16 @@ public class NameRepositoryService implements NameService {
     }
 
     @Transactional(readOnly = true)
-    @Override
     public List<Name> findAll() {
         return nameRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    @Override
-    public List<Name> findPart(int page, int size) {
-        return nameRepository.findAll(new PageRequest(page, size)).getContent();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
     public Name findById(Long id) {
         return nameRepository.findOne(id);
     }
 
     @Transactional(rollbackFor = ModelNotFoundException.class)
-    @Override
     public Name update(Name updated) throws ModelNotFoundException {
         Name name = nameRepository.findOne(updated.getId());
 
@@ -73,9 +66,15 @@ public class NameRepositoryService implements NameService {
         return name;
     }
 
-    @Override
-    public List<Name> findPersonNames(Person person) {
-        return nameRepository.findPersonNames(person);
+    @Transactional(readOnly = true)
+    public List<Name> findPersonNames(Person person, Range range, List<Sort> sorts) {
+        Page<Name> entitiesPage =  nameRepository.findPersonNames(person, new PageRequest(range.getPage(), range.getSize(), SortConverter.convert(sorts)));
+        if (entitiesPage != null) {
+            return entitiesPage.getContent();
+        }
+        else {
+            return null;
+        }
     }
 
 

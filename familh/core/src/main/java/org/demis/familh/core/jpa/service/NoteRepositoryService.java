@@ -1,12 +1,17 @@
 package org.demis.familh.core.jpa.service;
 
+import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
+import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.Note;
 import org.demis.familh.core.jpa.repository.NameRepository;
 import org.demis.familh.core.jpa.repository.NoteRepository;
+import org.demis.familh.core.jpa.service.converter.SortConverter;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.NoteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +20,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service(value ="noteRepositoryService")
-public class NoteRepositoryService implements NoteService {
+public class NoteRepositoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NoteRepositoryService.class);
 
@@ -23,12 +28,11 @@ public class NoteRepositoryService implements NoteService {
     private NoteRepository noteRepository;
 
     @Transactional
-    @Override
     public Note create(Note created) {
         return noteRepository.save(created);
     }
 
-    @Override
+    @Transactional
     public Note delete(Long id) throws ModelNotFoundException {
         Note deleted = noteRepository.findOne(id);
 
@@ -43,26 +47,27 @@ public class NoteRepositoryService implements NoteService {
     }
 
     @Transactional(readOnly = true)
-    @Override
     public List<Note> findAll() {
         return noteRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    @Override
-    public List<Note> findPart(int page, int size) {
-        return noteRepository.findAll(new PageRequest(page, size)).getContent();
+    public List<Note> findFamilyTreeNotes(FamilyTree familyTree, Range range, List<Sort> sorts) {
+        Page<Note> entitiesPage =  noteRepository.findFamilyTreeNotes(familyTree, new PageRequest(range.getPage(), range.getSize(), SortConverter.convert(sorts)));
+        if (entitiesPage != null) {
+            return entitiesPage.getContent();
+        }
+        else {
+            return null;
+        }
     }
 
-
     @Transactional(readOnly = true)
-    @Override
     public Note findById(Long id) {
         return noteRepository.findOne(id);
     }
 
     @Transactional(rollbackFor = ModelNotFoundException.class)
-    @Override
     public Note update(Note updated) throws ModelNotFoundException {
         Note note = noteRepository.findOne(updated.getId());
 
@@ -75,9 +80,5 @@ public class NoteRepositoryService implements NoteService {
 
         return note;
 
-    }
-
-    public void setNoteRepository(NoteRepository noteRepository) {
-        this.noteRepository = noteRepository;
     }
 }

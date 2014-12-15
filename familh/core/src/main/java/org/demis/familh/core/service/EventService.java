@@ -1,5 +1,7 @@
 package org.demis.familh.core.service;
 
+import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.elasticsearch.service.EventESService;
 import org.demis.familh.core.jpa.entity.Event;
 import org.demis.familh.core.jpa.entity.Person;
@@ -45,11 +47,6 @@ public class EventService {
     }
 
     @Transactional
-    public List<Event> findPart(int page, int size) {
-        return repositorySevice.findPart(page, size);
-    }
-
-    @Transactional
     public Event findById(Long id) {
         return repositorySevice.findById(id);
     }
@@ -62,8 +59,7 @@ public class EventService {
     }
 
     @Transactional
-    public List<Event> findPersonEvents(Person person) {
-        return Collections.emptyList();
-
+    public List<Event> findPersonEvents(Person person, Range range, List<Sort> sorts) {
+        return repositorySevice.findPersonEvents(person, range, sorts);
     }
 }

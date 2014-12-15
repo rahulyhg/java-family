@@ -3,7 +3,6 @@ package org.demis.familh.web.controller;
 import org.demis.familh.core.Range;
 import org.demis.familh.core.jpa.entity.Document;
 import org.demis.familh.core.service.DocumentService;
-import org.demis.familh.core.service.GenericService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.web.RestConfiguration;
 import org.demis.familh.web.controller.exception.RangeException;
@@ -49,7 +48,7 @@ public class DocumentController extends GenericController<Document, DocumentDTOW
         Range range = getRange(request.getHeader("Range"));
 
         if (range != null) {
-            List<Document> models = getService().findPart(range.getPage(), range.getSize());
+            List<Document> models = documentService.findPart(range.getPage(), range.getSize());
             if (models.isEmpty()) {
                 response.setStatus(HttpStatus.NO_CONTENT.value());
             } else {
@@ -58,7 +57,7 @@ public class DocumentController extends GenericController<Document, DocumentDTOW
                 dtos = getConverter().convertModels(models, request);
             }
         } else {
-            dtos = getConverter().convertModels(getService().findAll(), request);
+            dtos = getConverter().convertModels(documentService.findAll(), request);
         }
         return dtos;
     }
@@ -203,9 +202,4 @@ public class DocumentController extends GenericController<Document, DocumentDTOW
     protected GenericConverterWeb getConverter() {
         return documentConverter;
     }
-
-    protected GenericService<Document> getService() {
-        return documentService;
-    }
-
 }

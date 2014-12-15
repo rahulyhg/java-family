@@ -1,7 +1,11 @@
 package org.demis.familh.web.controller;
 
 import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
+import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.Name;
+import org.demis.familh.core.jpa.entity.Person;
+import org.demis.familh.core.jpa.entity.User;
 import org.demis.familh.core.service.*;
 import org.demis.familh.web.RestConfiguration;
 import org.demis.familh.web.controller.exception.RangeException;
@@ -72,13 +76,20 @@ public class NameController extends GenericController {
     public List<NameDTOWeb> getNames(@PathVariable(value = "userId") Long userId,
                                      @PathVariable(value = "familyTreeId") Long familyTreeId,
                                      @PathVariable(value = "personId") Long personId,
-                                     HttpServletRequest request, HttpServletResponse httpResponse) throws RangeException {
+                                     HttpServletRequest request,
+                                     HttpServletResponse httpResponse,
+                                     @RequestParam(value="sort", required = false) String sortParameters) throws RangeException {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<NameDTOWeb> dtos = null;
         Range range = getRange(request.getHeader("Range"));
+        List<Sort> sorts = getSorts(sortParameters);
 
-        List<Name> names = nameService.findPart(range.getPage(), range.getSize());
+        User user = userService.findById(userId);
+        FamilyTree familyTree = familyTreeService.findById(familyTreeId);
+        Person person = personService.findById(personId);
+
+        List<Name> names = nameService.findPersonNames(person, range, sorts);
         if (names.isEmpty()) {
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
         } else {
@@ -243,9 +254,5 @@ public class NameController extends GenericController {
     @Override
     protected GenericConverterWeb getConverter() {
         return nameConverter;
-    }
-
-    protected GenericService getService() {
-        return nameService;
     }
 }

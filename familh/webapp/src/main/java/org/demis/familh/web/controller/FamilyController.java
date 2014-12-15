@@ -1,6 +1,7 @@
 package org.demis.familh.web.controller;
 
 import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.Family;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.User;
@@ -75,11 +76,13 @@ public class FamilyController extends GenericController<Family, FamilyDTOWeb> {
     public List<FamilyDTOWeb> getFamilys(@PathVariable(value = "userId") Long userId,
                                          @PathVariable(value = "familyTreeId") Long familyTreeId,
                                          HttpServletRequest request,
-                                         HttpServletResponse httpResponse) throws RangeException {
+                                         HttpServletResponse httpResponse,
+                                         @RequestParam(value="sort", required = false) String sortParameters) throws RangeException {
         httpResponse.setHeader(HttpHeaders.ACCEPT_RANGES, "resources");
 
         List<FamilyDTOWeb> dtos = null;
         Range range = getRange(request.getHeader("Range"));
+        List<Sort> sorts = getSorts(sortParameters);
 
         User user = userService.findById(userId);
         FamilyTree familyTree = familyTreeService.findById(familyTreeId);
@@ -89,7 +92,7 @@ public class FamilyController extends GenericController<Family, FamilyDTOWeb> {
             return dtos;
         }
 
-        List<Family> models = familyService.findFamilyTreeFamilies(familyTree);
+        List<Family> models = familyService.findFamilyTreeFamilies(familyTree, range, sorts);
         // TODO add range to the find method
         if (models.isEmpty()) {
             httpResponse.setStatus(HttpStatus.NO_CONTENT.value());
@@ -352,9 +355,5 @@ public class FamilyController extends GenericController<Family, FamilyDTOWeb> {
     @Override
     protected GenericConverterWeb getConverter() {
         return familyConverter;
-    }
-
-    protected GenericService getService() {
-        return familyService;
     }
 }
