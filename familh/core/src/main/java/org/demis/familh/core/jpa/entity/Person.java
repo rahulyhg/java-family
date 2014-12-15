@@ -135,6 +135,10 @@ public class Person extends AbstractModel implements Model {
         association.setEventId(event.getId());
         association.setType(role);
 
+        if (this.events == null) {
+            events = new ArrayList<EventPersonAssociation>();
+        }
+
         this.events.add(association);
         event.getPersons().add(association);
     }

@@ -1,12 +1,17 @@
 package org.demis.familh.core.jpa.service;
 
+import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.Event;
+import org.demis.familh.core.jpa.entity.Family;
 import org.demis.familh.core.jpa.entity.Person;
 import org.demis.familh.core.jpa.repository.EventRepository;
+import org.demis.familh.core.jpa.service.converter.SortConverter;
 import org.demis.familh.core.service.EventService;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +73,13 @@ public class EventRepositoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<Event> findPersonEvents(Person person) {
-        return eventRepository.findPersonEvents(person);
+    public List<Event> findPersonEvents(Person person, Range range, List<Sort> sorts) {
+        Page<Event> entitiesPage =  eventRepository.findPersonEvents(person, new PageRequest(range.getPage(), range.getSize(), SortConverter.convert(sorts)));
+        if (entitiesPage != null) {
+            return entitiesPage.getContent();
+        }
+        else {
+            return null;
+        }
     }
 }

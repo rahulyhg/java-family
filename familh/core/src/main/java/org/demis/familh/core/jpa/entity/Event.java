@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -103,5 +104,16 @@ public class Event extends AbstractModel implements Model {
 
     public void setPersons(List<EventPersonAssociation> persons) {
         this.persons = persons;
+    }
+
+    public void addPerson( Person person) {
+        if (persons == null) {
+            persons = new ArrayList<EventPersonAssociation>();
+        }
+        EventPersonAssociation association = new EventPersonAssociation();
+        association.setPerson(person);
+        association.setEvent(this);
+        association.setEventId(this.getId());
+        persons.add(association);
     }
 }

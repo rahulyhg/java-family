@@ -1,13 +1,17 @@
 package org.demis.familh.core.jpa.service;
 
+import org.demis.familh.core.Range;
+import org.demis.familh.core.Sort;
 import org.demis.familh.core.jpa.entity.FamilyTree;
 import org.demis.familh.core.jpa.entity.Family;
 import org.demis.familh.core.jpa.repository.NameRepository;
 import org.demis.familh.core.jpa.repository.FamilyRepository;
+import org.demis.familh.core.jpa.service.converter.SortConverter;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.demis.familh.core.service.FamilyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +20,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service(value ="familyRepositoryService")
-public class FamilyRepositoryService implements FamilyService {
+public class FamilyRepositoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FamilyRepositoryService.class);
 
@@ -27,12 +31,11 @@ public class FamilyRepositoryService implements FamilyService {
     private NameRepository nameRepository;
 
     @Transactional
-    @Override
     public Family create(Family created) {
         return familyRepository.save(created);
     }
 
-    @Override
+    @Transactional
     public Family delete(Long id) throws ModelNotFoundException {
         Family deleted = familyRepository.findOne(id);
 
@@ -47,26 +50,21 @@ public class FamilyRepositoryService implements FamilyService {
     }
 
     @Transactional(readOnly = true)
-    @Override
     public List<Family> findAll() {
         return familyRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    @Override
     public List<Family> findPart(int page, int size) {
         return familyRepository.findAll(new PageRequest(page, size)).getContent();
     }
 
-
     @Transactional(readOnly = true)
-    @Override
     public Family findById(Long id) {
         return familyRepository.findOne(id);
     }
 
     @Transactional(rollbackFor = ModelNotFoundException.class)
-    @Override
     public Family update(Family updated) throws ModelNotFoundException {
         Family family = familyRepository.findOne(updated.getId());
 
@@ -81,16 +79,14 @@ public class FamilyRepositoryService implements FamilyService {
 
     }
 
-    public void setFamilyRepository(FamilyRepository familyRepository) {
-        this.familyRepository = familyRepository;
-    }
-
-    public void setNameRepository(NameRepository nameRepository) {
-        this.nameRepository = nameRepository;
-    }
-
-    @Override
-    public List<Family> findFamilyTreeFamilies(FamilyTree familyTree) {
-        return familyRepository.findFamilyTreeFamilies(familyTree);
+    @Transactional(readOnly = true)
+    public List<Family> findFamilyTreeFamilies(FamilyTree familyTree, Range range, List<Sort> sorts) {
+        Page<Family> entitiesPage =  familyRepository.findFamilyTreeFamilies(familyTree, new PageRequest(range.getPage(), range.getSize(), SortConverter.convert(sorts)));
+        if (entitiesPage != null) {
+            return entitiesPage.getContent();
+        }
+        else {
+            return null;
+        }
     }
 }

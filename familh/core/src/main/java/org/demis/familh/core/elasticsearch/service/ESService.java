@@ -56,6 +56,11 @@ public abstract class ESService<M extends Model, D extends DTO> {
 
     }
 
+    public M getById(Long id) {
+        // TODO Get By ID on elasticSearch
+        return null;
+    }
+
     protected abstract GenericConverter<M, D> getConverter();
 
     protected abstract String getMapping();
