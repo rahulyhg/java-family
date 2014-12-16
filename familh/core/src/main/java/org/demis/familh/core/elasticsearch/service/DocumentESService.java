@@ -1,7 +1,7 @@
 package org.demis.familh.core.elasticsearch.service;
 
-import org.demis.familh.core.elasticsearch.converter.DocumentConverter;
 import org.demis.familh.core.dto.DocumentDTO;
+import org.demis.familh.core.elasticsearch.converter.DocumentConverter;
 import org.demis.familh.core.jpa.entity.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +24,11 @@ public class DocumentESService extends ESService<Document, DocumentDTO> {
     @Override
     protected String getMapping() {
         return DOCUMENT_MAPPING;
+    }
+
+    @Override
+    protected Class<DocumentDTO> getDTOClass() {
+        return DocumentDTO.class;
     }
 
 }

@@ -17,6 +17,11 @@ public class PersonESService extends ESService<Person, PersonESDTO> {
     private PersonConverter personConverter;
 
     @Override
+    protected Class<PersonESDTO> getDTOClass() {
+        return PersonESDTO.class;
+    }
+
+    @Override
     protected PersonConverter getConverter() {
         return personConverter;
     }

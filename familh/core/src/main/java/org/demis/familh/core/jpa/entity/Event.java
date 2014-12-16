@@ -3,18 +3,7 @@ package org.demis.familh.core.jpa.entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +88,9 @@ public class Event extends AbstractModel implements Model {
 
     @OneToMany(mappedBy="event")
     public List<EventPersonAssociation> getPersons() {
+        if (persons == null) {
+            persons = new ArrayList<EventPersonAssociation>();
+        }
         return persons;
     }
 

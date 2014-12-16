@@ -25,4 +25,9 @@ public class FamilyTreeESService extends ESService<FamilyTree, FamilyTreeESDTO> 
     protected String getMapping() {
         return USER_MAPPING;
     }
+
+    @Override
+    protected Class<FamilyTreeESDTO> getDTOClass() {
+        return FamilyTreeESDTO.class;
+    }
 }

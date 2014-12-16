@@ -7,14 +7,17 @@ import org.demis.familh.core.elasticsearch.ElasticSearchConfig;
 import org.demis.familh.core.elasticsearch.converter.GenericConverter;
 import org.demis.familh.core.jpa.entity.Model;
 import org.demis.familh.core.service.ModelNotFoundException;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
+
 public abstract class ESService<M extends Model, D extends DTO> {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(GenericConverter.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(ESService.class);
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -56,10 +59,21 @@ public abstract class ESService<M extends Model, D extends DTO> {
 
     }
 
-    public M getById(Long id) {
-        // TODO Get By ID on elasticSearch
-        return null;
+    public M getById(Long id) throws IOException {
+        GetResponse response = client.prepareGet(configuration.getIndexName(), getMapping(), id.toString())
+                .execute()
+                .actionGet();
+        LOGGER.debug("Response as String: " + response.getSourceAsString());
+        if (response.getSource() == null) {
+            return null;
+        }
+        else {
+            D dto = mapper.readValue(response.getSourceAsString(), getDTOClass());
+            return getConverter().convertDTO(dto);
+        }
     }
+
+    protected abstract Class<D> getDTOClass();
 
     protected abstract GenericConverter<M, D> getConverter();
 

@@ -2,13 +2,7 @@ package org.demis.familh.core.elasticsearch.service;
 
 import org.demis.familh.core.elasticsearch.ElasticSearchConfig;
 import org.demis.familh.core.jpa.PersistenceJPAConfig;
-import org.demis.familh.core.jpa.entity.Event;
-import org.demis.familh.core.jpa.entity.EventPersonAssociation;
-import org.demis.familh.core.jpa.entity.EventRoleType;
-import org.demis.familh.core.jpa.entity.EventType;
-import org.demis.familh.core.jpa.entity.Name;
-import org.demis.familh.core.jpa.entity.Person;
-import org.demis.familh.core.jpa.entity.Sex;
+import org.demis.familh.core.jpa.entity.*;
 import org.demis.familh.core.service.ModelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +12,8 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 
 @ContextHierarchy({
         @ContextConfiguration(classes = ElasticSearchConfig.class),
@@ -30,7 +26,7 @@ public class PersonESServiceTest extends AbstractTestNGSpringContextTests {
     private PersonESService service;
 
     @Test
-    public void create() {
+    public void create() throws IOException {
         // create
         Person person = new Person();
         person.setId(1l);
@@ -64,13 +60,13 @@ public class PersonESServiceTest extends AbstractTestNGSpringContextTests {
 
         // get
         Person indexedPerson = service.getById(1l);
-        //TODO Assert.assertNotNull(indexedPerson);
-        //TODO Assert.assertEquals(person.getId(), indexedPerson.getId());
+        Assert.assertNotNull(indexedPerson);
+        Assert.assertEquals(person.getId(), indexedPerson.getId());
     }
 
     @AfterMethod
-    public void deleteAll() throws ModelNotFoundException {
-        //service.delete(1l);
+    public void deleteAll() throws ModelNotFoundException, IOException {
+        service.delete(1l);
         // get
         Person indexedPerson = service.getById(1l);
         Assert.assertNull(indexedPerson);

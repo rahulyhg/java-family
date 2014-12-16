@@ -1,7 +1,7 @@
 package org.demis.familh.core.elasticsearch.service;
 
-import org.demis.familh.core.elasticsearch.converter.NameConverter;
 import org.demis.familh.core.dto.NameDTO;
+import org.demis.familh.core.elasticsearch.converter.NameConverter;
 import org.demis.familh.core.jpa.entity.Name;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,5 +24,10 @@ public class NameESService extends ESService<Name, NameDTO> {
     @Override
     protected String getMapping() {
         return USER_MAPPING;
+    }
+
+    @Override
+    protected Class<NameDTO> getDTOClass() {
+        return NameDTO.class;
     }
 }

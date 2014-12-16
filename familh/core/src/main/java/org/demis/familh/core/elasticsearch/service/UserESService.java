@@ -25,4 +25,9 @@ public class UserESService extends ESService<User, UserESDTO> {
     protected String getMapping() {
         return USER_MAPPING;
     }
+
+    @Override
+    protected Class<UserESDTO> getDTOClass() {
+        return UserESDTO.class;
+    }
 }
