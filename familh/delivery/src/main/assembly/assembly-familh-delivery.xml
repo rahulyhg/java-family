@@ -8,14 +8,19 @@
 
     <dependencySets>
         <dependencySet>
-            <unpack>true</unpack>
-            <unpackOptions>
-                <excludes>
-                    <exclude>*.tex</exclude>
-                    <exclude>**/META-INF</exclude>
-                    <exclude>**/META-INF/*</exclude>
-                </excludes>
-            </unpackOptions>
+            <unpack>false</unpack>
+            <outputFileNameMapping>client.zip</outputFileNameMapping>
+            <includes>
+                <include>org.demis:familh.client</include>
+            </includes>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+        </dependencySet>
+        <dependencySet>
+            <unpack>false</unpack>
+            <outputFileNameMapping>familh.war</outputFileNameMapping>
+            <includes>
+                <include>org.demis:familh.webapp</include>
+            </includes>
             <useTransitiveDependencies>false</useTransitiveDependencies>
         </dependencySet>
     </dependencySets>
